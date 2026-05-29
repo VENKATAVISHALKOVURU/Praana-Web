@@ -1,15 +1,19 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import { auth, googleProvider, signInWithPopup, signInWithRedirect } from '../firebase';
 
 export default function Signup() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignup = (e) => {
     e.preventDefault();
-    navigate('/onboarding');
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate('/onboarding');
+    }, 1500);
   };
 
   const handleGoogleLogin = async () => {
@@ -35,93 +39,128 @@ export default function Signup() {
   };
 
   return (
-    <div className="auth-page">
-      {/* Sidebar for Desktop */}
-      <div className="auth-sidebar">
-        <div style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          background: 'radial-gradient(circle at top right, rgba(255,255,255,0.1), transparent 50%)'
-        }}></div>
-        <h2 style={{ fontSize: '32px', fontWeight: '500', marginBottom: '16px', fontFamily: "'Sora', sans-serif", zIndex: 1 }}>Begin your journey.</h2>
-        <p style={{ fontSize: '18px', opacity: 0.8, maxWidth: '300px', lineHeight: 1.5, zIndex: 1 }}>
-          Create an account to personalize your conscious space.
-        </p>
+    <div className="min-h-screen flex flex-col items-center justify-center font-body-md text-body-md overflow-x-hidden bg-background text-on-surface">
+      {/* Premium Background Ornamentation */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-surface-mint rounded-full blur-[100px] opacity-60"></div>
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-surface-herbal rounded-full blur-[100px] opacity-30"></div>
       </div>
-
-      {/* Form Container */}
-      <div className="auth-form-container">
-        
-        {/* Header Logo */}
-        <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-          <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-            <div style={{ position: 'relative', width: '24px', height: '24px' }}>
-              <div style={{ position: 'absolute', top: '0px', right: '2px', width: '10px', height: '10px', borderRadius: '50%', border: '2px solid var(--color-primary)' }}></div>
-              <div style={{ position: 'absolute', top: '8px', left: '0px', width: '8px', height: '8px', borderRadius: '50%', border: '2px solid var(--color-primary)' }}></div>
-              <div style={{ position: 'absolute', bottom: '0px', right: '6px', width: '6px', height: '6px', borderRadius: '50%', border: '2px solid var(--color-primary)' }}></div>
-            </div>
-            <h2 style={{ fontSize: '18px', fontWeight: '600', color: 'var(--color-primary)' }}>Praana</h2>
-          </div>
+      
+      {/* Main Container */}
+      <main className="relative z-10 w-full max-w-[420px] px-6 py-8 flex flex-col items-center">
+        {/* Brand Identity / Logo */}
+        <div className="mb-8 flex flex-col items-center space-y-2">
+          <span className="material-symbols-outlined text-primary text-[48px] opacity-90" style={{ fontVariationSettings: '"FILL" 1' }}>bubble_chart</span>
+          <h1 className="font-headline-md text-3xl text-primary tracking-tight font-medium">Praana</h1>
         </div>
-
-        <div className="auth-card">
-          <div style={{ textAlign: 'center', marginBottom: '24px' }}>
-            <h1 style={{ fontSize: '24px' }}>Create an Account</h1>
-            <p className="subtitle" style={{ marginBottom: '8px' }}>This space adapts gently to you.</p>
+        
+        {/* Hero Visual Section */}
+        <div className="w-full mb-8 rounded-2xl overflow-hidden shadow-[0_10px_30px_-5px_rgba(90,91,44,0.1)] bg-surface-mint aspect-video relative">
+          <img 
+            alt="Conscious Beginnings" 
+            className="w-full h-full object-cover mix-blend-multiply opacity-80" 
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8jxe9kfi8aLf9DCJVGBxGCL2xSXWvKZy7JZDYJJ9DQjqZ4PgzJQ7UaRH1HBElJXOPDIrX7ZdCz31knLJzmRNfyNbBEah3HN4lWwV756qKfgO2jEjoyz5-TxpLzNyP8M_Yj8fzF2bh4bNPx7sUCG23PaJd2WAcTjkYKu4DR05IUdn-YtGcIB-DOJEhOKphRZJoRlwp8ufqmbDbuwdCoEYwyH2rS59oYYdRj71iwglYuC5TNp4jgoUpIGXEhjVstpfXZmDvBkh3KgA" 
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-surface-mint/80 to-transparent"></div>
+        </div>
+        
+        {/* Welcome Text */}
+        <div className="text-center mb-6 space-y-1">
+          <h2 className="font-headline-lg-mobile text-2xl text-on-surface font-semibold">Begin your journey</h2>
+          <p className="font-body-md text-on-surface-variant italic">This space adapts gently to you.</p>
+        </div>
+        
+        {/* Signup Form */}
+        <form onSubmit={handleSignup} className="w-full space-y-4">
+          {/* Full Name Field */}
+          <div className="flex flex-col space-y-1.5">
+            <label className="font-label-md text-sm font-medium text-on-surface-variant ml-2" htmlFor="name">Full Name</label>
+            <div className="relative group">
+              <input 
+                className="w-full bg-surface-container-low border border-border-dusty rounded-xl px-4 py-3 font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-surface-tint focus:bg-white transition-all duration-300 group-focus-within:translate-y-[-2px]" 
+                id="name" 
+                placeholder="Elias Thorne" 
+                required 
+                type="text" 
+              />
+            </div>
           </div>
-
-          <form onSubmit={handleSignup}>
-            <div className="input-group">
-              <label>Full Name</label>
-              <div className="input-wrapper">
-                <input type="text" placeholder="Elias Thorne" required />
-              </div>
+          
+          {/* Email Field */}
+          <div className="flex flex-col space-y-1.5">
+            <label className="font-label-md text-sm font-medium text-on-surface-variant ml-2" htmlFor="email">Email Address</label>
+            <div className="relative group">
+              <input 
+                className="w-full bg-surface-container-low border border-border-dusty rounded-xl px-4 py-3 font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-surface-tint focus:bg-white transition-all duration-300 group-focus-within:translate-y-[-2px]" 
+                id="email" 
+                placeholder="hello@praana.co" 
+                required 
+                type="email" 
+              />
             </div>
-
-            <div className="input-group">
-              <label>Email Address</label>
-              <div className="input-wrapper">
-                <input type="email" placeholder="hello@praana.co" required />
-              </div>
+          </div>
+          
+          {/* Password Field */}
+          <div className="flex flex-col space-y-1.5">
+            <label className="font-label-md text-sm font-medium text-on-surface-variant ml-2" htmlFor="password">Create Password</label>
+            <div className="relative group">
+              <input 
+                className="w-full bg-surface-container-low border border-border-dusty rounded-xl px-4 py-3 font-body-md text-on-surface placeholder:text-outline focus:outline-none focus:border-surface-tint focus:bg-white transition-all duration-300 group-focus-within:translate-y-[-2px]" 
+                id="password" 
+                placeholder="••••••••" 
+                required 
+                type={showPassword ? "text" : "password"} 
+              />
+              <button 
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant opacity-60 hover:opacity-100 transition-opacity" 
+                type="button"
+              >
+                <span className="material-symbols-outlined text-[20px]">{showPassword ? 'visibility_off' : 'visibility'}</span>
+              </button>
             </div>
-
-            <div className="input-group">
-              <label>Create Password</label>
-              <div className="input-wrapper">
-                <input type={showPassword ? 'text' : 'password'} placeholder="••••••••" required />
-                <div className="input-icon" style={{ cursor: 'pointer' }} onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </div>
-              </div>
-            </div>
-
-            <button type="submit" className="btn btn-primary mt-4" onClick={() => navigate('/onboarding')}>
-              Continue
+          </div>
+          
+          {/* Primary Action */}
+          <div className="pt-2">
+            <button 
+              className={`w-full bg-primary text-white font-semibold text-lg py-3.5 rounded-xl shadow-[0_10px_30px_-5px_rgba(90,91,44,0.1)] active:scale-[0.98] transition-all duration-200 hover:bg-primary-container flex justify-center items-center ${isLoading ? 'opacity-80' : ''}`} 
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? <span className="material-symbols-outlined animate-spin">progress_activity</span> : 'Continue'}
             </button>
-          </form>
-
-          <button onClick={handleGoogleLogin} type="button" className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', backgroundColor: '#fcfdfa', marginTop: '16px' }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
-            Continue with Google
-          </button>
-        </div>
-
-        <div className="footer-link">
-          Already have an account? <Link to="/login">Log in</Link>
-        </div>
+          </div>
+          
+          <div className="pt-4">
+            <button 
+              onClick={handleGoogleLogin} 
+              className="w-full flex items-center justify-center space-x-2 bg-transparent border border-border-dusty text-on-surface font-medium text-sm py-3.5 rounded-xl hover:bg-surface-container-low transition-colors duration-200 active:scale-[0.98]" 
+              type="button"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+              </svg>
+              <span>Continue with Google</span>
+            </button>
+          </div>
+        </form>
         
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '24px', fontSize: '10px', letterSpacing: '1px', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>
-          <span style={{ width: '40px', height: '1px', backgroundColor: 'var(--color-border)', marginRight: '12px' }}></span>
-          EDITORIAL PRECISION
-          <span style={{ width: '40px', height: '1px', backgroundColor: 'var(--color-border)', marginLeft: '12px' }}></span>
-        </div>
-      </div>
+        {/* Footer / Secondary Actions */}
+        <footer className="mt-8 text-center space-y-4">
+          <p className="font-label-md text-sm text-on-surface-variant font-medium">
+            Already have an account? <Link to="/login" className="text-primary font-bold hover:underline">Log in</Link>
+          </p>
+          <div className="flex items-center justify-center space-x-2 pt-4">
+            <span className="h-[1px] w-8 bg-border-dusty"></span>
+            <span className="font-label-sm text-xs font-semibold text-outline tracking-widest uppercase">Editorial Precision</span>
+            <span className="h-[1px] w-8 bg-border-dusty"></span>
+          </div>
+        </footer>
+      </main>
     </div>
   );
 }

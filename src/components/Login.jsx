@@ -1,10 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { Mail, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { auth, googleProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from '../firebase';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +26,11 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    navigate('/onboarding');
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      navigate('/onboarding');
+    }, 1500);
   };
 
   const handleGoogleLogin = async () => {
@@ -53,85 +58,120 @@ export default function Login() {
   };
 
   return (
-    <div className="auth-page">
-      {/* Sidebar for Desktop */}
-      <div className="auth-sidebar">
-        <svg width="64" height="64" viewBox="0 0 28 28" fill="none" style={{ marginBottom: '24px' }}>
-          <circle cx="18" cy="8" r="7" stroke="white" strokeWidth="2.2"/>
-          <circle cx="8" cy="18" r="5" stroke="white" strokeWidth="2"/>
-          <circle cx="21" cy="21" r="3" stroke="white" strokeWidth="1.8"/>
-        </svg>
-        <h2 style={{ fontSize: '32px', fontWeight: '500', marginBottom: '16px', fontFamily: "'Sora', sans-serif" }}>Welcome back.</h2>
-        <p style={{ fontSize: '18px', opacity: 0.8, maxWidth: '300px', lineHeight: 1.5 }}>
-          Take a deep breath. Your conscious space awaits you.
-        </p>
+    <div className="bg-background text-on-surface min-h-screen flex flex-col items-center justify-center selection:bg-surface-herbal overflow-hidden relative">
+      {/* Ambient Background Elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-5%] w-[40%] h-[40%] bg-surface-herbal/20 rounded-full blur-[100px] animate-breath"></div>
+        <div className="absolute bottom-[-5%] right-[-5%] w-[30%] h-[30%] bg-secondary-container/10 rounded-full blur-[80px] animate-breath" style={{ animationDelay: '2s' }}></div>
       </div>
-
-      {/* Form Container */}
-      <div className="auth-form-container">
-        
-        <div style={{ textAlign: 'center', marginBottom: '32px', marginTop: '20px' }}>
-          <div style={{ width: '60px', height: '60px', margin: '0 auto 16px auto', borderRadius: '16px', backgroundColor: 'var(--color-bg-card)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-            {/* Logo icon */}
-            <div style={{ position: 'relative', width: '32px', height: '32px' }}>
-              <div style={{ position: 'absolute', top: '2px', right: '4px', width: '12px', height: '12px', borderRadius: '50%', backgroundColor: 'var(--color-primary)' }}></div>
-              <div style={{ position: 'absolute', top: '12px', left: '2px', width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--color-primary)' }}></div>
-              <div style={{ position: 'absolute', bottom: '2px', right: '12px', width: '6px', height: '6px', borderRadius: '50%', backgroundColor: 'var(--color-primary)' }}></div>
-            </div>
+      
+      {/* Login Container */}
+      <main className="w-full max-w-[420px] px-6 relative z-10 flex flex-col items-center">
+        {/* Identity Header */}
+        <header className="mb-8 flex flex-col items-center">
+          <div className="bg-surface-mint p-4 rounded-xl mb-4 shadow-[0_10px_40px_-10px_rgba(90,91,44,0.1)]">
+            <span className="material-symbols-outlined text-primary text-[32px]" style={{ fontVariationSettings: '"FILL" 1' }}>bubble_chart</span>
           </div>
-          <h1>Praana</h1>
-          <p className="subtitle" style={{ fontStyle: 'normal' }}>Return to your center.</p>
-        </div>
+          <h1 className="font-headline-md text-3xl text-primary tracking-tight font-medium">Praana</h1>
+          <p className="font-label-md text-sm text-on-surface-variant mt-1">Return to your center.</p>
+        </header>
 
-        <div className="auth-card">
-          <form onSubmit={handleLogin}>
-            <div className="input-group">
-              <label>Email Address</label>
-              <div className="input-wrapper">
-                <input type="email" placeholder="name@example.com" required />
-                <Mail className="input-icon" size={18} />
+        {/* Form Card */}
+        <section className="bg-surface-mint w-full p-8 rounded-2xl shadow-[0_10px_40px_-10px_rgba(90,91,44,0.1)] flex flex-col gap-6 border border-border-dusty/30">
+          <form onSubmit={handleLogin} className="flex flex-col gap-4">
+            {/* Email Field */}
+            <div className="flex flex-col gap-1.5">
+              <label className="font-label-sm text-xs font-semibold text-on-surface-variant px-2" htmlFor="email">Email Address</label>
+              <div className="relative group">
+                <input 
+                  className="w-full bg-surface/50 border border-border-dusty rounded-xl px-4 py-3 font-body-md text-base text-on-surface focus:ring-0 focus:border-primary-container transition-all duration-300 placeholder:text-outline/50 group-focus-within:scale-[1.01]" 
+                  id="email" 
+                  placeholder="name@example.com" 
+                  type="email" 
+                  required
+                />
+                <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline/40">mail</span>
               </div>
             </div>
 
-            <div className="input-group">
-              <label>
-                <span>Password</span>
-                <Link to="/forgot-password" style={{ color: 'var(--color-primary)', fontWeight: '500', cursor: 'pointer', textDecoration: 'none' }}>Forgot?</Link>
-              </label>
-              <div className="input-wrapper">
-                <input type={showPassword ? 'text' : 'password'} placeholder="••••••••" required />
-                <div className="input-icon" style={{ cursor: 'pointer' }} onClick={() => setShowPassword(!showPassword)}>
-                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                </div>
+            {/* Password Field */}
+            <div className="flex flex-col gap-1.5">
+              <div className="flex justify-between items-center px-2">
+                <label className="font-label-sm text-xs font-semibold text-on-surface-variant" htmlFor="password">Password</label>
+                <Link to="/forgot-password" className="font-label-sm text-xs font-semibold text-secondary hover:text-primary transition-colors">Forgot?</Link>
+              </div>
+              <div className="relative group">
+                <input 
+                  className="w-full bg-surface/50 border border-border-dusty rounded-xl px-4 py-3 font-body-md text-base text-on-surface focus:ring-0 focus:border-primary-container transition-all duration-300 placeholder:text-outline/50 group-focus-within:scale-[1.01]" 
+                  id="password" 
+                  placeholder="••••••••" 
+                  type={showPassword ? "text" : "password"} 
+                  required
+                />
+                <button 
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-outline/40 hover:text-on-surface-variant transition-colors" 
+                  type="button"
+                >
+                  <span className="material-symbols-outlined">{showPassword ? 'visibility_off' : 'visibility'}</span>
+                </button>
               </div>
             </div>
 
-            <button type="submit" className="btn btn-primary mt-4">
-              Enter Space
+            {/* Action Button */}
+            <button 
+              className={`mt-2 bg-primary text-surface-mint font-semibold text-base py-3.5 rounded-xl transition-all shadow-[0_10px_40px_-10px_rgba(90,91,44,0.1)] flex justify-center items-center ${isLoading ? 'opacity-80' : 'hover:bg-primary-container active:scale-[0.98]'}`} 
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? <span className="material-symbols-outlined animate-spin">progress_activity</span> : 'Enter Space'}
             </button>
           </form>
 
-          <div className="divider">or continue with</div>
+          <div className="relative py-1 flex items-center">
+            <div className="flex-grow border-t border-border-dusty/30"></div>
+            <span className="flex-shrink mx-4 font-label-sm text-xs font-semibold text-outline/50 uppercase tracking-wider">or continue with</span>
+            <div className="flex-grow border-t border-border-dusty/30"></div>
+          </div>
 
-          <button onClick={handleGoogleLogin} type="button" className="btn btn-outline" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', backgroundColor: '#fcfdfa' }}>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
+          {/* Google Login */}
+          <button onClick={handleGoogleLogin} type="button" className="w-full flex items-center justify-center gap-2 bg-surface-container-low border border-border-dusty/20 py-3.5 rounded-xl font-semibold text-sm text-on-surface hover:bg-surface-container-high transition-colors active:scale-[0.98]">
+            <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"></path>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"></path>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"></path>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.66l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"></path>
+            </svg> 
             Continue with Google
           </button>
-        </div>
+        </section>
 
-        <div className="footer-link" style={{ marginTop: 'auto', paddingBottom: '20px' }}>
-          New to the breath? <Link to="/signup">Create an Account</Link>
-        </div>
-        
-        <div style={{ textAlign: 'center', marginTop: '16px', fontSize: '11px', letterSpacing: '1px', color: 'var(--color-text-muted)', textTransform: 'uppercase' }}>
-          PRESENCE THROUGH FOCUS
+        {/* Footer Navigation */}
+        <footer className="mt-8 text-center">
+          <p className="font-body-md text-base text-on-surface-variant">
+            New to the breath? 
+            <Link to="/signup" className="text-primary font-semibold hover:underline decoration-surface-herbal decoration-2 underline-offset-4 ml-1">Create an Account</Link>
+          </p>
+        </footer>
+      </main>
+
+      {/* Decorative Illustration */}
+      <div className="mt-8 opacity-30 select-none pointer-events-none md:fixed md:bottom-12 md:right-12 md:mt-0 md:opacity-20">
+        <div className="flex flex-col items-center">
+          <div className="w-24 h-24 rounded-full bg-gradient-to-tr from-surface-herbal to-secondary-container blur-xl animate-breath"></div>
+          <p className="font-label-sm text-[10px] tracking-widest font-semibold text-secondary mt-2 uppercase opacity-40">Presence through focus</p>
         </div>
       </div>
+      
+      <style>{`
+        @keyframes subtle-breath {
+          0%, 100% { transform: scale(1); opacity: 0.8; }
+          50% { transform: scale(1.02); opacity: 1; }
+        }
+        .animate-breath {
+          animation: subtle-breath 8s ease-in-out infinite;
+        }
+      `}</style>
     </div>
   );
 }
