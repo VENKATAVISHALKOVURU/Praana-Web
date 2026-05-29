@@ -29,25 +29,25 @@ export default function Login() {
   };
 
   const handleGoogleLogin = async () => {
-    // Mobile browsers often block popups, so we use Redirect for mobile and Popup for desktop
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-    
-    if (isMobile) {
-      try {
-        await signInWithRedirect(auth, googleProvider);
-      } catch (err) {
-        console.error("Error during redirect setup: " + err.message);
-      }
-    } else {
-      try {
-        const result = await signInWithPopup(auth, googleProvider);
-        const user = result.user;
-        
-        localStorage.setItem('praana_userId', user.uid);
-        localStorage.setItem('praana_userName', user.displayName);
-        navigate('/onboarding');
-      } catch (error) {
-        console.error("Google login failed:", error.message);
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      localStorage.setItem('praana_userId', user.uid);
+      localStorage.setItem('praana_userName', user.displayName);
+      navigate('/onboarding');
+    } catch (error) {
+      console.error("Google Popup login failed:", error);
+      
+      // If popup is blocked or closed, fallback to redirect
+      if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-user') {
+        alert("Popup was blocked or closed. Redirecting instead...");
+        try {
+          await signInWithRedirect(auth, googleProvider);
+        } catch (redirectErr) {
+          alert("Redirect login failed: " + redirectErr.message);
+        }
+      } else {
+        alert(`Google Login Error (${error.code}): ${error.message}`);
       }
     }
   };
