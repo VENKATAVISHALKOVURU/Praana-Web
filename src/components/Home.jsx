@@ -176,11 +176,10 @@ export default function Home() {
             animation: breathing 12s ease-in-out infinite;
         }
         .stagger-fade-in {
-            opacity: 0;
-            transform: translateY(20px);
             animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
       `}} />
