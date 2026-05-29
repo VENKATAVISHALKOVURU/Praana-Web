@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Praana | Focused Silence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Sora:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary-fixed": "#bcf0b6",
+            "on-secondary": "#ffffff",
+            "background": "#fbfaed",
+            "secondary-container": "#e6e7a1",
+            "surface-tint": "#44664c",
+            "on-tertiary": "#ffffff",
+            "inverse-primary": "#aad0af",
+            "on-primary-fixed-variant": "#2d4e35",
+            "error": "#ba1a1a",
+            "tertiary-container": "#1a471d",
+            "surface-container-highest": "#e4e3d7",
+            "surface": "#fbfaed",
+            "error-container": "#ffdad6",
+            "on-tertiary-fixed-variant": "#235025",
+            "surface-container-high": "#eae9dc",
+            "secondary": "#606129",
+            "surface-dim": "#dcdacf",
+            "surface-mint": "#E7F6E6",
+            "primary-fixed-dim": "#aad0af",
+            "on-secondary-fixed": "#1c1d00",
+            "on-tertiary-container": "#84b680",
+            "surface-container-low": "#f5f4e8",
+            "on-primary-container": "#8db293",
+            "on-primary-fixed": "#00210d",
+            "on-surface-variant": "#424842",
+            "primary-fixed": "#c6ecca",
+            "inverse-on-surface": "#f3f1e5",
+            "surface-herbal": "#C3E5B2",
+            "secondary-fixed": "#e6e7a1",
+            "inverse-surface": "#303129",
+            "border-dusty": "#A0AC9D",
+            "shadow-olive": "#5A5B2C",
+            "on-surface": "#1b1c15",
+            "on-primary": "#ffffff",
+            "on-secondary-fixed-variant": "#484914",
+            "on-secondary-container": "#66672f",
+            "on-tertiary-fixed": "#002205",
+            "outline-variant": "#c2c8c0",
+            "on-error": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-background": "#1b1c15",
+            "surface-variant": "#e4e3d7",
+            "tertiary-fixed-dim": "#a1d39b",
+            "surface-container": "#f0eee2",
+            "primary-container": "#24452d",
+            "secondary-fixed-dim": "#caca87",
+            "tertiary": "#003009",
+            "surface-bright": "#fbfaed",
+            "surface-container-lowest": "#ffffff",
+            "outline": "#727971",
+            "primary": "#0d2e19"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.5rem",
+            "lg": "1rem",
+            "xl": "1.5rem",
+            "full": "9999px"
+          },
+          "fontFamily": {
+            "body-lg": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-lg": ["Sora"],
+            "label-sm": ["Inter"],
+            "title-lg": ["Inter"],
+            "headline-lg-mobile": ["Sora"],
+            "headline-md": ["Sora"],
+            "body-md": ["Inter"],
+            "display-lg": ["Sora"]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    .blur-glow {
+      filter: blur(80px);
+      opacity: 0.4;
+    }
+    @keyframes pulse-slow {
+      0%, 100% { transform: scale(1); opacity: 0.4; }
+      50% { transform: scale(1.05); opacity: 0.6; }
+    }
+    .animate-pulse-slow {
+      animation: pulse-slow 8s ease-in-out infinite;
+    }
+    .timer-ring {
+      stroke-dasharray: 283;
+      stroke-dashoffset: 70;
+      transition: stroke-dashoffset 1s linear;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface selection:bg-surface-herbal overflow-hidden">
+<!-- Atmospheric Background -->
+<div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+<div class="absolute -top-[10%] -left-[10%] w-[60%] h-[60%] bg-surface-herbal rounded-full blur-glow animate-pulse-slow"></div>
+<div class="absolute top-[20%] -right-[10%] w-[50%] h-[50%] bg-surface-mint rounded-full blur-glow animate-pulse-slow" style="animation-delay: 2s;"></div>
+<div class="absolute -bottom-[10%] left-[20%] w-[70%] h-[50%] bg-tertiary-fixed-dim rounded-full blur-glow animate-pulse-slow" style="animation-delay: 4s;"></div>
+</div>
+<!-- Main Container -->
+<main class="relative flex flex-col h-screen w-full max-w-md mx-auto px-margin-mobile py-8 justify-between">
+<!-- Top Bar: Shared Logic (Process Screen Exclusion Applied) -->
+<!-- Creating a custom focused header instead of shared TopAppBar per Hierarchy of Focus rule 2 & 3 -->
+<header class="flex items-center justify-between w-full">
+<button class="size-10 flex items-center justify-center rounded-full bg-surface-container-low border border-outline-variant text-on-surface-variant hover:bg-surface-container transition-colors" title="Leave Session">
+<span class="material-symbols-outlined" data-icon="close">close</span>
+</button>
+<div class="text-center">
+<h2 class="font-headline-md text-title-lg text-primary">Focus Room #24</h2>
+<div class="flex items-center justify-center gap-1.5">
+<span class="size-1.5 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-label-md text-on-surface-variant">12 active souls</span>
+</div>
+</div>
+<div class="size-10"></div> <!-- Spacer for symmetry -->
+</header>
+<!-- Center Section: Shared Timer & Focus State -->
+<section class="flex flex-col items-center justify-center flex-1">
+<!-- Shared Timer Component -->
+<div class="relative flex items-center justify-center size-64 mb-md">
+<!-- SVG Timer Progress -->
+<svg class="absolute inset-0 size-full -rotate-90" viewbox="0 0 100 100">
+<circle class="text-surface-container-high" cx="50" cy="50" fill="transparent" r="45" stroke="currentColor" stroke-width="2"></circle>
+<circle class="text-primary timer-ring" cx="50" cy="50" fill="transparent" r="45" stroke="currentColor" stroke-linecap="round" stroke-width="2.5"></circle>
+</svg>
+<div class="text-center">
+<h1 class="font-display-lg text-[56px] text-primary tracking-tighter leading-none" id="main-timer">24:58</h1>
+<p class="font-label-sm uppercase tracking-widest text-on-surface-variant mt-2">minutes left</p>
+</div>
+</div>
+<div class="text-center space-y-2">
+<p class="font-body-lg text-on-surface italic">"Everyone is focusing quietly"</p>
+<p class="font-label-md text-on-surface-variant/80">A shared canopy of silence</p>
+</div>
+<!-- Participant Circles (Minimal) -->
+<div class="flex -space-x-3 mt-xl">
+<div class="size-11 rounded-full border-4 border-background bg-surface-mint relative overflow-hidden group">
+<img class="size-full object-cover" data-alt="A close-up portrait of a woman with a serene expression, eyes closed in meditation, bathed in soft morning light within a minimalist studio. The overall aesthetic is clean and calm, featuring a natural, organic color palette of soft creams and muted earth tones, perfectly aligned with the tranquil brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZYPnCWTPw4GnHaXVAi5E9lSfDGVpqrCkStkMIXi2WB1JGtE7fmR-dKlJsK_BpcG2ofKviz9eQvKZQrzkw6n5M2RVEE79YUOKnZFv5TjrGb06wn3oi1dBxchA2njj1ircUsa0pq30v1Nb8FzCNCuuflJzT1wEp0IN9e8rbdh1GLFfzUBQc-Z4sDpmEmmL8IaBViPFIjari2nzoRvCQ7yxIcgw-_Jhv0VpE05EKZWRl4bKZ5Nv2BNGtDtJDon-lgBwWXBRUwykWBr4"/>
+<div class="absolute inset-0 bg-primary/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined text-white text-[16px]" data-icon="energy_savings_leaf" style="font-variation-settings: 'FILL' 1;">energy_savings_leaf</span>
+</div>
+</div>
+<div class="size-11 rounded-full border-4 border-background bg-surface-mint relative overflow-hidden group">
+<img class="size-full object-cover" data-alt="A portrait of a young man looking thoughtfully into the distance, his face illuminated by a soft, diffused golden light that highlights a peaceful and focused demeanor. The background is a blurred, minimalist natural setting with hints of sage green and moss, creating an editorial feel that emphasizes clarity and mental presence." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnSD6zbYkCLscfC93Hmi77anh86NkqkXQEoSs1APMOfnCWuRx-R8BUPJUCJTBDfEMsRwbXlZeo3hLhngqqlUIZftpjz_BmNmEuqYBm_obPbQiaSC5tX5kA-h1eJzL4cfw2SSnnXfoIaPLF4oREunuUrXAEEr62ACfYcR9CVNTzJZl1mO8Jd2l5-NJa8o4gk-8rTaMpgwT6o4s8MKYKC5MdLDOyi3PR2XFN73ZucpS3aHjbsQsWLjOd8vwpPT7Efv9wblLogJ4MbXI"/>
+<div class="absolute inset-0 bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[16px]" data-icon="energy_savings_leaf" style="font-variation-settings: 'FILL' 1;">energy_savings_leaf</span>
+</div>
+</div>
+<div class="size-11 rounded-full border-4 border-background bg-surface-mint relative overflow-hidden group">
+<img class="size-full object-cover" data-alt="A minimalist editorial style portrait of a person with a neutral expression, sitting in a space defined by soft geometric shadows and a palette of warm beiges and cool mint greens. The lighting is low-contrast and soft, evoking a sense of calm and deep introspection, characteristic of a premium wellness app experience." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVmwG10fkOp0VeodZyj0R6jEEcUFiKhh2oAJyrHIHLh_5obVgxllByhar-86iR91EnFQ7nnAC6xesyh0dFgMB5ew698xbLzHfVeBACkX7X4SdJzfWhhXt1HoTkF-2euC-nnKPbto55v9udpimp8mUjOIyvTjsTLH6kJH2FQf2IIr_jSQ95toBZH7xI3BqNxYdGq9ETAkPmuTwQ_jhjhPzctjJhIYmoT6xy5yh6NiSdVlMRsfv6XeXt_72bzd5lU7pC6anguDE2_iI"/>
+<div class="absolute inset-0 bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[16px]" data-icon="energy_savings_leaf" style="font-variation-settings: 'FILL' 1;">energy_savings_leaf</span>
+</div>
+</div>
+<div class="size-11 rounded-full border-4 border-background bg-surface-container-high flex items-center justify-center font-label-sm text-on-surface-variant">
+          +9
+        </div>
+</div>
+</section>
+<!-- Bottom Controls -->
+<footer class="grid grid-cols-3 gap-md items-center pt-xl">
+<button class="flex flex-col items-center gap-1 group">
+<div class="size-14 flex items-center justify-center rounded-xl bg-surface-container border border-outline-variant text-on-surface group-hover:bg-surface-herbal transition-all">
+<span class="material-symbols-outlined" data-icon="more_time">more_time</span>
+</div>
+<span class="font-label-sm text-on-surface-variant">Extend</span>
+</button>
+<button class="flex flex-col items-center gap-1 group" id="play-pause">
+<div class="size-16 flex items-center justify-center rounded-full bg-primary text-on-primary shadow-lg shadow-shadow-olive/20 group-hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined text-[32px]" data-icon="pause" id="pause-icon" style="font-variation-settings: 'FILL' 1;">pause</span>
+</div>
+<span class="font-label-sm text-primary font-bold">Focusing</span>
+</button>
+<button class="flex flex-col items-center gap-1 group">
+<div class="size-14 flex items-center justify-center rounded-xl bg-error-container/20 border border-error/20 text-error group-hover:bg-error group-hover:text-white transition-all">
+<span class="material-symbols-outlined" data-icon="logout">logout</span>
+</div>
+<span class="font-label-sm text-error/80">Leave</span>
+</button>
+</footer>
+</main>
+<script>
+    // Simple Timer Logic
+    let minutes = 24;
+    let seconds = 58;
+    let isPaused = false;
+    const timerDisplay = document.getElementById('main-timer');
+    const pauseBtn = document.getElementById('play-pause');
+    const pauseIcon = document.getElementById('pause-icon');
+    const statusText = pauseBtn.querySelector('span:last-child');
+
+    function updateTimer() {
+      if (isPaused) return;
+      
+      if (seconds === 0) {
+        if (minutes === 0) {
+          clearInterval(timerInterval);
+          return;
+        }
+        minutes--;
+        seconds = 59;
+      } else {
+        seconds--;
+      }
+
+      const m = minutes < 10 ? '0' + minutes : minutes;
+      const s = seconds < 10 ? '0' + seconds : seconds;
+      timerDisplay.innerText = `${m}:${s}`;
+      
+      // Update SVG Ring
+      const totalSeconds = 25 * 60;
+      const currentSeconds = (minutes * 60) + seconds;
+      const offset = (currentSeconds / totalSeconds) * 283;
+      document.querySelector('.timer-ring').style.strokeDashoffset = 283 - offset;
+    }
+
+    const timerInterval = setInterval(updateTimer, 1000);
+
+    pauseBtn.addEventListener('click', () => {
+      isPaused = !isPaused;
+      if (isPaused) {
+        pauseIcon.innerText = 'play_arrow';
+        statusText.innerText = 'Paused';
+        statusText.classList.remove('text-primary');
+        statusText.classList.add('text-on-surface-variant');
+      } else {
+        pauseIcon.innerText = 'pause';
+        statusText.innerText = 'Focusing';
+        statusText.classList.add('text-primary');
+        statusText.classList.remove('text-on-surface-variant');
+      }
+    });
+
+    // Handle Leave Icon interaction
+    document.querySelector('header button').addEventListener('click', () => {
+      if(confirm("Ready to step away from the shared silence?")) {
+        window.history.back();
+      }
+    });
+  </script>
+</body></html>

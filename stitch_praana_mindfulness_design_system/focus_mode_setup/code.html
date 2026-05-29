@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Praana - Focus Mode</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#424842",
+                    "secondary": "#606129",
+                    "tertiary-fixed": "#bcf0b6",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "outline": "#727971",
+                    "surface-container": "#f0eee2",
+                    "primary": "#0d2e19",
+                    "outline-variant": "#c2c8c0",
+                    "tertiary": "#003009",
+                    "secondary-fixed": "#e6e7a1",
+                    "on-secondary-container": "#66672f",
+                    "on-primary-container": "#8db293",
+                    "inverse-surface": "#303129",
+                    "surface-container-high": "#eae9dc",
+                    "shadow-olive": "#5A5B2C",
+                    "surface-dim": "#dcdacf",
+                    "on-tertiary-fixed": "#002205",
+                    "on-tertiary-fixed-variant": "#235025",
+                    "surface-bright": "#fbfaed",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-herbal": "#C3E5B2",
+                    "on-error": "#ffffff",
+                    "primary-container": "#24452d",
+                    "primary-fixed-dim": "#aad0af",
+                    "on-tertiary-container": "#84b680",
+                    "on-primary-fixed": "#00210d",
+                    "on-tertiary": "#ffffff",
+                    "background": "#fbfaed",
+                    "border-dusty": "#A0AC9D",
+                    "surface-container-low": "#f5f4e8",
+                    "on-background": "#1b1c15",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#aad0af",
+                    "on-surface": "#1b1c15",
+                    "surface-variant": "#e4e3d7",
+                    "surface-mint": "#E7F6E6",
+                    "on-secondary-fixed-variant": "#484914",
+                    "secondary-fixed-dim": "#caca87",
+                    "on-secondary-fixed": "#1c1d00",
+                    "surface-container-highest": "#e4e3d7",
+                    "surface-tint": "#44664c",
+                    "primary-fixed": "#c6ecca",
+                    "surface": "#fbfaed",
+                    "tertiary-container": "#1a471d",
+                    "on-primary-fixed-variant": "#2d4e35",
+                    "tertiary-fixed-dim": "#a1d39b",
+                    "inverse-on-surface": "#f3f1e5",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#e6e7a1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "margin-desktop": "40px",
+                    "unit": "4px",
+                    "xl": "32px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "xs": "4px",
+                    "gutter": "16px",
+                    "sm": "8px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Sora"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "title-lg": ["Inter"],
+                    "headline-md": ["Sora"],
+                    "headline-lg": ["Sora"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .timer-ring {
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        .chip-active {
+            background-color: #24452d !important;
+            color: #aad0af !important;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body-md selection:bg-surface-herbal min-h-screen pb-24">
+<!-- Top AppBar -->
+<header class="w-full top-0 z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md bg-surface dark:bg-surface-dim transition-all duration-300 ease-in-out">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary dark:text-inverse-primary" data-icon="spa">spa</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary dark:text-tertiary-fixed-dim">Praana</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-mint dark:hover:bg-primary-container transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant dark:text-outline" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<main class="max-w-2xl mx-auto px-margin-mobile pt-lg space-y-xl">
+<!-- Header Section -->
+<header class="text-center space-y-xs">
+<h2 class="font-headline-lg text-headline-lg text-primary">Focus</h2>
+<p class="font-body-md text-on-surface-variant italic">Protect your attention intentionally.</p>
+</header>
+<!-- Section 1: Mind State -->
+<section class="space-y-md">
+<h3 class="font-title-lg text-title-lg text-on-background">How does your mind feel right now?</h3>
+<div class="flex flex-wrap gap-sm">
+<button class="px-md py-sm rounded-full border border-border-dusty text-label-md font-label-md bg-surface hover:bg-surface-mint transition-colors" onclick="toggleChip(this)">Restless</button>
+<button class="px-md py-sm rounded-full border border-border-dusty text-label-md font-label-md bg-surface hover:bg-surface-mint transition-colors" onclick="toggleChip(this)">Distracted</button>
+<button class="px-md py-sm rounded-full border border-border-dusty text-label-md font-label-md bg-surface hover:bg-surface-mint transition-colors" onclick="toggleChip(this)">Calm</button>
+<button class="px-md py-sm rounded-full border border-border-dusty text-label-md font-label-md bg-surface hover:bg-surface-mint transition-colors" onclick="toggleChip(this)">Mentally Heavy</button>
+<button class="px-md py-sm rounded-full border border-border-dusty text-label-md font-label-md bg-surface hover:bg-surface-mint transition-colors" onclick="toggleChip(this)">Focused</button>
+</div>
+</section>
+<!-- Section 2: Intentional Focus -->
+<section class="space-y-md">
+<h3 class="font-title-lg text-title-lg text-on-background">What deserves your attention right now?</h3>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-md">
+<div class="cursor-pointer p-md rounded-xl bg-surface-mint border border-transparent hover:border-border-dusty transition-all flex flex-col items-center gap-sm text-center" onclick="selectCard(this)">
+<span class="material-symbols-outlined text-primary text-[32px]" data-icon="menu_book">menu_book</span>
+<span class="font-label-md text-label-md">Reading</span>
+</div>
+<div class="cursor-pointer p-md rounded-xl bg-surface-mint border border-transparent hover:border-border-dusty transition-all flex flex-col items-center gap-sm text-center" onclick="selectCard(this)">
+<span class="material-symbols-outlined text-primary text-[32px]" data-icon="school">school</span>
+<span class="font-label-md text-label-md">Studying</span>
+</div>
+<div class="cursor-pointer p-md rounded-xl bg-surface-mint border border-transparent hover:border-border-dusty transition-all flex flex-col items-center gap-sm text-center" onclick="selectCard(this)">
+<span class="material-symbols-outlined text-primary text-[32px]" data-icon="terminal">terminal</span>
+<span class="font-label-md text-label-md">Deep Work</span>
+</div>
+<div class="cursor-pointer p-md rounded-xl bg-surface-mint border border-transparent hover:border-border-dusty transition-all flex flex-col items-center gap-sm text-center" onclick="selectCard(this)">
+<span class="material-symbols-outlined text-primary text-[32px]" data-icon="palette">palette</span>
+<span class="font-label-md text-label-md">Creative Work</span>
+</div>
+<div class="cursor-pointer p-md rounded-xl bg-surface-mint border border-transparent hover:border-border-dusty transition-all flex flex-col items-center gap-sm text-center" onclick="selectCard(this)">
+<span class="material-symbols-outlined text-primary text-[32px]" data-icon="self_improvement">self_improvement</span>
+<span class="font-label-md text-label-md">Quiet Thinking</span>
+</div>
+</div>
+</section>
+<!-- Section 3: Timer -->
+<section class="flex flex-col items-center space-y-lg py-xl bg-surface-herbal/20 rounded-[32px] border border-outline-variant/30">
+<div class="relative w-64 h-64 flex items-center justify-center">
+<svg class="absolute inset-0 w-full h-full -rotate-90">
+<circle class="text-outline-variant/20" cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" stroke-width="4"></circle>
+<circle class="text-primary timer-ring" cx="128" cy="128" fill="transparent" id="timer-progress" r="110" stroke="currentColor" stroke-dasharray="691" stroke-dashoffset="172" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<div class="text-center">
+<span class="font-display-lg text-display-lg text-primary tracking-tight" id="timer-display">25:00</span>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mt-1">minutes</p>
+</div>
+</div>
+<div class="flex gap-sm">
+<button class="px-lg py-sm rounded-full border border-border-dusty text-label-md font-label-md bg-surface hover:bg-secondary-container transition-colors" onclick="updateTimer(25)">25</button>
+<button class="px-lg py-sm rounded-full border border-border-dusty text-label-md font-label-md bg-surface hover:bg-secondary-container transition-colors" onclick="updateTimer(45)">45</button>
+<button class="px-lg py-sm rounded-full border border-border-dusty text-label-md font-label-md bg-surface hover:bg-secondary-container transition-colors" onclick="updateTimer(60)">60</button>
+<button class="px-lg py-sm rounded-full border border-border-dusty text-label-md font-label-md bg-surface hover:bg-secondary-container transition-colors">Custom</button>
+</div>
+</section>
+<!-- Section 4: Shielding -->
+<section class="space-y-md">
+<div class="flex justify-between items-center">
+<h3 class="font-title-lg text-title-lg text-on-background">Protected From</h3>
+<span class="text-label-sm font-label-sm text-secondary uppercase">All Notifications Off</span>
+</div>
+<div class="flex flex-wrap gap-sm">
+<div class="flex items-center gap-2 px-md py-sm rounded-full bg-surface-container border border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant" data-icon="block">block</span>
+<span class="font-label-md text-label-md">Instagram</span>
+</div>
+<div class="flex items-center gap-2 px-md py-sm rounded-full bg-surface-container border border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant" data-icon="block">block</span>
+<span class="font-label-md text-label-md">YouTube</span>
+</div>
+<div class="flex items-center gap-2 px-md py-sm rounded-full bg-surface-container border border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant" data-icon="block">block</span>
+<span class="font-label-md text-label-md">WhatsApp</span>
+</div>
+<div class="flex items-center gap-2 px-md py-sm rounded-full bg-surface-container border border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant" data-icon="block">block</span>
+<span class="font-label-md text-label-md">Facebook</span>
+</div>
+<div class="flex items-center gap-2 px-md py-sm rounded-full bg-surface-container border border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant" data-icon="block">block</span>
+<span class="font-label-md text-label-md">X</span>
+</div>
+<div class="flex items-center gap-2 px-md py-sm rounded-full bg-surface-container border border-outline-variant">
+<span class="material-symbols-outlined text-[18px] text-on-surface-variant" data-icon="block">block</span>
+<span class="font-label-md text-label-md">Snapchat</span>
+</div>
+</div>
+</section>
+<!-- Call to Action -->
+<div class="pt-xl pb-margin-desktop">
+<button class="w-full py-lg rounded-xl bg-primary text-mint-cream font-title-lg text-on-primary shadow-sm hover:shadow-md hover:bg-primary-container transition-all active:scale-[0.98]">
+                Begin Focus Session
+            </button>
+</div>
+</main>
+<!-- Bottom Navigation Shell -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center h-[72px] px-sm bg-surface-mint dark:bg-surface-container-high shadow-sm rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:text-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-md text-label-md">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-tertiary-container text-on-secondary-container dark:text-tertiary-fixed-dim rounded-full px-4 py-1 scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="temp_preferences_custom">temp_preferences_custom</span>
+<span class="font-label-md text-label-md">Focus</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:text-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span class="font-label-md text-label-md">Insights</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant hover:text-primary transition-all duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+<span class="font-label-md text-label-md">Saathi</span>
+</a>
+</nav>
+<script>
+        function toggleChip(el) {
+            el.classList.toggle('chip-active');
+        }
+
+        function selectCard(el) {
+            document.querySelectorAll('div[onclick="selectCard(this)"]').forEach(card => {
+                card.classList.remove('bg-secondary-container', 'border-primary');
+                card.classList.add('bg-surface-mint', 'border-transparent');
+            });
+            el.classList.remove('bg-surface-mint', 'border-transparent');
+            el.classList.add('bg-secondary-container', 'border-primary');
+        }
+
+        function updateTimer(mins) {
+            const display = document.getElementById('timer-display');
+            display.innerText = mins + ":00";
+            
+            // Visual feedback on buttons
+            document.querySelectorAll('button[onclick^="updateTimer"]').forEach(btn => {
+                btn.classList.remove('chip-active');
+            });
+            event.target.classList.add('chip-active');
+
+            // Reset ring (example calculation for 691 circumf)
+            const ring = document.getElementById('timer-progress');
+            ring.style.strokeDashoffset = "0";
+            setTimeout(() => {
+                 ring.style.strokeDashoffset = "172"; 
+            }, 50);
+        }
+    </script>
+</body></html>

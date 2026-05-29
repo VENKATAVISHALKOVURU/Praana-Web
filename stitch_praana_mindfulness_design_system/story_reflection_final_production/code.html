@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Praana | Story Reflection</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#e6e7a1",
+                        "on-error-container": "#93000a",
+                        "border-dusty": "#A0AC9D",
+                        "surface-container": "#f0eee2",
+                        "secondary": "#606129",
+                        "inverse-on-surface": "#f3f1e5",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-surface": "#1b1c15",
+                        "inverse-primary": "#aad0af",
+                        "outline-variant": "#c2c8c0",
+                        "on-primary-fixed-variant": "#2d4e35",
+                        "shadow-olive": "#5A5B2C",
+                        "on-tertiary-container": "#84b680",
+                        "tertiary-fixed": "#bcf0b6",
+                        "secondary-container": "#e6e7a1",
+                        "on-surface-variant": "#424842",
+                        "surface-container-high": "#eae9dc",
+                        "surface": "#fbfaed",
+                        "on-tertiary-fixed": "#002205",
+                        "outline": "#727971",
+                        "on-background": "#1b1c15",
+                        "primary-fixed-dim": "#aad0af",
+                        "on-secondary-fixed": "#1c1d00",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#24452d",
+                        "background": "#fbfaed",
+                        "tertiary-container": "#1a471d",
+                        "on-secondary-fixed-variant": "#484914",
+                        "tertiary-fixed-dim": "#a1d39b",
+                        "on-tertiary-fixed-variant": "#235025",
+                        "surface-container-low": "#f5f4e8",
+                        "surface-bright": "#fbfaed",
+                        "primary-fixed": "#c6ecca",
+                        "on-primary": "#ffffff",
+                        "surface-herbal": "#C3E5B2",
+                        "inverse-surface": "#303129",
+                        "secondary-fixed-dim": "#caca87",
+                        "surface-dim": "#dcdacf",
+                        "on-secondary-container": "#66672f",
+                        "on-primary-container": "#8db293",
+                        "tertiary": "#003009",
+                        "surface-tint": "#44664c",
+                        "surface-container-highest": "#e4e3d7",
+                        "primary": "#0d2e19",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e4e3d7",
+                        "on-primary-fixed": "#00210d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-mint": "#E7F6E6",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "gutter": "16px",
+                        "sm": "8px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin-desktop": "40px",
+                        "unit": "4px",
+                        "margin-mobile": "20px",
+                        "xl": "32px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Sora"],
+                        "label-md": ["Inter"],
+                        "headline-lg-mobile": ["Sora"],
+                        "title-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Sora"],
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Sora"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #fbfaed;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+        .conscious-layer {
+            background: radial-gradient(circle at 50% 50%, rgba(251, 250, 237, 0.92) 0%, rgba(185, 237, 179, 0.4) 100%);
+            backdrop-filter: blur(40px) saturate(120%);
+        }
+        .story-card {
+            box-shadow: 0 20px 40px -10px rgba(90, 91, 44, 0.08);
+            max-width: 420px;
+        }
+        .btn-press:active {
+            transform: translateY(2px);
+        }
+        .mock-app-bg {
+            filter: blur(12px) grayscale(40%);
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="h-screen w-full flex flex-col items-center justify-center relative bg-surface">
+<!-- Background Layer: Simulated "Distracting App" -->
+<div class="absolute inset-0 z-0 overflow-hidden mock-app-bg">
+<div class="grid grid-cols-3 gap-1 p-1">
+<div class="aspect-square bg-surface-container-highest"></div>
+<div class="aspect-square bg-surface-container-high"></div>
+<div class="aspect-square bg-surface-container"></div>
+<div class="aspect-square bg-surface-container-highest"></div>
+<div class="aspect-square bg-surface-container-high"></div>
+<div class="aspect-square bg-surface-container"></div>
+<div class="aspect-square bg-surface-container-highest"></div>
+<div class="aspect-square bg-surface-container-high"></div>
+<div class="aspect-square bg-surface-container"></div>
+<div class="aspect-square bg-surface-container-highest"></div>
+<div class="aspect-square bg-surface-container-high"></div>
+<div class="aspect-square bg-surface-container"></div>
+</div>
+<div class="absolute bottom-10 left-1/2 -translate-x-1/2 w-4/5 h-12 bg-surface-container-highest rounded-full opacity-50"></div>
+</div>
+<!-- Conscious Overlay Layer -->
+<div class="absolute inset-0 z-10 conscious-layer"></div>
+<!-- Main Content Canvas -->
+<main class="relative z-20 w-full h-full max-w-lg flex flex-col px-margin-mobile md:px-margin-desktop py-12">
+<!-- Top Section -->
+<header class="flex flex-col items-center text-center space-y-2 mb-8">
+<h1 class="font-display-lg text-primary tracking-tight">Reflect</h1>
+<p class="font-body-md text-on-surface-variant opacity-80">Pause before impulse.</p>
+</header>
+<!-- Main Story Card Cluster -->
+<section class="flex-grow flex items-center justify-center">
+<div class="story-card bg-surface rounded-[16px] overflow-hidden flex flex-col w-full">
+<!-- Serene Image -->
+<div class="aspect-[4/5] relative w-full overflow-hidden">
+<img alt="Serene natural landscape with misty forest at sunrise" class="w-full h-full object-cover transition-transform duration-700 hover:scale-105" src="https://lh3.googleusercontent.com/aida/ADBb0ugxxhQJUsEuWeDgwyovnoVQ_5eUltv7c-dXti7sqHA5xyHjfiTHUG0QzsEXA6aTzaXcExm4VaNOdyqzxwltkYElc9RtoITMy4LI9p5R90Y4rLhgpfr95MMdAFpKBZnfdthSvv3Mq99eaNFjWS8eTyZWTol7DRx20B7QpqoVxTjfnjbfedvVickAxP8wg2d9vGAhaQuQgmfM-6eR8uZygCD4JMTzAYy49FW5iWEl-WyRJSoIwXO-avN1E9I"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface/40 to-transparent"></div>
+</div>
+<!-- Narrative Content -->
+<div class="p-lg md:p-xl space-y-md">
+<p class="font-body-lg text-on-surface leading-relaxed text-center md:text-left">
+                        "A student once realized that late-night scrolling wasn't helping them rest — it was only delaying what their mind actually needed: <span class="text-primary font-semibold">quiet</span>."
+                    </p>
+</div>
+</div>
+</section>
+<!-- Action Section -->
+<footer class="mt-8 flex flex-col items-center space-y-lg">
+<div class="w-full space-y-md">
+<button class="btn-press w-full py-md bg-primary-container text-surface-mint font-label-md rounded-[8px] transition-all duration-200 hover:bg-primary shadow-sm">
+                    Exit App
+                </button>
+<button class="w-full py-md border border-border-dusty text-on-surface-variant font-label-md rounded-[8px] transition-colors hover:bg-surface-mint/50">
+                    Continue Anyway
+                </button>
+</div>
+<!-- Saathi AI Link -->
+<div class="flex items-center gap-2 text-on-surface-variant/80 hover:text-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 0;">psychology</span>
+<span class="font-label-sm border-b border-transparent group-hover:border-primary">Talk to Saathi</span>
+</div>
+</footer>
+</main>
+<!-- Navigation Shell (Suppressed due to transactional/focused nature of the screen) -->
+<!-- BottomNavBar and TopAppBar are excluded as per "Shell Visibility & Relevance" mandate for focused journeys -->
+<script>
+        // Micro-interactions for the story card emergence
+        document.addEventListener('DOMContentLoaded', () => {
+            const card = document.querySelector('.story-card');
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'all 0.8s cubic-bezier(0.22, 1, 0.36, 1)';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 300);
+        });
+
+        // Interactive states for buttons
+        const exitBtn = document.querySelector('button:first-of-type');
+        exitBtn.addEventListener('click', () => {
+            document.body.style.transition = 'opacity 0.5s ease-out';
+            document.body.style.opacity = '0';
+            setTimeout(() => {
+                alert('Closing application environment...');
+            }, 500);
+        });
+    </script>
+</body></html>

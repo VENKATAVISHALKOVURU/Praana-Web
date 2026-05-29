@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Praana | Welcome</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Sora:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-fixed-dim": "#caca87",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#235025",
+                        "surface-mint": "#E7F6E6",
+                        "surface": "#fbfaed",
+                        "surface-tint": "#44664c",
+                        "on-error": "#ffffff",
+                        "primary": "#0d2e19",
+                        "on-surface": "#1b1c15",
+                        "tertiary-fixed-dim": "#a1d39b",
+                        "on-error-container": "#93000a",
+                        "surface-container-high": "#eae9dc",
+                        "on-secondary-fixed-variant": "#484914",
+                        "secondary-container": "#e6e7a1",
+                        "secondary": "#606129",
+                        "surface-bright": "#fbfaed",
+                        "secondary-fixed": "#e6e7a1",
+                        "outline-variant": "#c2c8c0",
+                        "on-primary-fixed-variant": "#2d4e35",
+                        "surface-variant": "#e4e3d7",
+                        "shadow-olive": "#5A5B2C",
+                        "tertiary": "#003009",
+                        "primary-container": "#24452d",
+                        "surface-herbal": "#C3E5B2",
+                        "tertiary-fixed": "#bcf0b6",
+                        "background": "#fbfaed",
+                        "inverse-on-surface": "#f3f1e5",
+                        "inverse-surface": "#303129",
+                        "error": "#ba1a1a",
+                        "primary-fixed": "#c6ecca",
+                        "surface-container-low": "#f5f4e8",
+                        "on-secondary": "#ffffff",
+                        "on-secondary-fixed": "#1c1d00",
+                        "surface-container": "#f0eee2",
+                        "on-tertiary-container": "#84b680",
+                        "on-tertiary-fixed": "#002205",
+                        "on-primary": "#ffffff",
+                        "on-background": "#1b1c15",
+                        "inverse-primary": "#aad0af",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-highest": "#e4e3d7",
+                        "primary-fixed-dim": "#aad0af",
+                        "outline": "#727971",
+                        "on-secondary-container": "#66672f",
+                        "on-primary-fixed": "#00210d",
+                        "border-dusty": "#A0AC9D",
+                        "on-surface-variant": "#424842",
+                        "tertiary-container": "#1a471d",
+                        "on-primary-container": "#8db293",
+                        "surface-dim": "#dcdacf"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xl": "32px",
+                        "sm": "8px",
+                        "unit": "4px",
+                        "xs": "4px",
+                        "margin-desktop": "40px",
+                        "md": "16px",
+                        "margin-mobile": "20px",
+                        "lg": "24px",
+                        "gutter": "16px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "title-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-md": ["Sora"],
+                        "body-md": ["Inter"],
+                        "headline-lg": ["Sora"],
+                        "headline-lg-mobile": ["Sora"],
+                        "display-lg": ["Sora"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #fbfaed; /* surface */
+            overflow-x: hidden;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom deceleration animation for the illustration */
+        @keyframes drift {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-drift {
+            animation: drift 8s ease-in-out infinite;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen text-on-surface selection:bg-surface-herbal selection:text-primary">
+<!-- Onboarding Canvas -->
+<main class="flex-grow flex flex-col items-center justify-between px-margin-mobile py-xl md:px-margin-desktop md:py-margin-desktop max-w-4xl mx-auto w-full">
+<!-- Top: Abstract Illustration Section -->
+<div class="w-full flex flex-col items-center justify-center mt-lg relative">
+<div class="relative w-full max-w-md aspect-square rounded-3xl overflow-hidden bg-surface-container-low shadow-olive/5 shadow-xl animate-drift">
+<img alt="Fragmented Attention Calming" class="w-full h-full object-cover mix-blend-multiply opacity-90" data-alt="A minimalist abstract digital painting representing human attention. On the left, sharp, fragmented geometric shards in muted moss green and dusty sage represent digital noise. As the eye moves to the right, these fragments gracefully dissolve into smooth, flowing organic curves and soft gradients of mint cream and herbal green, symbolizing restored focus and calm. The lighting is soft and diffused, creating a serene, high-end editorial atmosphere with a breathable, minimalist aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMDijzTsUcOEBRhCrrmHp0bQwIumQl9QoDo556w-ho4MQ9QzRgs4D7lmTwTeiYTpO2sEkJR1tSG3jT4ohvMc9cZfaLinAT8H3R0Nv6u3Ug9B0UuIHyRRNLdsnBrjyKe3dG9RwjZstrT9tgQZnumhT0NyUCG1Djx1X2dnjAs_dU-lvpVb6UrHeZI8QAMn75KToarwqmapY2Yu9js2l-5R2jNplhFiJvK_pZiQLb26snn4uFVsQIdmb-IFOYHHn4IfL7BxvdNdtDg7M"/>
+<!-- Soft overlay for "Conscious Layer" feel -->
+<div class="absolute inset-0 bg-gradient-to-t from-surface-container-low/40 to-transparent"></div>
+</div>
+<!-- Branding Accent -->
+<div class="mt-lg flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary text-headline-md">bubble_chart</span>
+<span class="font-headline-md text-headline-md tracking-tight text-primary">Praana</span>
+</div>
+</div>
+<!-- Center: Editorial Content -->
+<div class="w-full text-center space-y-md mt-xl">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary leading-tight">
+                Your attention deserves awareness.
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-lg mx-auto leading-relaxed">
+                Praana helps you notice unconscious digital habits before they consume your focus.
+            </p>
+</div>
+<!-- Bottom: Action & Footnote -->
+<div class="w-full flex flex-col items-center space-y-lg mt-xl mb-md">
+<button class="w-full md:w-auto md:min-w-[240px] h-[56px] bg-primary text-surface-mint font-title-lg text-title-lg rounded-xl shadow-olive/15 shadow-lg active:scale-95 transition-all duration-200 hover:bg-primary-container hover:text-on-tertiary-container">
+                Begin
+            </button>
+<div class="flex flex-col items-center space-y-unit">
+<p class="font-label-sm text-label-sm text-outline tracking-wider">
+                    No pressure. Just awareness.
+                </p>
+<div class="w-12 h-[2px] bg-surface-container-highest rounded-full"></div>
+</div>
+</div>
+</main>
+<!-- Decorative Corner Elements (Subtle Minimalism) -->
+<div class="fixed top-0 right-0 p-lg opacity-20 pointer-events-none hidden md:block">
+<div class="w-32 h-32 border-t border-r border-border-dusty rounded-tr-[40px]"></div>
+</div>
+<div class="fixed bottom-0 left-0 p-lg opacity-20 pointer-events-none hidden md:block">
+<div class="w-32 h-32 border-b border-l border-border-dusty rounded-bl-[40px]"></div>
+</div>
+<script>
+        // Micro-interaction for the CTA
+        const btn = document.querySelector('button');
+        btn.addEventListener('click', () => {
+            // Flash feedback
+            btn.classList.add('opacity-80');
+            setTimeout(() => {
+                btn.classList.remove('opacity-80');
+                // Potential transition logic here
+            }, 300);
+        });
+
+        // Subtle parallax/drift effect on mouse move for desktop
+        if (window.innerWidth > 768) {
+            document.addEventListener('mousemove', (e) => {
+                const moveX = (e.clientX - window.innerWidth / 2) / 100;
+                const moveY = (e.clientY - window.innerHeight / 2) / 100;
+                const illustration = document.querySelector('.animate-drift');
+                illustration.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        }
+    </script>
+</body></html>

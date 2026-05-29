@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Sora:wght@500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#e6e7a1",
+                    "border-dusty": "#A0AC9D",
+                    "tertiary-fixed": "#bcf0b6",
+                    "secondary": "#606129",
+                    "outline": "#727971",
+                    "on-surface": "#1b1c15",
+                    "on-background": "#1b1c15",
+                    "inverse-primary": "#aad0af",
+                    "secondary-fixed": "#e6e7a1",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#a1d39b",
+                    "tertiary-container": "#1a471d",
+                    "shadow-olive": "#5A5B2C",
+                    "primary-container": "#24452d",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "background": "#fbfaed",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#003009",
+                    "on-secondary-fixed": "#1c1d00",
+                    "surface-tint": "#44664c",
+                    "on-tertiary-fixed": "#002205",
+                    "primary-fixed": "#c6ecca",
+                    "inverse-on-surface": "#f3f1e5",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#eae9dc",
+                    "on-tertiary-fixed-variant": "#235025",
+                    "primary": "#0d2e19",
+                    "surface-container-highest": "#e4e3d7",
+                    "on-primary-container": "#8db293",
+                    "on-secondary-fixed-variant": "#484914",
+                    "on-tertiary-container": "#84b680",
+                    "surface": "#fbfaed",
+                    "primary-fixed-dim": "#aad0af",
+                    "surface-dim": "#dcdacf",
+                    "outline-variant": "#c2c8c0",
+                    "on-primary-fixed-variant": "#2d4e35",
+                    "surface-variant": "#e4e3d7",
+                    "surface-herbal": "#C3E5B2",
+                    "on-surface-variant": "#424842",
+                    "on-secondary": "#ffffff",
+                    "surface-container": "#f0eee2",
+                    "on-secondary-container": "#66672f",
+                    "surface-bright": "#fbfaed",
+                    "inverse-surface": "#303129",
+                    "secondary-fixed-dim": "#caca87",
+                    "surface-mint": "#E7F6E6",
+                    "on-primary-fixed": "#00210d",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f5f4e8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "lg": "24px",
+                    "margin-mobile": "20px",
+                    "xl": "32px",
+                    "unit": "4px",
+                    "md": "16px",
+                    "margin-desktop": "40px",
+                    "xs": "4px",
+                    "sm": "8px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Sora"],
+                    "headline-lg-mobile": ["Sora"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Sora"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "title-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #fbfaed;
+            color: #1b1c15;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .glass-saathi {
+            background: rgba(195, 229, 178, 0.2);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(160, 172, 157, 0.2);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface sticky top-0 z-40 flex justify-between items-center w-full px-margin-mobile py-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="bubble_chart">bubble_chart</span>
+<span class="font-headline-md text-headline-md text-primary tracking-tight">Praana</span>
+</div>
+<div class="flex items-center gap-md">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="search">search</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-primary-container overflow-hidden border border-outline-variant">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A professional and serene close-up portrait of a calm person with a soft, natural expression. The lighting is diffused and warm, evoking a sense of tranquility and focused energy. The background is a minimalist, slightly blurred interior with soft sage and cream tones, aligning with a premium wellness aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDknCoprzI3frSGErUxteOWs_Nfk-1H5U_1o3-lRxzJd83dzdBKhDpUd9PBRj9HF6JSJIT6QuuTYBgtscXQ0nCTEBa1MDKH9WCMDRLWhKgYO4pBLAf5JjBjKIpR4cXOugUdz8j0N-5nWgsFL-hrlfb-p8FSbd0ZIHrCG5zP97MCqac3Sb5VzimfkCZoasuVSw3D9-VA8Kl4ERZ-UpsQBy_GCgUrAzOmxLcQb1v9jY4uKNI9dPYo7AHPT29dgTt_68pg95WbYsFygM"/>
+</div>
+</div>
+</header>
+<main class="flex-1 px-margin-mobile pb-32">
+<!-- Hero Section -->
+<section class="mt-lg mb-xl">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-primary">Focus Rooms</h1>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs opacity-80">Focus quietly with others</p>
+</section>
+<!-- Active Rooms Grid (Asymmetric Layout) -->
+<section class="mb-xl">
+<div class="flex justify-between items-center mb-md">
+<h2 class="font-title-lg text-title-lg text-primary">Active Rooms</h2>
+<button class="font-label-md text-label-md text-secondary hover:underline">View all</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<!-- Large Featured Room Card -->
+<div class="md:col-span-2 group relative overflow-hidden rounded-xl bg-surface-mint p-lg shadow-olive/5 shadow-lg border border-border-dusty/30 transition-all hover:shadow-olive/10">
+<div class="flex flex-col h-full justify-between">
+<div>
+<div class="flex justify-between items-start">
+<span class="px-3 py-1 bg-primary text-on-primary rounded-full text-label-sm font-label-sm">LIVE</span>
+<div class="flex -space-x-2">
+<img alt="Participant" class="w-6 h-6 rounded-full border-2 border-surface-mint" data-alt="A small circular avatar of a peaceful individual against a neutral backdrop." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjmUUVoL0KWNxUtnYnBnxmlohXW3-lN58WgLB1-foIIblZch5meBmIh1ns33j3kwtHk0R5UpFQg4T3DYWcwM94cPDh7esbR0WKa6ehfTv7VYIbpVMccgpLDuC4M1NDAXKepsmkOPMA1KYqjjr2-6M2-QOL5uVFtTuIsmpRiU2Gl0eJQp2Wx4YUuIKlnYdqT1hfeddIEDT-Ajvgt5Q61q4tpUKCiIDEs3swahZRVrGoIfekovtwjbylN2n9hwlX3hIqZolfCpCYBZ8"/>
+<img alt="Participant" class="w-6 h-6 rounded-full border-2 border-surface-mint" data-alt="A small circular avatar of a smiling individual in a minimalist setting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuACIxyVLslwDoXRbBq3m7NeWjavBkbOGNBu1cKRyT1Nxv-vsXMmKxAPgPVzdJOOonD-ZtTLgKq9jcxEzUc0rZ1JCzCKJWuwzMDMAU_KItiZfP5PpOHrtRd-sMF14d6nLLyffYWqWn5evg5Lp4MDkhNLSxiYB76OoMNLLQB638bfy9VgXSHTaSFHPljZXHBy0YwbHx7O1m8SkXkhPZ9JYYMg5ve7uS608V5XjTHzSJzdPqfkyGhx47jfqaRmqiPmMaN9sgunYJOqyR4"/>
+<div class="w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center border-2 border-surface-mint">
+<span class="text-[10px] font-bold">+12</span>
+</div>
+</div>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mt-md">Deep Work Room</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Strictly no microphones. Pomodoro: 50/10.</p>
+</div>
+<div class="mt-lg flex items-center justify-between">
+<div class="flex items-center gap-sm text-secondary">
+<span class="material-symbols-outlined text-body-md" data-icon="timer">timer</span>
+<span class="font-label-md text-label-md">24:12 remaining</span>
+</div>
+<button class="bg-primary text-on-primary px-lg py-sm rounded-lg font-label-md transition-opacity active:opacity-80">Join Now</button>
+</div>
+</div>
+</div>
+<!-- Secondary Room Card -->
+<div class="rounded-xl bg-surface-container-low p-md border border-border-dusty/20 hover:border-border-dusty/50 transition-all">
+<div class="flex justify-between items-center mb-sm">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary" data-icon="groups">groups</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">8 Active</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant opacity-30" data-icon="lock_open">lock_open</span>
+</div>
+<h4 class="font-title-lg text-title-lg text-primary">Silent Study</h4>
+<p class="font-label-md text-label-md text-on-surface-variant mt-xs">Perfect for reading and solo research.</p>
+<button class="w-full mt-md py-sm rounded-lg border border-border-dusty text-primary font-label-md hover:bg-surface-container-high transition-colors">Enter</button>
+</div>
+<!-- Secondary Room Card -->
+<div class="rounded-xl bg-surface-container-low p-md border border-border-dusty/20 hover:border-border-dusty/50 transition-all">
+<div class="flex justify-between items-center mb-sm">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-secondary" data-icon="groups">groups</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">3 Active</span>
+</div>
+<span class="material-symbols-outlined text-secondary" data-icon="nightlight">nightlight</span>
+</div>
+<h4 class="font-title-lg text-title-lg text-primary">Midnight Focus</h4>
+<p class="font-label-md text-label-md text-on-surface-variant mt-xs">Low lighting, lofi beats, collective calm.</p>
+<button class="w-full mt-md py-sm rounded-lg border border-border-dusty text-primary font-label-md hover:bg-surface-container-high transition-colors">Enter</button>
+</div>
+</div>
+</section>
+<!-- Create Room Button Section -->
+<section class="mb-xl">
+<div class="relative group cursor-pointer overflow-hidden rounded-xl bg-primary py-xl px-lg text-center shadow-lg shadow-olive/10 transition-transform active:scale-[0.98]">
+<div class="absolute inset-0 opacity-10 pointer-events-none">
+<div class="absolute top-0 right-0 w-32 h-32 bg-tertiary-fixed rounded-full blur-3xl translate-x-10 -translate-y-10"></div>
+<div class="absolute bottom-0 left-0 w-24 h-24 bg-secondary-container rounded-full blur-2xl -translate-x-10 translate-y-10"></div>
+</div>
+<div class="relative z-10">
+<div class="bg-primary-container inline-flex p-md rounded-full mb-md">
+<span class="material-symbols-outlined text-on-primary-container" data-icon="add">add</span>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-primary">Host a Private Room</h2>
+<p class="font-body-md text-body-md text-primary-fixed mt-xs opacity-70">Create a space for your inner circle</p>
+</div>
+</div>
+</section>
+<!-- Join Room Section -->
+<section class="mb-8">
+<div class="bg-surface-container-highest/30 rounded-xl p-lg border border-dashed border-border-dusty">
+<h3 class="font-title-lg text-title-lg text-primary mb-md">Join by Room ID</h3>
+<div class="flex flex-col sm:flex-row gap-md">
+<div class="flex-1">
+<input class="w-full px-md py-sm bg-surface border border-border-dusty rounded-lg text-body-md focus:outline-none focus:border-primary transition-colors placeholder:text-on-surface-variant/40" placeholder="Enter 6-digit ID" type="text"/>
+</div>
+<button class="bg-secondary text-on-secondary px-xl py-sm rounded-lg font-label-md hover:opacity-90 transition-opacity">Join Room</button>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-lg py-md pb-safe bg-surface-container-low dark:bg-surface-dim shadow-olive/10 shadow-lg rounded-t-xl">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant p-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="home_wellness">home_health</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant p-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="timer">timer</span>
+<span class="font-label-sm text-label-sm">Focus</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container dark:bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="groups">groups</span>
+<span class="font-label-sm text-label-sm">Rooms</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline-variant p-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-label-sm text-label-sm">Saathi</span>
+</a>
+</nav>
+<script>
+        // Micro-interaction for room cards
+        document.querySelectorAll('.group').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.transform = 'translateY(-4px)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Subtle animation for the "LIVE" badge
+        setInterval(() => {
+            const liveBadges = document.querySelectorAll('.text-on-primary');
+            liveBadges.forEach(badge => {
+                if (badge.textContent === 'LIVE') {
+                    badge.classList.toggle('opacity-80');
+                }
+            });
+        }, 1000);
+    </script>
+</body></html>

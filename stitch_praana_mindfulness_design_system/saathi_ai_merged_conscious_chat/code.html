@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport"/>
+<title>Saathi AI - Luminous Stillness</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Sora:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#e6e7a1",
+                    "inverse-on-surface": "#f3f1e5",
+                    "on-error-container": "#93000a",
+                    "tertiary-container": "#1a471d",
+                    "on-primary-fixed-variant": "#2d4e35",
+                    "tertiary-fixed-dim": "#a1d39b",
+                    "surface": "#fbfaed",
+                    "surface-container-highest": "#e4e3d7",
+                    "surface-tint": "#44664c",
+                    "primary-fixed": "#c6ecca",
+                    "secondary-fixed-dim": "#caca87",
+                    "on-secondary-fixed": "#1c1d00",
+                    "on-secondary-fixed-variant": "#484914",
+                    "surface-variant": "#e4e3d7",
+                    "surface-mint": "#E7F6E6",
+                    "inverse-primary": "#aad0af",
+                    "on-surface": "#1b1c15",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "surface-container-low": "#f5f4e8",
+                    "on-background": "#1b1c15",
+                    "border-dusty": "#A0AC9D",
+                    "on-tertiary": "#ffffff",
+                    "background": "#fbfaed",
+                    "on-primary-fixed": "#00210d",
+                    "primary-fixed-dim": "#aad0af",
+                    "on-tertiary-container": "#84b680",
+                    "primary-container": "#24452d",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-herbal": "#C3E5B2",
+                    "on-tertiary-fixed-variant": "#235025",
+                    "surface-bright": "#fbfaed",
+                    "shadow-olive": "#5A5B2C",
+                    "surface-dim": "#dcdacf",
+                    "on-tertiary-fixed": "#002205",
+                    "surface-container-high": "#eae9dc",
+                    "on-secondary-container": "#66672f",
+                    "on-primary-container": "#8db293",
+                    "inverse-surface": "#303129",
+                    "tertiary": "#003009",
+                    "secondary-fixed": "#e6e7a1",
+                    "error": "#ba1a1a",
+                    "outline": "#727971",
+                    "surface-container": "#f0eee2",
+                    "primary": "#0d2e19",
+                    "outline-variant": "#c2c8c0",
+                    "secondary": "#606129",
+                    "tertiary-fixed": "#bcf0b6",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#424842"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "32px",
+                    "lg": "24px",
+                    "margin-mobile": "20px",
+                    "margin-desktop": "40px",
+                    "unit": "4px",
+                    "gutter": "16px",
+                    "sm": "8px",
+                    "md": "16px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "headline-lg-mobile": ["Sora"],
+                    "body-md": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "headline-md": ["Sora"],
+                    "headline-lg": ["Sora"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .orb-breathing {
+            animation: breathe 8s ease-in-out infinite;
+        }
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.7; filter: blur(40px); }
+            50% { transform: scale(1.15); opacity: 0.9; filter: blur(30px); }
+        }
+        .message-entrance {
+            animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #c2c8c0; border-radius: 10px; }
+        body { background-color: #fbfaed; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="flex flex-col h-screen overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex justify-between items-center w-full px-margin-mobile py-sm bg-surface sticky top-0 z-50">
+<div class="flex items-center gap-md">
+<button class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<div class="flex flex-col">
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Saathi</h1>
+<div class="flex items-center gap-xs">
+<span class="w-1.5 h-1.5 bg-on-tertiary-container rounded-full animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Listening quietly</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-sm">
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">psychology</span>
+</button>
+<button class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto px-margin-mobile relative" id="chat-container">
+<!-- Empty State / Background Ambience -->
+<div class="absolute inset-0 flex flex-col items-center justify-center text-center px-lg pointer-events-none opacity-0 transition-opacity duration-1000" id="empty-state">
+<div class="relative w-64 h-64 mb-xl">
+<div class="absolute inset-0 bg-surface-herbal rounded-full orb-breathing opacity-40"></div>
+<div class="absolute inset-4 bg-primary-fixed-dim rounded-full orb-breathing opacity-30" style="animation-delay: -2s;"></div>
+</div>
+<p class="font-headline-md text-headline-md text-on-surface-variant italic opacity-60">
+                Awareness begins with noticing.
+            </p>
+</div>
+<!-- Chat History -->
+<div class="flex flex-col gap-lg py-xl max-w-2xl mx-auto">
+<!-- Saathi Message 1 -->
+<div class="flex flex-col items-start message-entrance">
+<div class="max-w-[85%] bg-surface-mint p-lg rounded-2xl rounded-tl-none border border-surface-container-highest shadow-sm">
+<p class="font-body-lg text-body-lg text-primary leading-relaxed">
+                        Take a deep breath. I'm here to hold space for whatever is weighing on you.
+                    </p>
+</div>
+<span class="mt-xs ml-xs font-label-sm text-label-sm text-outline">Just now</span>
+</div>
+<!-- User Message 1 -->
+<div class="flex flex-col items-end message-entrance" style="animation-delay: 0.2s;">
+<div class="max-w-[85%] bg-surface-container-low p-md rounded-2xl rounded-tr-none border border-border-dusty/30">
+<p class="font-body-md text-body-md text-on-surface">
+                        I feel like I'm constantly rushing but never getting anywhere. My thoughts are just... tangled.
+                    </p>
+</div>
+</div>
+<!-- Saathi Message 2 (Editorial Depth) -->
+<div class="flex flex-col items-start message-entrance" style="animation-delay: 0.4s;">
+<div class="max-w-[85%] bg-surface-herbal/30 p-lg rounded-2xl rounded-tl-none border border-surface-herbal shadow-sm">
+<p class="font-body-lg text-body-lg text-primary leading-relaxed">
+                        It sounds like your mind is searching for a boundary that doesn't exist right now. When we rush without direction, we're often trying to outrun an internal feeling rather than reaching an external goal.
+                    </p>
+<p class="mt-md font-body-lg text-body-lg text-primary italic border-l-2 border-primary/20 pl-md py-xs">
+                        If you were to sit with that "tangled" feeling for just three breaths, where in your body would it live?
+                    </p>
+</div>
+<span class="mt-xs ml-xs font-label-sm text-label-sm text-outline">Reflecting</span>
+</div>
+</div>
+</main>
+<!-- Interactive Footer Section -->
+<footer class="w-full bg-surface pb-safe pt-md">
+<!-- Suggestions Chips -->
+<div class="px-margin-mobile mb-md overflow-x-auto whitespace-nowrap scrollbar-hide flex gap-sm items-center">
+<button class="px-md py-2 rounded-full border border-border-dusty text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+                I can't focus
+            </button>
+<button class="px-md py-2 rounded-full border border-border-dusty text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+                I feel mentally tired
+            </button>
+<button class="px-md py-2 rounded-full border border-border-dusty text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+                Help me pause
+            </button>
+<button class="px-md py-2 rounded-full border border-border-dusty text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low transition-colors">
+                Reflect on my day
+            </button>
+</div>
+<!-- Input Area -->
+<div class="px-margin-mobile pb-md">
+<div class="flex items-end gap-sm bg-surface-container-low border border-border-dusty p-2 rounded-2xl focus-within:border-on-tertiary-container transition-all shadow-sm">
+<button class="p-2 flex items-center justify-center rounded-xl text-on-surface-variant hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined">mic</span>
+</button>
+<textarea class="flex-1 bg-transparent border-none focus:ring-0 font-body-md text-body-md py-2 resize-none placeholder:text-outline-variant max-h-32" id="chat-input" placeholder="Share your thoughts..." rows="1"></textarea>
+<button class="w-10 h-10 flex items-center justify-center bg-primary text-on-primary rounded-xl hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'wght' 500;">arrow_upward</span>
+</button>
+</div>
+</div>
+</footer>
+<!-- Bottom Navigation Bar (Context Check: Primary UI Component) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-lg py-md pb-safe bg-surface-container-low shadow-olive/10 shadow-lg rounded-t-xl md:hidden">
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">home_health</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">timer</span>
+<span class="font-label-sm text-label-sm">Focus</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all" href="#">
+<span class="material-symbols-outlined">groups</span>
+<span class="font-label-sm text-label-sm">Rooms</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-full px-4 py-1 active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="font-label-sm text-label-sm">Saathi</span>
+</a>
+</nav>
+<script>
+        // Auto-expand textarea
+        const textarea = document.getElementById('chat-input');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+        });
+
+        // Simple visibility logic for empty state
+        const chatContainer = document.querySelector('#chat-container > div');
+        const emptyState = document.getElementById('empty-state');
+        
+        function checkEmptyState() {
+            if (chatContainer.children.length === 0) {
+                emptyState.style.opacity = '1';
+                emptyState.style.pointerEvents = 'auto';
+            } else {
+                emptyState.style.opacity = '0';
+                emptyState.style.pointerEvents = 'none';
+            }
+        }
+
+        // Initialize
+        window.addEventListener('load', () => {
+            // Check scroll position to highlight bottom nav or other micro-interactions
+            const chatMessages = document.querySelectorAll('.message-entrance');
+            chatMessages.forEach((msg, idx) => {
+                msg.style.animationDelay = `${idx * 0.15}s`;
+            });
+        });
+
+        // Interaction for "listening" state
+        const statusIndicator = document.querySelector('.animate-pulse');
+        textarea.addEventListener('focus', () => {
+            statusIndicator.classList.remove('bg-on-tertiary-container');
+            statusIndicator.classList.add('bg-primary');
+        });
+        textarea.addEventListener('blur', () => {
+            statusIndicator.classList.add('bg-on-tertiary-container');
+            statusIndicator.classList.remove('bg-primary');
+        });
+    </script>
+</body></html>

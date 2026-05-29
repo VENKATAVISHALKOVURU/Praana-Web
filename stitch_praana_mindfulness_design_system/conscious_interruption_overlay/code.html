@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Praana - Conscious Interruption</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-surface-variant": "#424842",
+            "secondary": "#606129",
+            "tertiary-fixed": "#bcf0b6",
+            "on-secondary": "#ffffff",
+            "error": "#ba1a1a",
+            "outline": "#727971",
+            "surface-container": "#f0eee2",
+            "primary": "#0d2e19",
+            "outline-variant": "#c2c8c0",
+            "tertiary": "#003009",
+            "secondary-fixed": "#e6e7a1",
+            "on-secondary-container": "#66672f",
+            "on-primary-container": "#8db293",
+            "inverse-surface": "#303129",
+            "surface-container-high": "#eae9dc",
+            "shadow-olive": "#5A5B2C",
+            "surface-dim": "#dcdacf",
+            "on-tertiary-fixed": "#002205",
+            "on-tertiary-fixed-variant": "#235025",
+            "surface-bright": "#fbfaed",
+            "surface-container-lowest": "#ffffff",
+            "surface-herbal": "#C3E5B2",
+            "on-error": "#ffffff",
+            "primary-container": "#24452d",
+            "primary-fixed-dim": "#aad0af",
+            "on-tertiary-container": "#84b680",
+            "on-primary-fixed": "#00210d",
+            "on-tertiary": "#ffffff",
+            "background": "#fbfaed",
+            "border-dusty": "#A0AC9D",
+            "surface-container-low": "#f5f4e8",
+            "on-background": "#1b1c15",
+            "error-container": "#ffdad6",
+            "on-primary": "#ffffff",
+            "inverse-primary": "#aad0af",
+            "on-surface": "#1b1c15",
+            "surface-variant": "#e4e3d7",
+            "surface-mint": "#E7F6E6",
+            "on-secondary-fixed-variant": "#484914",
+            "secondary-fixed-dim": "#caca87",
+            "on-secondary-fixed": "#1c1d00",
+            "surface-container-highest": "#e4e3d7",
+            "surface-tint": "#44664c",
+            "primary-fixed": "#c6ecca",
+            "surface": "#fbfaed",
+            "tertiary-container": "#1a471d",
+            "on-primary-fixed-variant": "#2d4e35",
+            "tertiary-fixed-dim": "#a1d39b",
+            "inverse-on-surface": "#f3f1e5",
+            "on-error-container": "#93000a",
+            "secondary-container": "#e6e7a1"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          "spacing": {
+            "margin-mobile": "20px",
+            "margin-desktop": "40px",
+            "unit": "4px",
+            "xl": "32px",
+            "lg": "24px",
+            "md": "16px",
+            "xs": "4px",
+            "gutter": "16px",
+            "sm": "8px"
+          },
+          "fontFamily": {
+            "headline-lg-mobile": ["Sora"],
+            "body-md": ["Inter"],
+            "label-md": ["Inter"],
+            "label-sm": ["Inter"],
+            "display-lg": ["Sora"],
+            "title-lg": ["Inter"],
+            "headline-md": ["Sora"],
+            "headline-lg": ["Sora"],
+            "body-lg": ["Inter"]
+          },
+          "fontSize": {
+            "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+            "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+            "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+            "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+            "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+            "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+            "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+            "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+            "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    @keyframes pulse-orb {
+      0%, 100% { transform: scale(1); opacity: 0.6; filter: blur(4px); }
+      50% { transform: scale(1.15); opacity: 0.9; filter: blur(0px); }
+    }
+    .animate-pulse-orb {
+      animation: pulse-orb 6s ease-in-out infinite;
+    }
+    .conscious-overlay {
+      background-color: rgba(231, 246, 230, 0.96);
+      backdrop-filter: blur(20px);
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md overflow-hidden h-screen w-screen">
+<!-- Background App Simulation (Blurred) -->
+<div class="absolute inset-0 z-0 select-none pointer-events-none opacity-40 blur-xl">
+<div class="p-margin-mobile md:p-margin-desktop grid grid-cols-3 gap-xs">
+<div class="aspect-square bg-outline-variant rounded-sm"></div>
+<div class="aspect-square bg-outline-variant rounded-sm"></div>
+<div class="aspect-square bg-outline-variant rounded-sm"></div>
+<div class="aspect-square bg-outline-variant rounded-sm"></div>
+<div class="aspect-square bg-outline-variant rounded-sm"></div>
+<div class="aspect-square bg-outline-variant rounded-sm"></div>
+<div class="aspect-square bg-outline-variant rounded-sm"></div>
+<div class="aspect-square bg-outline-variant rounded-sm"></div>
+<div class="aspect-square bg-outline-variant rounded-sm"></div>
+</div>
+</div>
+<!-- Main Conscious Interruption Overlay -->
+<main class="relative z-10 h-full w-full flex flex-col items-center justify-between conscious-overlay p-margin-mobile md:p-margin-desktop text-center">
+<!-- Top Brand Signature -->
+<header class="w-full flex justify-center py-md">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="spa">spa</span>
+<h1 class="font-headline-md text-headline-md font-bold text-primary tracking-tight">Praana</h1>
+</div>
+</header>
+<!-- Center Content: The Interruption -->
+<section class="flex flex-col items-center max-w-md w-full gap-xl">
+<!-- Breathing Orb Container -->
+<div class="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center">
+<!-- Outer Glow Layers -->
+<div class="absolute inset-0 bg-surface-herbal rounded-full opacity-20 blur-2xl animate-pulse-orb"></div>
+<div class="absolute inset-4 bg-tertiary-fixed rounded-full opacity-30 blur-xl animate-pulse-orb" style="animation-delay: 1s;"></div>
+<!-- Core Geometric Orb -->
+<div class="relative w-32 h-32 md:w-40 md:h-40 bg-surface-herbal rounded-full flex items-center justify-center border border-primary/10 shadow-lg shadow-shadow-olive/5 overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-tr from-surface-mint to-tertiary-fixed opacity-50"></div>
+<span class="material-symbols-outlined text-primary text-4xl animate-pulse-orb" data-icon="temp_preferences_custom">temp_preferences_custom</span>
+</div>
+</div>
+<!-- Narrative -->
+<div class="space-y-md">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface leading-tight px-sm">
+          Your focus session is still protecting this moment.
+        </h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant font-medium opacity-80">
+          Take one slow breath first.
+        </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col gap-md w-full max-w-xs mt-lg">
+<button class="bg-primary text-surface-mint font-label-md text-label-md py-lg px-xl rounded-full shadow-md shadow-shadow-olive/10 hover:bg-primary-container transition-all active:scale-95 duration-200">
+          Return to Focus
+        </button>
+<button class="bg-transparent border border-border-dusty text-on-surface-variant font-label-md text-label-md py-lg px-xl rounded-full hover:bg-surface-variant/30 transition-all active:scale-95 duration-200">
+          End Session
+        </button>
+</div>
+</section>
+<!-- Bottom Footer -->
+<footer class="w-full py-xl">
+<p class="font-label-sm text-label-sm tracking-[0.2em] text-on-secondary-container opacity-60 uppercase">
+        CLARITY IS A CHOICE.
+      </p>
+</footer>
+</main>
+<!-- Interactive Breath Guide Logic -->
+<script>
+    // Subtle interactivity to enhance the calm vibe
+    const orb = document.querySelector('.animate-pulse-orb');
+    let breathPhase = 'Inhale';
+    
+    // Simple state indicator hidden in console or small toast could be added,
+    // but the philosophy is "Quiet", so we let the animation speak.
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      // Logic for button transitions
+      const primaryBtn = document.querySelector('button.bg-primary');
+      const secondaryBtn = document.querySelector('button.border-border-dusty');
+      
+      primaryBtn.addEventListener('click', () => {
+        // Visual feedback for 'returning'
+        document.body.style.opacity = '0';
+        document.body.style.transition = 'opacity 0.8s ease-in-out';
+        setTimeout(() => {
+          alert("Focus maintained. Keep breathing.");
+          document.body.style.opacity = '1';
+        }, 800);
+      });
+
+      secondaryBtn.addEventListener('click', () => {
+        // Warning or confirmation for intentional interruption
+        const confirmEnd = confirm("Ending a session is a conscious choice. Are you sure you're ready to re-engage?");
+        if(confirmEnd) {
+          document.body.style.filter = 'grayscale(100%)';
+          setTimeout(() => {
+            alert("Session Ended. Navigate with intention.");
+            document.body.style.filter = 'none';
+          }, 500);
+        }
+      });
+    });
+  </script>
+</body></html>

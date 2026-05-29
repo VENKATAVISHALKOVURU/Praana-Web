@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Praana | Emotional Analysis</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Sora:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-error-container": "#93000a",
+                        "surface-herbal": "#C3E5B2",
+                        "on-background": "#1b1c15",
+                        "on-surface": "#1b1c15",
+                        "surface-container-low": "#f5f4e8",
+                        "on-tertiary-container": "#84b680",
+                        "outline-variant": "#c2c8c0",
+                        "secondary-fixed": "#e6e7a1",
+                        "inverse-primary": "#aad0af",
+                        "surface-tint": "#44664c",
+                        "surface-variant": "#e4e3d7",
+                        "border-dusty": "#A0AC9D",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#727971",
+                        "on-secondary-fixed-variant": "#484914",
+                        "on-secondary-container": "#66672f",
+                        "surface-dim": "#dcdacf",
+                        "tertiary": "#003009",
+                        "secondary": "#606129",
+                        "inverse-surface": "#303129",
+                        "on-secondary-fixed": "#1c1d00",
+                        "tertiary-fixed": "#bcf0b6",
+                        "on-error": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "background": "#fbfaed",
+                        "on-surface-variant": "#424842",
+                        "shadow-olive": "#5A5B2C",
+                        "tertiary-fixed-dim": "#a1d39b",
+                        "secondary-fixed-dim": "#caca87",
+                        "primary-container": "#24452d",
+                        "primary": "#0d2e19",
+                        "surface-container-high": "#eae9dc",
+                        "surface-bright": "#fbfaed",
+                        "on-primary": "#ffffff",
+                        "secondary-container": "#e6e7a1",
+                        "surface-container-highest": "#e4e3d7",
+                        "surface": "#fbfaed",
+                        "tertiary-container": "#1a471d",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container": "#f0eee2",
+                        "primary-fixed": "#c6ecca",
+                        "primary-fixed-dim": "#aad0af",
+                        "surface-mint": "#E7F6E6",
+                        "error": "#ba1a1a",
+                        "on-tertiary-fixed-variant": "#235025",
+                        "on-primary-fixed-variant": "#2d4e35",
+                        "on-primary-fixed": "#00210d",
+                        "on-tertiary-fixed": "#002205",
+                        "on-primary-container": "#8db293",
+                        "error-container": "#ffdad6",
+                        "inverse-on-surface": "#f3f1e5"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "xs": "4px",
+                        "unit": "4px",
+                        "margin-desktop": "40px",
+                        "gutter": "16px",
+                        "margin-mobile": "20px",
+                        "md": "16px",
+                        "lg": "24px",
+                        "sm": "8px",
+                        "xl": "32px"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Sora"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "headline-lg": ["Sora"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["Sora"],
+                        "headline-lg-mobile": ["Sora"],
+                        "title-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                        "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.6; filter: blur(20px); }
+            50% { transform: scale(1.15); opacity: 0.9; filter: blur(40px); }
+        }
+        .orb-pulse {
+            animation: breathe 8s ease-in-out infinite;
+        }
+        .canvas-gradient {
+            background: radial-gradient(circle at 50% 50%, #E7F6E6 0%, #fbfaed 100%);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .stagger-in {
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeIn 1.2s forwards;
+        }
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .delay-1 { animation-delay: 0.4s; }
+        .delay-2 { animation-delay: 0.8s; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface selection:bg-surface-herbal overflow-hidden">
+<!-- The Navigation is suppressed to prioritize the psychological safety of the loading canvas -->
+<main class="relative min-h-screen w-full flex items-center justify-center canvas-gradient overflow-hidden">
+<!-- Ambient Decorative Elements -->
+<div class="absolute inset-0 pointer-events-none">
+<div class="absolute top-[-10%] right-[-10%] w-[600px] h-[600px] rounded-full bg-surface-herbal opacity-20 blur-[100px]"></div>
+<div class="absolute bottom-[-15%] left-[-10%] w-[500px] h-[500px] rounded-full bg-secondary-container opacity-15 blur-[120px]"></div>
+</div>
+<div class="relative z-10 w-full max-w-md px-margin-mobile flex flex-col items-center text-center">
+<!-- Central Breathing Orb -->
+<div class="relative mb-xl">
+<!-- Inner Solid Layer -->
+<div class="w-32 h-32 rounded-full bg-surface-herbal shadow-lg shadow-shadow-olive/10 flex items-center justify-center relative z-20">
+<span class="material-symbols-outlined text-primary text-4xl" data-icon="bubble_chart">bubble_chart</span>
+</div>
+<!-- Outer Pulsing Glows -->
+<div class="absolute inset-[-20px] bg-primary-fixed opacity-40 rounded-full orb-pulse z-10"></div>
+<div class="absolute inset-[-40px] bg-surface-herbal opacity-20 rounded-full orb-pulse z-0" style="animation-delay: -2s;"></div>
+</div>
+<!-- Primary Status Text -->
+<h1 class="font-headline-md text-headline-md text-primary mb-sm stagger-in">
+                Understanding your attention patterns...
+            </h1>
+<!-- Descriptive Subtext -->
+<p class="font-body-md text-body-md text-on-surface-variant stagger-in delay-1 max-w-[280px] leading-relaxed">
+                This helps Praana create calmer and more intentional experiences.
+            </p>
+<!-- Progress Insight Card -->
+<div class="mt-xl w-full bg-surface-mint/80 backdrop-blur-md rounded-xl p-lg border border-border-dusty/30 shadow-sm stagger-in delay-2">
+<div class="flex items-center justify-between mb-sm">
+<span class="font-label-sm text-label-sm text-primary uppercase tracking-widest">Cognitive Load Check</span>
+<span class="font-label-md text-label-md text-secondary" id="loading-percent">0%</span>
+</div>
+<div class="h-1 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary transition-all duration-700 ease-out" id="loading-bar" style="width: 0%"></div>
+</div>
+<div class="mt-md flex gap-sm items-start">
+<span class="material-symbols-outlined text-secondary text-[20px]" data-icon="auto_awesome">auto_awesome</span>
+<p class="font-label-md text-label-md text-on-surface-variant text-left italic">
+                        "Patience is the calm acceptance that things can happen in a different order than the one you have in mind."
+                    </p>
+</div>
+</div>
+<!-- Bottom Brand Identifier -->
+<div class="mt-xl pt-xl flex flex-col items-center gap-xs opacity-60">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-tighter">Powered by</span>
+<span class="font-headline-md text-headline-md text-primary tracking-tight font-bold">Praana</span>
+</div>
+</div>
+</main>
+<!-- Background Atmospheric Imagery -->
+<div class="fixed inset-0 z-[-1] pointer-events-none">
+<img alt="Calm natural abstract background" class="w-full h-full object-cover opacity-10 mix-blend-multiply filter grayscale" data-alt="A serene, soft-focus macro photograph of morning dew drops on a single blade of grass, captured in a minimalist editorial style. The lighting is ethereal and high-key, emphasizing the pastel greens and creamy whites of the Praana color palette. The composition is spacious with significant negative space, evoking a sense of psychological safety and professional tranquility. No harsh shadows or saturated colors are present, only soft, organic transitions." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDrEeIqVsRsu8giuCXHeSU1wAP7KHyJZlmIPeQu1FnuAaThFyJal6orJio_ADS07EWRVkhUzeT3cIFjMQBvj6FfhVVVPT0COW9dOD7x59CSTFXqH8penRN0QtNzDy5UZQdoUQRTYyvz9lGT4LlhGESEVeatuBPx8Tip9IvMJzDvLldb8Pg-bCs1imstpS_CIuNKNXByl7TMJLlIaM5Nm_jO8yDtqLBwUCZ0IblNLlJUhuRlh-vFrDyu35fM-Mb00xFO1uWggcf8bsU"/>
+</div>
+<script>
+        // Micro-interaction for the loading bar
+        let progress = 0;
+        const bar = document.getElementById('loading-bar');
+        const text = document.getElementById('loading-percent');
+
+        const simulateProgress = () => {
+            if (progress < 100) {
+                // Slower at the end to create "intentional friction"
+                const increment = progress > 80 ? Math.random() * 0.5 : Math.random() * 2;
+                progress += increment;
+                if (progress > 100) progress = 100;
+                
+                bar.style.width = `${progress}%`;
+                text.innerText = `${Math.floor(progress)}%`;
+                
+                requestAnimationFrame(() => {
+                    setTimeout(simulateProgress, 50);
+                });
+            }
+        };
+
+        // Start animation after a brief initial pause for "conscious entry"
+        setTimeout(simulateProgress, 1200);
+
+        // Gentle cursor interaction for the orb
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 15;
+            const y = (e.clientY / window.innerHeight - 0.5) * 15;
+            const orbContainer = document.querySelector('.relative.mb-xl');
+            if (orbContainer) {
+                orbContainer.style.transform = `translate(${x}px, ${y}px)`;
+                orbContainer.style.transition = 'transform 0.4s ease-out';
+            }
+        });
+    </script>
+</body></html>

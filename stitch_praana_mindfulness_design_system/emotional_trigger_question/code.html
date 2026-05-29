@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Sora:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#93000a",
+                    "surface-herbal": "#C3E5B2",
+                    "on-background": "#1b1c15",
+                    "on-surface": "#1b1c15",
+                    "surface-container-low": "#f5f4e8",
+                    "on-tertiary-container": "#84b680",
+                    "outline-variant": "#c2c8c0",
+                    "secondary-fixed": "#e6e7a1",
+                    "inverse-primary": "#aad0af",
+                    "surface-tint": "#44664c",
+                    "surface-variant": "#e4e3d7",
+                    "border-dusty": "#A0AC9D",
+                    "on-tertiary": "#ffffff",
+                    "outline": "#727971",
+                    "on-secondary-fixed-variant": "#484914",
+                    "on-secondary-container": "#66672f",
+                    "surface-dim": "#dcdacf",
+                    "tertiary": "#003009",
+                    "secondary": "#606129",
+                    "inverse-surface": "#303129",
+                    "on-secondary-fixed": "#1c1d00",
+                    "tertiary-fixed": "#bcf0b6",
+                    "on-error": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "background": "#fbfaed",
+                    "on-surface-variant": "#424842",
+                    "shadow-olive": "#5A5B2C",
+                    "tertiary-fixed-dim": "#a1d39b",
+                    "secondary-fixed-dim": "#caca87",
+                    "primary-container": "#24452d",
+                    "primary": "#0d2e19",
+                    "surface-container-high": "#eae9dc",
+                    "surface-bright": "#fbfaed",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#e6e7a1",
+                    "surface-container-highest": "#e4e3d7",
+                    "surface": "#fbfaed",
+                    "tertiary-container": "#1a471d",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container": "#f0eee2",
+                    "primary-fixed": "#c6ecca",
+                    "primary-fixed-dim": "#aad0af",
+                    "surface-mint": "#E7F6E6",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed-variant": "#235025",
+                    "on-primary-fixed-variant": "#2d4e35",
+                    "on-primary-fixed": "#00210d",
+                    "on-tertiary-fixed": "#002205",
+                    "on-primary-container": "#8db293",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f3f1e5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "unit": "4px",
+                    "margin-desktop": "40px",
+                    "gutter": "16px",
+                    "margin-mobile": "20px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Sora"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Sora"],
+                    "headline-lg-mobile": ["Sora"],
+                    "title-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .conscious-friction {
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md overflow-x-hidden">
+<!-- Header Section (Transactional Navigation - No Shell) -->
+<header class="w-full max-w-2xl mx-auto pt-lg px-margin-mobile">
+<nav class="flex items-center justify-between mb-md">
+<button aria-label="Go back" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">arrow_back</span>
+</button>
+<span class="font-label-md text-label-md text-on-surface-variant tracking-wider">STEP 1 OF 5</span>
+<div class="w-10"></div> <!-- Spacer for symmetry -->
+</nav>
+<!-- Progress Bar -->
+<div class="w-full h-1 bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary conscious-friction" style="width: 20%"></div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center max-w-2xl mx-auto w-full px-margin-mobile py-xl">
+<!-- Decorative Reflection Graphic -->
+<div class="mb-xl fade-in-up" style="animation-delay: 0.1s;">
+<div class="relative w-24 h-24 rounded-full bg-surface-herbal/30 flex items-center justify-center">
+<div class="w-16 h-16 rounded-full bg-surface-herbal/60 animate-pulse"></div>
+<span class="material-symbols-outlined absolute text-primary text-3xl">psychology</span>
+</div>
+</div>
+<!-- Question Header -->
+<section class="text-center mb-xl fade-in-up" style="animation-delay: 0.2s;">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-primary mb-sm">
+                What usually brings you back to your phone?
+            </h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md mx-auto">
+                Understanding your triggers is the first step toward conscious presence.
+            </p>
+</section>
+<!-- Selection Grid (Bento-lite pill layout) -->
+<div class="w-full grid grid-cols-1 gap-sm fade-in-up" id="options-container" style="animation-delay: 0.3s;">
+<button class="group flex items-center justify-between p-lg rounded-xl border border-border-dusty bg-surface-mint hover:bg-surface-container-low conscious-friction text-left outline-none" onclick="toggleSelect(this)">
+<span class="font-title-lg text-title-lg text-secondary group-hover:text-primary transition-colors">Stress</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-opacity opacity-0 group-[.selected]:opacity-100" data-weight="fill">check_circle</span>
+</button>
+<button class="group flex items-center justify-between p-lg rounded-xl border border-border-dusty bg-surface-mint hover:bg-surface-container-low conscious-friction text-left outline-none" onclick="toggleSelect(this)">
+<span class="font-title-lg text-title-lg text-secondary group-hover:text-primary transition-colors">Boredom</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-opacity opacity-0 group-[.selected]:opacity-100" data-weight="fill">check_circle</span>
+</button>
+<button class="group flex items-center justify-between p-lg rounded-xl border border-border-dusty bg-surface-mint hover:bg-surface-container-low conscious-friction text-left outline-none" onclick="toggleSelect(this)">
+<span class="font-title-lg text-title-lg text-secondary group-hover:text-primary transition-colors">Habit</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-opacity opacity-0 group-[.selected]:opacity-100" data-weight="fill">check_circle</span>
+</button>
+<button class="group flex items-center justify-between p-lg rounded-xl border border-border-dusty bg-surface-mint hover:bg-surface-container-low conscious-friction text-left outline-none" onclick="toggleSelect(this)">
+<span class="font-title-lg text-title-lg text-secondary group-hover:text-primary transition-colors">Loneliness</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-opacity opacity-0 group-[.selected]:opacity-100" data-weight="fill">check_circle</span>
+</button>
+<button class="group flex items-center justify-between p-lg rounded-xl border border-border-dusty bg-surface-mint hover:bg-surface-container-low conscious-friction text-left outline-none" onclick="toggleSelect(this)">
+<span class="font-title-lg text-title-lg text-secondary group-hover:text-primary transition-colors">Relaxation</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary transition-opacity opacity-0 group-[.selected]:opacity-100" data-weight="fill">check_circle</span>
+</button>
+</div>
+</main>
+<!-- Footer Action -->
+<footer class="w-full max-w-2xl mx-auto pb-xl px-margin-mobile fade-in-up" style="animation-delay: 0.5s;">
+<button class="w-full bg-primary text-on-primary font-label-md text-label-md py-lg rounded-xl shadow-lg shadow-shadow-olive/10 hover:bg-primary-container transition-all flex items-center justify-center gap-sm active:scale-95 disabled:opacity-50 disabled:active:scale-100" id="continue-btn">
+            Continue
+            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<p class="text-center mt-md font-label-sm text-label-sm text-outline tracking-wide uppercase">
+            Step 1 of 5 • Discovering Triggers
+        </p>
+</footer>
+<!-- Background Atmospheric Image (Low opacity) -->
+<div class="fixed inset-0 -z-10 pointer-events-none opacity-10">
+<img class="w-full h-full object-cover" data-alt="A serene close-up of a lush green leaf with delicate morning dew drops resting on its surface. The lighting is soft and natural, emphasizing the organic textures and a calm, meditative atmosphere. The color palette consists of various shades of moss and herbal greens, creating a sense of peace and psychological grounding." src="https://lh3.googleusercontent.com/aida-public/AB6AXuByh8k8ydjpbdpn7RBoRQG9C11iRC8F3pNCyGFTASXLbs4-_KiCAmpTa_2yF8kiKSfYxs-zCRHIg05T_8O-_d1E-GshLW36VAsd_mubLVPR1s1ZJhigx50NEhXdA-FXetvZ_WRFHrxcBZyXd4FMz6UG66Ef8M6L8UzrvGnciLB_IgPddzzs8R_wvDAOIVgLl3dv6ILzYXm_SGaCKMd8wAcK3r-4Io_rtIyNkRRKQvigfLjiNJqK3rdlPTV6hSeKGoi_utcm6uET1M8"/>
+</div>
+<script>
+        function toggleSelect(element) {
+            // Check if selected
+            const isSelected = element.classList.contains('selected');
+            
+            // For a "one thing at a time" philosophy, we could restrict to single choice,
+            // but usually triggers are multiple. Let's allow multiple but animate clearly.
+            if (isSelected) {
+                element.classList.remove('selected', 'bg-surface-herbal', 'border-primary');
+                element.classList.add('bg-surface-mint', 'border-border-dusty');
+            } else {
+                element.classList.add('selected', 'bg-surface-herbal', 'border-primary');
+                element.classList.remove('bg-surface-mint', 'border-border-dusty');
+                
+                // Micro-interaction sound or vibration would go here
+                if (window.navigator.vibrate) {
+                    window.navigator.vibrate(5);
+                }
+            }
+
+            // Update continue button state
+            const selectedCount = document.querySelectorAll('.selected').length;
+            const btn = document.getElementById('continue-btn');
+            if (selectedCount > 0) {
+                btn.disabled = false;
+            } else {
+                btn.disabled = true;
+            }
+        }
+
+        // Initialize button state
+        document.getElementById('continue-btn').disabled = true;
+    </script>
+</body></html>

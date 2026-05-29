@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Praana - Protected Apps</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-dim": "#dcdacf",
+                    "surface-variant": "#e4e3d7",
+                    "surface-container-highest": "#e4e3d7",
+                    "primary-fixed-dim": "#aad0af",
+                    "outline": "#727971",
+                    "surface-container-low": "#f5f4e8",
+                    "secondary-fixed-dim": "#caca87",
+                    "background": "#fbfaed",
+                    "secondary": "#606129",
+                    "on-primary-fixed-variant": "#2d4e35",
+                    "on-secondary-fixed": "#1c1d00",
+                    "tertiary-fixed-dim": "#a1d39b",
+                    "on-tertiary-fixed": "#002205",
+                    "outline-variant": "#c2c8c0",
+                    "on-surface": "#1b1c15",
+                    "surface-mint": "#E7F6E6",
+                    "surface-herbal": "#C3E5B2",
+                    "surface": "#fbfaed",
+                    "on-secondary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "primary": "#0d2e19",
+                    "on-secondary-fixed-variant": "#484914",
+                    "inverse-on-surface": "#f3f1e5",
+                    "on-primary-fixed": "#00210d",
+                    "primary-container": "#24452d",
+                    "error": "#ba1a1a",
+                    "on-tertiary": "#ffffff",
+                    "secondary-fixed": "#e6e7a1",
+                    "border-dusty": "#A0AC9D",
+                    "on-error-container": "#93000a",
+                    "on-primary": "#ffffff",
+                    "on-tertiary-container": "#84b680",
+                    "inverse-surface": "#303129",
+                    "tertiary": "#003009",
+                    "on-secondary-container": "#66672f",
+                    "shadow-olive": "#5A5B2C",
+                    "on-background": "#1b1c15",
+                    "on-tertiary-fixed-variant": "#235025",
+                    "surface-container-lowest": "#ffffff",
+                    "on-surface-variant": "#424842",
+                    "surface-container": "#f0eee2",
+                    "surface-tint": "#44664c",
+                    "tertiary-fixed": "#bcf0b6",
+                    "surface-bright": "#fbfaed",
+                    "secondary-container": "#e6e7a1",
+                    "error-container": "#ffdad6",
+                    "surface-container-high": "#eae9dc",
+                    "on-primary-container": "#8db293",
+                    "primary-fixed": "#c6ecca",
+                    "inverse-primary": "#aad0af",
+                    "tertiary-container": "#1a471d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "lg": "24px",
+                    "gutter": "16px",
+                    "unit": "4px",
+                    "md": "16px",
+                    "xl": "32px",
+                    "margin-desktop": "40px",
+                    "sm": "8px",
+                    "xs": "4px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "title-lg": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["Sora"],
+                    "headline-lg": ["Sora"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Sora"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .custom-toggle {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #c2c8c0; /* Dusty Sage-ish */
+        }
+        .custom-toggle.active {
+            background-color: #24452d; /* Moss Green */
+            box-shadow: 0 0 12px rgba(36, 69, 45, 0.2);
+        }
+        .app-row {
+            transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1), transform 0.2s ease;
+        }
+        .app-row.selected {
+            background-color: #E7F6E6; /* Mint Cream */
+        }
+        .quiet-shadow {
+            box-shadow: 0 4px 24px -4px rgba(90, 91, 44, 0.08);
+        }
+        body {
+            background-color: #fbfaed;
+            color: #1b1c15;
+            -webkit-font-smoothing: antialiased;
+        }
+        .fade-in-list {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fbfaed;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #A0AC9D;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md overflow-x-hidden min-h-screen">
+<!-- Top AppBar -->
+<header class="bg-surface/90 backdrop-blur-sm sticky top-0 z-50 flex justify-between items-center w-full px-margin-mobile py-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[28px]" data-icon="bubble_chart">bubble_chart</span>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Praana</h1>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant hover:bg-surface-container-low transition-colors cursor-pointer">
+<img alt="User profile" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQeZ5k-VUrZ_lGKkubUhtOlRfAxO4YFgrxnCpndrgwSoQ7ZCyL-LaHhU36-crxjnkdNXMl7Td1mdWYKLxGWgPsVVRRLpB9Off5elavLviOufjeo8VxEpY8WE-e-BCBH3ZuQ47gfmgkXiLpjXE_oLHUWbZRGEZJCYZSPBVC5B_f_sdiUF40pmsYeGAHRXVVpdvZoN9f3WcdbD9aQxN5-M2RfkFaOdzkG4gA8x_QpVuUTXBQNind29xvXer7Aus6DNnW8KYiplaxfTA"/>
+</div>
+</header>
+<main class="max-w-2xl mx-auto px-margin-mobile pt-xl pb-40">
+<!-- Header Section -->
+<section class="text-center mb-xl">
+<h2 class="font-headline-lg text-headline-lg text-on-surface mb-xs tracking-tight">Protected Apps</h2>
+<p class="font-body-md text-on-surface-variant italic">Protect your attention intentionally.</p>
+</section>
+<!-- Search Bar -->
+<div class="relative mb-xl">
+<span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-outline-variant" data-icon="search">search</span>
+<input class="w-full pl-12 pr-4 py-4 bg-transparent border border-border-dusty rounded-xl focus:ring-1 focus:ring-surface-herbal focus:border-surface-herbal outline-none transition-all font-body-md text-on-surface placeholder:text-outline-variant/60" placeholder="Search applications" type="text"/>
+</div>
+<!-- App List -->
+<div class="space-y-3 fade-in-list">
+<!-- Instagram -->
+<div class="app-row group flex items-center justify-between py-5 px-4 rounded-2xl cursor-pointer hover:bg-surface-container-low transition-all" onclick="toggleApp(this, 'Instagram')">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-[20px] bg-surface-mint flex items-center justify-center overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500">
+<img alt="Instagram" class="w-8 h-8 opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3GErQiDlj-9Yx_UP4SuHhCtj2N-p5y060wzrWpsbuE8j16Qsz1tXCDvc_AzLXa3hMwQ8LdRkqlCLzOTqQ1sX3-AOUlbqbu4-kEAipFDiIJTkNfbx0B-PgNXfHEypBbmJcPz94qDnkmaCnJwpYBINOjLqTH_2fTXylS-QP0Pu5fFVIHNJ617TZI7oLO6Rvw83K2bYBXkL-ylYtAaFQJxKy95sc0obZUhCp-R8ohAkC5QnrmZDh_56sYFeWT3pmFUbH1OKOBwP4jRI"/>
+</div>
+<span class="font-title-lg text-title-lg text-on-surface tracking-tight">Instagram</span>
+</div>
+<div class="custom-toggle w-12 h-6 rounded-full relative p-1">
+<div class="dot w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-300"></div>
+</div>
+</div>
+<!-- YouTube -->
+<div class="app-row group flex items-center justify-between py-5 px-4 rounded-2xl cursor-pointer hover:bg-surface-container-low transition-all" onclick="toggleApp(this, 'YouTube')">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-[20px] bg-surface-variant/40 flex items-center justify-center overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500">
+<img alt="YouTube" class="w-8 h-8 opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAKQqc_fKLMS-5oYQsowPY8sEpKn67LnzFKezzuUyauajPtHxfgcFAxHjaTQiinJptsrYb1lm_lg9tTZGSops5jGuHziAD2UM-OrBqGFsexfb0z2E7i37Dt81SpC7XTEcxpgWlZ5s7A1eAwC96_rmzVBFXSs7VWaMBPI4uxuEtAIJy_6L4FqR3PynNxyGQmJuPP_xIRh3IxdKN0jcAskOBJY_0BicyUcYtSYer7Y1OLVNE-v8lZ8GgJZrEPkhnXZCtKguzh9_UsRX0"/>
+</div>
+<span class="font-title-lg text-title-lg text-on-surface tracking-tight">YouTube</span>
+</div>
+<div class="custom-toggle w-12 h-6 rounded-full relative p-1">
+<div class="dot w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-300"></div>
+</div>
+</div>
+<!-- WhatsApp -->
+<div class="app-row group flex items-center justify-between py-5 px-4 rounded-2xl cursor-pointer hover:bg-surface-container-low transition-all" onclick="toggleApp(this, 'WhatsApp')">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-[20px] bg-surface-mint flex items-center justify-center overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500">
+<img alt="WhatsApp" class="w-8 h-8 opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB79cKOBvhD-0TIvU_1ZxqBmK-sUNBm1F_3XNhhAU-FWdiPEF95Ocx6pa-8CS8TAsNO2QrxsKSqLx7wunFpE3gk4oGKntBRmDkdljizb5zEhqqJkLnFBLWgCC20PNG_oLS1ZZlNhdyy8fYh2GRsc8gSLTWdFhKnTcvBuQraI_8OHoL8pTraMAuYY5SLOpPujDp6antMqIlBkbW3TF6eR-ixl7ox_6VNj159xZPjdqL5vx3srYW7NjOGjx0hyQXKVdlLZctGW_uvPyg"/>
+</div>
+<span class="font-title-lg text-title-lg text-on-surface tracking-tight">WhatsApp</span>
+</div>
+<div class="custom-toggle w-12 h-6 rounded-full relative p-1">
+<div class="dot w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-300"></div>
+</div>
+</div>
+<!-- Facebook -->
+<div class="app-row group flex items-center justify-between py-5 px-4 rounded-2xl cursor-pointer hover:bg-surface-container-low transition-all" onclick="toggleApp(this, 'Facebook')">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-[20px] bg-surface-variant/40 flex items-center justify-center overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500">
+<img alt="Facebook" class="w-8 h-8 opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCA1whnYB889B__YaMJn8Z4B9Upsv2bZ18bUVx3_Ggicobza2i4WDqNpryTGMgc5OE0nkvOpvmdWkUGEXPYH3-R7WGAOIGVzgOpJjJNRvRBFDWjNFBq7YWFzjVqqL_roGHp-KfzGFslFBEIPk1WQBpwQjc3v_AcDyfWuhA8fe_1UdK4Wz2Fk3B5cS6louB0W-5X7q3H9xbno8Br6Ffro33wB0uEVcOOOoqShrunnqQF5FbWwIUmA7Cex3icex5XP-auGJNW8V7p_CM"/>
+</div>
+<span class="font-title-lg text-title-lg text-on-surface tracking-tight">Facebook</span>
+</div>
+<div class="custom-toggle w-12 h-6 rounded-full relative p-1">
+<div class="dot w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-300"></div>
+</div>
+</div>
+<!-- X -->
+<div class="app-row group flex items-center justify-between py-5 px-4 rounded-2xl cursor-pointer hover:bg-surface-container-low transition-all" onclick="toggleApp(this, 'X')">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-[20px] bg-surface-variant/40 flex items-center justify-center overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500">
+<img alt="X" class="w-8 h-8 opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAxWaAt_G7v8MyFvHnRGWRRPwRAvZnqhCEZDv9YgOzYovwicBmsbDYQ4LQOq_nXxvWX8rTzEBY19_yurnf--g8BcHt70vLluzgGZ7jCg2k7PwcBody6sfikRcdjL7JGevQ9o-E8EUpqeS28Mps4UlPSrt9Q4MmILjcGPhzNoPrnmw9e6P46I8ekfn53mRvw0TjEek7GA9ELBDhxcw148vHIaPDohphHztIZxGsL4EAYotToO7iSIolBt4T3PhatvQVnU37FI5xMC7c"/>
+</div>
+<span class="font-title-lg text-title-lg text-on-surface tracking-tight">X (Twitter)</span>
+</div>
+<div class="custom-toggle w-12 h-6 rounded-full relative p-1">
+<div class="dot w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-300"></div>
+</div>
+</div>
+<!-- Chrome -->
+<div class="app-row group flex items-center justify-between py-5 px-4 rounded-2xl cursor-pointer hover:bg-surface-container-low transition-all" onclick="toggleApp(this, 'Chrome')">
+<div class="flex items-center gap-5">
+<div class="w-14 h-14 rounded-[20px] bg-surface-mint flex items-center justify-center overflow-hidden grayscale group-hover:grayscale-0 transition-all duration-500">
+<img alt="Chrome" class="w-8 h-8 opacity-80" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCYmNqG7SQygmZT61Q_e9R__ALSUaD_4Ko4C0WSUI_T4iWAL5awqjTKM1Ki5-GcTpLHt4J7Xx2V-m5S7x_bvvXuQawWaGmwW6y8PVWNsvBnppWFjSksGAhzfoQbRRCnCOuCI35qe-wsqxQ8wdMMsw0W9vDNEy7H5huiA3c9xyQKQnA6vhR8EX0_FrKvxxvB-WevJZxfCPTf9lvMT3RxIJ0oRW_XO7eWVaAdMw2kPpbSmJQPP88jXVOSU5Ma7gAeMMR_CyLsHPXOgJI"/>
+</div>
+<span class="font-title-lg text-title-lg text-on-surface tracking-tight">Chrome</span>
+</div>
+<div class="custom-toggle w-12 h-6 rounded-full relative p-1">
+<div class="dot w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-300"></div>
+</div>
+</div>
+</div>
+<!-- Canopy of Silence Summary Section -->
+<section class="mt-xl p-8 bg-surface-mint/60 rounded-[24px] quiet-shadow border border-surface-herbal/20">
+<h3 class="font-label-md text-label-md text-secondary uppercase tracking-[0.15em] mb-4 opacity-70">Canopy of Silence</h3>
+<div class="flex flex-wrap gap-3" id="protected-chips">
+<span class="empty-state text-on-surface-variant font-body-md italic">Creating a canopy of silence... No apps selected yet.</span>
+</div>
+</section>
+</main>
+<!-- Fixed Action Bar & Navigation -->
+<div class="fixed bottom-0 left-0 right-0 z-40 bg-surface/80 backdrop-blur-md border-t border-outline-variant/10">
+<div class="max-w-2xl mx-auto px-margin-mobile pt-4 pb-2">
+<button class="w-full bg-primary text-surface-mint py-4 rounded-lg font-title-lg text-title-lg shadow-sm active:scale-[0.98] transition-all duration-300">
+                Save Protected Apps
+            </button>
+</div>
+<!-- Bottom Navigation -->
+<nav class="w-full flex justify-around items-center px-lg py-md pb-safe">
+<div class="flex flex-col items-center justify-center text-outline transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[24px]" data-icon="home_health">home_health</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</div>
+<div class="flex flex-col items-center justify-center text-primary transition-all cursor-pointer">
+<div class="bg-secondary-fixed w-14 h-8 flex items-center justify-center rounded-full mb-1">
+<span class="material-symbols-outlined text-[24px]" data-icon="timer">timer</span>
+</div>
+<span class="font-label-sm text-label-sm font-semibold">Focus</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[24px]" data-icon="groups">groups</span>
+<span class="font-label-sm text-label-sm mt-1">Rooms</span>
+</div>
+<div class="flex flex-col items-center justify-center text-outline transition-all cursor-pointer">
+<span class="material-symbols-outlined text-[24px]" data-icon="auto_awesome">auto_awesome</span>
+<span class="font-label-sm text-label-sm mt-1">Saathi</span>
+</div>
+</nav>
+</div>
+<script>
+        const protectedApps = new Set();
+
+        function toggleApp(element, appName) {
+            const toggle = element.querySelector('.custom-toggle');
+            const dot = element.querySelector('.dot');
+            const isSelected = toggle.classList.toggle('active');
+            
+            element.classList.toggle('selected');
+            
+            if (isSelected) {
+                dot.classList.add('translate-x-6');
+                protectedApps.add(appName);
+            } else {
+                dot.classList.remove('translate-x-6');
+                protectedApps.delete(appName);
+            }
+
+            updateChips();
+            
+            // Haptic-like interaction
+            element.style.transform = 'scale(0.99)';
+            setTimeout(() => {
+                element.style.transform = 'scale(1)';
+            }, 150);
+        }
+
+        function updateChips() {
+            const container = document.getElementById('protected-chips');
+            container.innerHTML = '';
+
+            if (protectedApps.size === 0) {
+                container.innerHTML = '<span class="empty-state text-on-surface-variant font-body-md italic">Creating a canopy of silence... No apps selected yet.</span>';
+                return;
+            }
+
+            protectedApps.forEach(app => {
+                const chip = document.createElement('div');
+                chip.className = 'bg-primary-container/10 text-primary px-4 py-1.5 rounded-full text-label-md font-medium flex items-center gap-2 border border-primary/10 animate-in fade-in slide-in-from-bottom-1 duration-500';
+                chip.innerHTML = `
+                    <span class="material-symbols-outlined text-[16px]" data-icon="shield">shield</span>
+                    ${app}
+                `;
+                container.appendChild(chip);
+            });
+        }
+    </script>
+</body></html>

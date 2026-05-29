@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Praana | Onboarding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Sora:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-error-container": "#93000a",
+                    "surface-herbal": "#C3E5B2",
+                    "on-background": "#1b1c15",
+                    "on-surface": "#1b1c15",
+                    "surface-container-low": "#f5f4e8",
+                    "on-tertiary-container": "#84b680",
+                    "outline-variant": "#c2c8c0",
+                    "secondary-fixed": "#e6e7a1",
+                    "inverse-primary": "#aad0af",
+                    "surface-tint": "#44664c",
+                    "surface-variant": "#e4e3d7",
+                    "border-dusty": "#A0AC9D",
+                    "on-tertiary": "#ffffff",
+                    "outline": "#727971",
+                    "on-secondary-fixed-variant": "#484914",
+                    "on-secondary-container": "#66672f",
+                    "surface-dim": "#dcdacf",
+                    "tertiary": "#003009",
+                    "secondary": "#606129",
+                    "inverse-surface": "#303129",
+                    "on-secondary-fixed": "#1c1d00",
+                    "tertiary-fixed": "#bcf0b6",
+                    "on-error": "#ffffff",
+                    "on-secondary": "#ffffff",
+                    "background": "#fbfaed",
+                    "on-surface-variant": "#424842",
+                    "shadow-olive": "#5A5B2C",
+                    "tertiary-fixed-dim": "#a1d39b",
+                    "secondary-fixed-dim": "#caca87",
+                    "primary-container": "#24452d",
+                    "primary": "#0d2e19",
+                    "surface-container-high": "#eae9dc",
+                    "surface-bright": "#fbfaed",
+                    "on-primary": "#ffffff",
+                    "secondary-container": "#e6e7a1",
+                    "surface-container-highest": "#e4e3d7",
+                    "surface": "#fbfaed",
+                    "tertiary-container": "#1a471d",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container": "#f0eee2",
+                    "primary-fixed": "#c6ecca",
+                    "primary-fixed-dim": "#aad0af",
+                    "surface-mint": "#E7F6E6",
+                    "error": "#ba1a1a",
+                    "on-tertiary-fixed-variant": "#235025",
+                    "on-primary-fixed-variant": "#2d4e35",
+                    "on-primary-fixed": "#00210d",
+                    "on-tertiary-fixed": "#002205",
+                    "on-primary-container": "#8db293",
+                    "error-container": "#ffdad6",
+                    "inverse-on-surface": "#f3f1e5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xs": "4px",
+                    "unit": "4px",
+                    "margin-desktop": "40px",
+                    "gutter": "16px",
+                    "margin-mobile": "20px",
+                    "md": "16px",
+                    "lg": "24px",
+                    "sm": "8px",
+                    "xl": "32px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "label-md": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Sora"],
+                    "body-md": ["Inter"],
+                    "headline-md": ["Sora"],
+                    "headline-lg-mobile": ["Sora"],
+                    "title-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { background-color: #fbfaed; overflow-x: hidden; }
+        .conscious-fade-in { animation: fadeIn 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .stagger-1 { animation-delay: 0.2s; }
+        .stagger-2 { animation-delay: 0.4s; }
+        .stagger-3 { animation-delay: 0.6s; }
+        .option-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .option-card:active { transform: scale(0.98); }
+        .selected-option { background-color: #E7F6E6; border-color: #44664c; }
+        .grain-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; opacity: 0.03; z-index: 9999;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-on-surface antialiased">
+<div class="grain-overlay"></div>
+<!-- Top Navigation Shell (Simplified for Onboarding) -->
+<header class="flex justify-between items-center w-full px-margin-mobile py-sm fixed top-0 bg-background z-50">
+<button aria-label="Back" class="p-2 text-on-surface-variant hover:bg-surface-container-low transition-colors rounded-full">
+<span class="material-symbols-outlined">arrow_back_ios_new</span>
+</button>
+<div class="flex items-center gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Step 3 of 5</span>
+<div class="flex gap-1">
+<div class="w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-primary"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+<div class="w-1.5 h-1.5 rounded-full bg-outline-variant"></div>
+</div>
+</div>
+<div class="w-10"></div> <!-- Spacer for symmetry -->
+</header>
+<main class="min-h-screen flex flex-col pt-24 pb-32 px-margin-mobile max-w-md mx-auto relative">
+<!-- Atmospheric Visual -->
+<div class="conscious-fade-in mb-xl">
+<div class="w-full aspect-[4/3] rounded-[32px] overflow-hidden bg-surface-mint flex items-center justify-center relative shadow-sm">
+<img class="w-full h-full object-cover opacity-80" data-alt="A serene and abstract composition featuring soft, undulating liquid gradients in muted sage, mint cream, and moss green. The lighting is ethereal and diffused, creating a calm and meditative atmosphere. The forms are organic and slow-moving, suggesting a sense of emotional breathability and psychological safety within a minimalist digital space. The overall mood is quiet, sophisticated, and deeply human." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBev2sAiceS_-klH9HnkpPscioMph7uGdf-1J3JSjpg-_Tr1ELB8awphTc5PNsbYC8k4MN4jBuz2ll9z00Gb_stxEn52S6DkdLoJuxIYHMRoWVXIvvJ1MxrdTKEvwIAnzaSDTv49dM6WPbm53bG9v4a706lufr4dCAOminKE5rom5Grgscx82OevNfI2nD7K3HfsyFu0uu87kMEgxuqsZxrvSlcqZnb-MaapXQARcSnQ07lgciy5VAykP50Of9BUQ-Wla4Efoh-XVY"/>
+<div class="absolute inset-0 bg-gradient-to-t from-surface-mint via-transparent to-transparent"></div>
+</div>
+</div>
+<!-- Question Section -->
+<div class="conscious-fade-in stagger-1 mb-lg">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-sm leading-tight">
+                How do you usually feel after long scrolling sessions?
+            </h1>
+<p class="font-body-md text-on-surface-variant opacity-80">
+                Observe the resonance of these words in your body.
+            </p>
+</div>
+<!-- Options Cluster -->
+<div class="flex flex-col gap-sm conscious-fade-in stagger-2">
+<button class="option-card flex items-center justify-between p-md bg-surface-container-low border border-outline-variant rounded-xl group text-left" onclick="selectOption(this)">
+<span class="font-body-md text-on-surface group-hover:text-primary transition-colors">Mentally drained</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary opacity-0 group-focus:opacity-100 transition-opacity">check_circle</span>
+</button>
+<button class="option-card flex items-center justify-between p-md bg-surface-container-low border border-outline-variant rounded-xl group text-left" onclick="selectOption(this)">
+<span class="font-body-md text-on-surface group-hover:text-primary transition-colors">Numb</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary opacity-0 group-focus:opacity-100 transition-opacity">check_circle</span>
+</button>
+<button class="option-card flex items-center justify-between p-md bg-surface-container-low border border-outline-variant rounded-xl group text-left" onclick="selectOption(this)">
+<span class="font-body-md text-on-surface group-hover:text-primary transition-colors">Guilty</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary opacity-0 group-focus:opacity-100 transition-opacity">check_circle</span>
+</button>
+<button class="option-card flex items-center justify-between p-md bg-surface-container-low border border-outline-variant rounded-xl group text-left" onclick="selectOption(this)">
+<span class="font-body-md text-on-surface group-hover:text-primary transition-colors">Unsatisfied</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary opacity-0 group-focus:opacity-100 transition-opacity">check_circle</span>
+</button>
+<button class="option-card flex items-center justify-between p-md bg-surface-container-low border border-outline-variant rounded-xl group text-left" onclick="selectOption(this)">
+<span class="font-body-md text-on-surface group-hover:text-primary transition-colors">Completely fine</span>
+<span class="material-symbols-outlined text-outline group-hover:text-primary opacity-0 group-focus:opacity-100 transition-opacity">check_circle</span>
+</button>
+</div>
+</main>
+<!-- Bottom Action Shell -->
+<footer class="fixed bottom-0 w-full px-margin-mobile py-lg bg-background/80 backdrop-blur-md flex flex-col items-center">
+<button class="w-full max-w-md py-md bg-outline-variant text-on-surface-variant font-label-md text-label-md rounded-full shadow-olive/5 shadow-md transition-all duration-300 opacity-50 cursor-not-allowed" disabled="" id="continueBtn">
+            Continue
+        </button>
+<p class="mt-md font-label-sm text-label-sm text-on-surface-variant opacity-60 text-center">
+            Your reflections are private and only for you.
+        </p>
+</footer>
+<script>
+        function selectOption(element) {
+            // Deselect others
+            document.querySelectorAll('.option-card').forEach(card => {
+                card.classList.remove('selected-option', 'border-primary', 'bg-surface-herbal');
+                card.classList.add('bg-surface-container-low', 'border-outline-variant');
+                card.querySelector('.material-symbols-outlined').classList.add('opacity-0');
+            });
+
+            // Select clicked
+            element.classList.remove('bg-surface-container-low', 'border-outline-variant');
+            element.classList.add('selected-option', 'border-primary', 'bg-surface-herbal');
+            element.querySelector('.material-symbols-outlined').classList.remove('opacity-0');
+
+            // Enable Continue Button
+            const btn = document.getElementById('continueBtn');
+            btn.disabled = false;
+            btn.classList.remove('bg-outline-variant', 'text-on-surface-variant', 'opacity-50', 'cursor-not-allowed');
+            btn.classList.add('bg-primary', 'text-on-primary', 'opacity-100');
+        }
+
+        // Add subtle hover tracking for depth effect on the atmospheric image
+        document.querySelector('main').addEventListener('mousemove', (e) => {
+            const img = document.querySelector('img');
+            const x = (window.innerWidth / 2 - e.pageX) / 45;
+            const y = (window.innerHeight / 2 - e.pageY) / 45;
+            img.style.transform = `scale(1.1) translate(${x}px, ${y}px)`;
+        });
+    </script>
+</body></html>

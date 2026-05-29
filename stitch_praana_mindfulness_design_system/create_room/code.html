@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-container": "#e6e7a1",
+                    "border-dusty": "#A0AC9D",
+                    "tertiary-fixed": "#bcf0b6",
+                    "secondary": "#606129",
+                    "outline": "#727971",
+                    "on-surface": "#1b1c15",
+                    "on-background": "#1b1c15",
+                    "inverse-primary": "#aad0af",
+                    "secondary-fixed": "#e6e7a1",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed-dim": "#a1d39b",
+                    "tertiary-container": "#1a471d",
+                    "shadow-olive": "#5A5B2C",
+                    "primary-container": "#24452d",
+                    "on-error": "#ffffff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-tertiary": "#ffffff",
+                    "background": "#fbfaed",
+                    "on-error-container": "#93000a",
+                    "tertiary": "#003009",
+                    "on-secondary-fixed": "#1c1d00",
+                    "surface-tint": "#44664c",
+                    "on-tertiary-fixed": "#002205",
+                    "primary-fixed": "#c6ecca",
+                    "inverse-on-surface": "#f3f1e5",
+                    "error": "#ba1a1a",
+                    "surface-container-high": "#eae9dc",
+                    "on-tertiary-fixed-variant": "#235025",
+                    "primary": "#0d2e19",
+                    "surface-container-highest": "#e4e3d7",
+                    "on-primary-container": "#8db293",
+                    "on-secondary-fixed-variant": "#484914",
+                    "on-tertiary-container": "#84b680",
+                    "surface": "#fbfaed",
+                    "primary-fixed-dim": "#aad0af",
+                    "surface-dim": "#dcdacf",
+                    "outline-variant": "#c2c8c0",
+                    "on-primary-fixed-variant": "#2d4e35",
+                    "surface-variant": "#e4e3d7",
+                    "surface-herbal": "#C3E5B2",
+                    "on-surface-variant": "#424842",
+                    "on-secondary": "#ffffff",
+                    "surface-container": "#f0eee2",
+                    "on-secondary-container": "#66672f",
+                    "surface-bright": "#fbfaed",
+                    "inverse-surface": "#303129",
+                    "secondary-fixed-dim": "#caca87",
+                    "surface-mint": "#E7F6E6",
+                    "on-primary-fixed": "#00210d",
+                    "error-container": "#ffdad6",
+                    "surface-container-low": "#f5f4e8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "16px",
+                    "lg": "24px",
+                    "margin-mobile": "20px",
+                    "xl": "32px",
+                    "unit": "4px",
+                    "md": "16px",
+                    "margin-desktop": "40px",
+                    "xs": "4px",
+                    "sm": "8px"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "headline-md": ["Sora"],
+                    "headline-lg-mobile": ["Sora"],
+                    "body-md": ["Inter"],
+                    "headline-lg": ["Sora"],
+                    "body-lg": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "title-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        body {
+            background-color: #fbfaed;
+            color: #1b1c15;
+            -webkit-font-smoothing: antialiased;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .focus-ring:focus {
+            outline: none;
+            border-color: #606129;
+            box-shadow: 0 0 0 1px #606129;
+        }
+        .custom-shadow {
+            box-shadow: 0 10px 30px -5px rgba(90, 91, 44, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-body-md text-body-md selection:bg-surface-herbal">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 bg-surface dark:bg-surface flex justify-between items-center w-full px-margin-mobile py-sm">
+<div class="flex items-center gap-md">
+<button aria-label="Go back" class="p-2 rounded-full hover:bg-surface-container-low transition-colors text-on-surface-variant">
+<span class="material-symbols-outlined">arrow_back</span>
+</button>
+<h1 class="font-headline-md text-headline-md dark:text-on-surface tracking-tight">Create Room</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high border border-outline-variant">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="A professional and clean headshot of a person with a serene expression, set against a soft, out-of-focus natural green background. The lighting is diffused and warm, emphasizing skin textures and a calm mood. The overall aesthetic is high-end, minimalist, and perfectly aligned with a wellness and mindfulness brand identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB7pWUPv9dA5Q8h9_Owo52DrIEYb2pllxj65blb2aAocpvtDDwMBd71f-XIcJKqI292yymWsuYV7iD8SEQwaqebr1Emc-VcHC0gYZ7dyQ65bQGSBM8syPc4Xh9vXdMXNYCI9WvW2rDBy5bxS1jtvRd7B82tpvuC3SPLjewKcwIlF2cI7sSeB_5UG7_9qFhp8q8FtOLfxd8MLrdcKWjoJl-5Bg8Yed7z5PtXP4Ldd4e1L6JUEkpgKt-FR5Zcvnelf5hblZZeUSB9Md8"/>
+</div>
+</header>
+<main class="max-w-2xl mx-auto px-margin-mobile pt-lg pb-32">
+<div class="space-y-xl">
+<!-- Room Identity Section -->
+<section class="space-y-md">
+<label class="font-title-lg text-title-lg block text-on-surface" for="room-name">Room Identity</label>
+<div class="space-y-sm">
+<input class="w-full h-12 px-md rounded-lg border border-border-dusty bg-surface-mint focus-ring transition-all placeholder:text-outline-variant font-body-md" id="room-name" placeholder="E.g., Morning Deep Flow" type="text"/>
+<p class="font-label-sm text-label-sm text-on-surface-variant px-sm">A clear name helps your Saathi curate the right ambience.</p>
+</div>
+</section>
+<!-- Access Type Section -->
+<section class="space-y-md">
+<h3 class="font-title-lg text-title-lg text-on-surface">Privacy &amp; Access</h3>
+<div class="grid grid-cols-2 gap-md">
+<button class="flex flex-col items-start p-md rounded-xl border-2 border-secondary-container bg-secondary-container/20 transition-all hover:bg-secondary-container/30 group" id="type-public" onclick="toggleAccess('public')">
+<span class="material-symbols-outlined text-secondary mb-sm">public</span>
+<span class="font-label-md text-label-md text-primary block">Public Room</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Visible to the community</span>
+</button>
+<button class="flex flex-col items-start p-md rounded-xl border-2 border-transparent bg-surface-container-low hover:bg-surface-container-high transition-all group" id="type-private" onclick="toggleAccess('private')">
+<span class="material-symbols-outlined text-on-surface-variant mb-sm">lock</span>
+<span class="font-label-md text-label-md text-on-surface block">Private Room</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Invite only via password</span>
+</button>
+</div>
+<!-- Password Field (Conditional) -->
+<div class="hidden animate-in fade-in slide-in-from-top-2 duration-300" id="password-container">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-outline">key</span>
+<input class="w-full h-12 pl-12 pr-md rounded-lg border border-border-dusty bg-surface-mint focus-ring transition-all font-body-md" placeholder="Set room password" type="password"/>
+</div>
+</div>
+</section>
+<!-- Focus Duration Section -->
+<section class="space-y-md">
+<div class="flex justify-between items-end">
+<h3 class="font-title-lg text-title-lg text-on-surface">Focus Timer</h3>
+<span class="font-label-sm text-label-sm text-secondary">Minutes</span>
+</div>
+<div class="flex flex-wrap gap-sm">
+<button class="px-lg py-sm rounded-full bg-primary text-on-primary font-label-md transition-transform active:scale-95">25</button>
+<button class="px-lg py-sm rounded-full bg-surface-container-highest text-on-surface-variant font-label-md hover:bg-surface-container-high transition-all">45</button>
+<button class="px-lg py-sm rounded-full bg-surface-container-highest text-on-surface-variant font-label-md hover:bg-surface-container-high transition-all">60</button>
+<button class="px-lg py-sm rounded-full border border-border-dusty text-on-surface font-label-md hover:bg-surface-container-high transition-all flex items-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">edit</span> Custom
+                    </button>
+</div>
+</section>
+<!-- Mood Selector Section (Bento Style) -->
+<section class="space-y-md">
+<h3 class="font-title-lg text-title-lg text-on-surface">Room Mood</h3>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-sm">
+<!-- Mood Card 1 -->
+<div class="relative h-28 rounded-xl overflow-hidden cursor-pointer group border-2 border-primary-container">
+<img alt="Silent Study" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 brightness-75" data-alt="A serene indoor scene featuring a minimalist wooden desk with a single open notebook and a ceramic mug. The background is a soft-focus library or home office with neutral beige and earthy olive tones. Natural, warm morning light streams through a window, creating a peaceful, concentrated atmosphere for deep study." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjBLrE4PQCiAGUgEQvnLS5CHde3H43dFkEL0i7KHN9W0jQr3Xkm-1bI6D413dM3a9PUzj4kmXqAFwRrPcGiIw9v6qGER9Qm-_XID2gf7fcE069AVg0c8pWe--ki6aNm41LUZmY9ylPGgb5Wqzb9EUzSxKBvFa00OV9siJFidOupmldKYX0i_m1NcwSc26iGeHC8_aFz1yLIg2AueKlTVgk_yyVojotRbIvLBOsl6pbr0Imu567HhMMChndkossXq7zKmOpVa-tgH8"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-md">
+<span class="font-label-md text-label-md text-white">Silent Study</span>
+<div class="absolute top-2 right-2 bg-primary-container text-on-primary-container rounded-full p-0.5">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</div>
+</div>
+</div>
+<!-- Mood Card 2 -->
+<div class="relative h-28 rounded-xl overflow-hidden cursor-pointer group border-2 border-transparent">
+<img alt="Deep Work" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 brightness-75" data-alt="A close-up of a high-tech yet organic workspace, featuring a mechanical keyboard and a small green succulent plant. The color palette is composed of deep moss greens and dark woods. The lighting is low-key with a gentle herbal green glow emanating from the desk lamp, fostering a sense of intense focus and productivity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYn5IQjAy51ci8-MeTPsae6X--nsE9Bxuwp2RQ45HkWhmCv_UGRmB3GFVZTaAq0hJinwQmEHml7RFJQlTmDoU7JUNsm1dT-zfzf9ZOE3u9dn1TtoFLCT6seolQ1W7FqacIUaQGRMOt5ZSPGmFc1wcpIufg43uPG7YttFfntISiGJAyc2woz2m6XHaZ4vAs4xSnQJ6ndJmLmmICpBUpY7VmS8FX_JLLgGxoFYWU5ZTYvkPAMHgSMhoiz6sQnjD5fWzrkhxsykzvgdc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-md">
+<span class="font-label-md text-label-md text-white">Deep Work</span>
+</div>
+</div>
+<!-- Mood Card 3 -->
+<div class="relative h-28 rounded-xl overflow-hidden cursor-pointer group border-2 border-transparent">
+<img alt="Forest Rain" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 brightness-75" data-alt="A lush, misty forest scene with tall pine trees and a soft carpet of moss. The atmosphere is damp and cool, with visible raindrops on leaves. The color scheme is a rich spectrum of herbal greens and dusty sages. The lighting is ethereal and diffused, evoking a feeling of calm, rhythmic focus like rain in a deep forest." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJrej6MWRQEGGdGMpWGmk78JgoLEt0FVn2pcBWFF4HQ7RVMGzzne5RINnvE21r_9tg0PMd31RBahp7seQa-RPCF73mk4vlQATEZpAioJSvdMN-bD-g-nLzSLvprLTBjnGGsDVhglnf1P0ua51fhdjP8M374KvIOSxCxYGU8pirFtx7gSSzgKEebUdaBtyDB_pLDUOX0b0pxPWTElBoRrTB4_pp_akf0ODSltSMCLzWlmTxhjTt7pgLsdpXE7a4Go-3EIWgWjIm85s"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-md">
+<span class="font-label-md text-label-md text-white">Forest Rain</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Saathi AI Assist Chip -->
+<div class="p-md rounded-xl bg-surface-herbal/30 border border-surface-herbal flex gap-md items-start">
+<span class="material-symbols-outlined text-secondary-fixed-dim" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<div class="space-y-xs">
+<p class="font-label-md text-label-md text-primary">Saathi Tip</p>
+<p class="font-body-md text-body-md text-on-surface-variant">Silent Study rooms with 25-minute Pomodoros are currently popular for morning focus sessions.</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Action Area -->
+<div class="fixed bottom-0 left-0 w-full p-margin-mobile bg-surface/80 backdrop-blur-md z-50">
+<button class="w-full h-14 bg-primary text-on-primary rounded-xl font-title-lg text-title-lg flex items-center justify-center gap-sm custom-shadow active:scale-[0.98] transition-all">
+            Create Room
+            <span class="material-symbols-outlined">rocket_launch</span>
+</button>
+</div>
+<!-- Hidden Bottom Nav for top-level pages (as per instructions) -->
+<!-- We'll hide it here since this is a transactional 'Create' screen -->
+<script>
+        function toggleAccess(type) {
+            const pubBtn = document.getElementById('type-public');
+            const privBtn = document.getElementById('type-private');
+            const pwdContainer = document.getElementById('password-container');
+
+            if (type === 'public') {
+                pubBtn.classList.add('border-secondary-container', 'bg-secondary-container/20');
+                pubBtn.classList.remove('border-transparent', 'bg-surface-container-low');
+                pubBtn.querySelector('.material-symbols-outlined').classList.add('text-secondary');
+                pubBtn.querySelector('.material-symbols-outlined').classList.remove('text-on-surface-variant');
+
+                privBtn.classList.remove('border-secondary-container', 'bg-secondary-container/20');
+                privBtn.classList.add('border-transparent', 'bg-surface-container-low');
+                privBtn.querySelector('.material-symbols-outlined').classList.remove('text-secondary');
+                privBtn.querySelector('.material-symbols-outlined').classList.add('text-on-surface-variant');
+                
+                pwdContainer.classList.add('hidden');
+            } else {
+                privBtn.classList.add('border-secondary-container', 'bg-secondary-container/20');
+                privBtn.classList.remove('border-transparent', 'bg-surface-container-low');
+                privBtn.querySelector('.material-symbols-outlined').classList.add('text-secondary');
+                privBtn.querySelector('.material-symbols-outlined').classList.remove('text-on-surface-variant');
+
+                pubBtn.classList.remove('border-secondary-container', 'bg-secondary-container/20');
+                pubBtn.classList.add('border-transparent', 'bg-surface-container-low');
+                pubBtn.querySelector('.material-symbols-outlined').classList.remove('text-secondary');
+                pubBtn.querySelector('.material-symbols-outlined').classList.add('text-on-surface-variant');
+
+                pwdContainer.classList.remove('hidden');
+            }
+        }
+
+        // Simple interaction for mood cards
+        document.querySelectorAll('.mood-card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.mood-card').forEach(c => c.classList.remove('border-primary-container'));
+                card.classList.add('border-primary-container');
+            });
+        });
+    </script>
+</body></html>

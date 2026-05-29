@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-surface-variant": "#424842",
+                    "secondary": "#606129",
+                    "tertiary-fixed": "#bcf0b6",
+                    "on-secondary": "#ffffff",
+                    "error": "#ba1a1a",
+                    "outline": "#727971",
+                    "surface-container": "#f0eee2",
+                    "primary": "#0d2e19",
+                    "outline-variant": "#c2c8c0",
+                    "tertiary": "#003009",
+                    "secondary-fixed": "#e6e7a1",
+                    "on-secondary-container": "#66672f",
+                    "on-primary-container": "#8db293",
+                    "inverse-surface": "#303129",
+                    "surface-container-high": "#eae9dc",
+                    "shadow-olive": "#5A5B2C",
+                    "surface-dim": "#dcdacf",
+                    "on-tertiary-fixed": "#002205",
+                    "on-tertiary-fixed-variant": "#235025",
+                    "surface-bright": "#fbfaed",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-herbal": "#C3E5B2",
+                    "on-error": "#ffffff",
+                    "primary-container": "#24452d",
+                    "primary-fixed-dim": "#aad0af",
+                    "on-tertiary-container": "#84b680",
+                    "on-primary-fixed": "#00210d",
+                    "on-tertiary": "#ffffff",
+                    "background": "#fbfaed",
+                    "border-dusty": "#A0AC9D",
+                    "surface-container-low": "#f5f4e8",
+                    "on-background": "#1b1c15",
+                    "error-container": "#ffdad6",
+                    "on-primary": "#ffffff",
+                    "inverse-primary": "#aad0af",
+                    "on-surface": "#1b1c15",
+                    "surface-variant": "#e4e3d7",
+                    "surface-mint": "#E7F6E6",
+                    "on-secondary-fixed-variant": "#484914",
+                    "secondary-fixed-dim": "#caca87",
+                    "on-secondary-fixed": "#1c1d00",
+                    "surface-container-highest": "#e4e3d7",
+                    "surface-tint": "#44664c",
+                    "primary-fixed": "#c6ecca",
+                    "surface": "#fbfaed",
+                    "tertiary-container": "#1a471d",
+                    "on-primary-fixed-variant": "#2d4e35",
+                    "tertiary-fixed-dim": "#a1d39b",
+                    "inverse-on-surface": "#f3f1e5",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#e6e7a1"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "margin-mobile": "20px",
+                    "margin-desktop": "40px",
+                    "unit": "4px",
+                    "xl": "32px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "xs": "4px",
+                    "gutter": "16px",
+                    "sm": "8px"
+            },
+            "fontFamily": {
+                    "headline-lg-mobile": ["Sora"],
+                    "body-md": ["Inter"],
+                    "label-md": ["Inter"],
+                    "label-sm": ["Inter"],
+                    "display-lg": ["Sora"],
+                    "title-lg": ["Inter"],
+                    "headline-md": ["Sora"],
+                    "headline-lg": ["Sora"],
+                    "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                    "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+        .reflective-glass {
+            background: rgba(231, 246, 230, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .canvas-transition {
+            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md antialiased selection:bg-surface-herbal selection:text-primary">
+<!-- Top Navigation Anchor (Suppressed based on Transactional/Focus rule, but Brand Identity preserved) -->
+<header class="w-full top-0 z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md bg-surface">
+<div class="flex items-center gap-xs">
+<span class="material-symbols-outlined text-primary" data-icon="spa">spa</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">Praana</span>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-mint transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="close">close</span>
+</button>
+</header>
+<main class="min-h-[calc(100vh-80px)] max-w-4xl mx-auto px-margin-mobile md:px-margin-desktop pb-xl flex flex-col items-center">
+<!-- Hero Reflection Section -->
+<section class="w-full mt-md animate-in fade-in slide-in-from-bottom-4 duration-1000">
+<div class="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-xl overflow-hidden mb-lg shadow-sm border border-outline-variant/20">
+<img class="w-full h-full object-cover grayscale-[20%] brightness-[95%]" data-alt="A macro photograph of a single translucent dewdrop clinging to the tip of a vibrant green forest leaf. The lighting is soft and natural, suggesting early morning fog in a serene woodland environment. The color palette is dominated by organic Moss Greens and Mint Cream highlights, creating a grounded, quiet, and meditative atmosphere. The focus is pin-sharp on the water droplet, reflecting the surrounding trees in miniature." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAhi-vpRVmn3uLrgsEonKo0uNHdbt9Dn2dx7y8JGfPJKsVqDNNn2KeytK3TXUPCF7t1R3cB_jbV2YYESPaIgqKk6CQnrUMxVPnjMuGPyLid3LyRw9Qmbq9gVWT6sxWryGBK9f4h1uiNzUbT9pFRdZQoQYR7nMKgc-_329LI2A10kWkwA1zMWC8eFOcpo2MIeS07DIUCrAlEEZicGg-ET3gQ3pzQmDNo_dgUsl-VHLRjy7Op3wFRErpJX-JGdwxZ-2lLCECTMUeq8gs"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/20 to-transparent"></div>
+</div>
+<div class="text-center mb-xl">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-on-surface mb-xs">Moment of Reflection</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-lg mx-auto">Take a breath. Acknowledge the transition from focus back to the present.</p>
+</div>
+</section>
+<!-- Reflection Interaction -->
+<section class="w-full max-w-2xl">
+<div class="mb-lg">
+<h2 class="font-title-lg text-title-lg text-on-surface mb-md text-center">How does your mind feel now?</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-md">
+<!-- Option Card: Calmer -->
+<button class="group flex flex-col items-center justify-center p-md bg-surface-mint rounded-xl border border-transparent hover:border-border-dusty transition-all duration-300 active:scale-95" onclick="selectState(this)">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-herbal text-primary mb-sm transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-2xl" data-icon="air">air</span>
+</div>
+<span class="font-label-md text-label-md text-on-secondary-container">Calmer</span>
+</button>
+<!-- Option Card: Clearer -->
+<button class="group flex flex-col items-center justify-center p-md bg-surface-mint rounded-xl border border-transparent hover:border-border-dusty transition-all duration-300 active:scale-95" onclick="selectState(this)">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-herbal text-primary mb-sm transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-2xl" data-icon="light_mode">light_mode</span>
+</div>
+<span class="font-label-md text-label-md text-on-secondary-container">Clearer</span>
+</button>
+<!-- Option Card: More Present -->
+<button class="group flex flex-col items-center justify-center p-md bg-surface-mint rounded-xl border border-transparent hover:border-border-dusty transition-all duration-300 active:scale-95" onclick="selectState(this)">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-herbal text-primary mb-sm transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-2xl" data-icon="center_focus_strong">center_focus_strong</span>
+</div>
+<span class="font-label-md text-label-md text-on-secondary-container text-center leading-tight">More Present</span>
+</button>
+<!-- Option Card: Still Distracted -->
+<button class="group flex flex-col items-center justify-center p-md bg-surface-mint rounded-xl border border-transparent hover:border-border-dusty transition-all duration-300 active:scale-95" onclick="selectState(this)">
+<div class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-variant text-on-surface-variant mb-sm transition-transform group-hover:scale-110">
+<span class="material-symbols-outlined text-2xl" data-icon="waves">waves</span>
+</div>
+<span class="font-label-md text-label-md text-on-surface-variant text-center leading-tight">Still Distracted</span>
+</button>
+</div>
+</div>
+<!-- Qualitative Entry -->
+<div class="mb-xl">
+<label class="block font-label-sm text-label-sm text-outline mb-sm uppercase tracking-widest" for="state-note">One word for your current state...</label>
+<div class="relative">
+<input class="w-full bg-surface-container-low border border-border-dusty rounded-lg px-md py-md focus:ring-0 focus:border-primary transition-colors text-body-md text-on-surface placeholder:text-outline/50" id="state-note" placeholder="Type here..." type="text"/>
+<div class="absolute right-md top-1/2 -translate-y-1/2 text-outline/30">
+<span class="material-symbols-outlined text-sm" data-icon="edit">edit</span>
+</div>
+</div>
+</div>
+<!-- CTA -->
+<div class="flex justify-center">
+<button class="bg-primary text-surface-mint px-xl py-md rounded-full font-label-md text-label-md hover:brightness-110 active:scale-95 transition-all shadow-sm shadow-shadow-olive/20 flex items-center gap-sm">
+                    Back to Home
+                    <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</button>
+</div>
+</section>
+</main>
+<!-- Micro-interaction Script -->
+<script>
+        function selectState(element) {
+            // Remove active classes from all siblings
+            const buttons = element.parentElement.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-secondary-container', 'border-secondary', 'ring-2', 'ring-secondary/20');
+                btn.classList.add('bg-surface-mint');
+                const label = btn.querySelector('span:not(.material-symbols-outlined)');
+                label.classList.remove('text-primary');
+                label.classList.add('text-on-secondary-container');
+            });
+
+            // Add active classes to selected
+            element.classList.remove('bg-surface-mint');
+            element.classList.add('bg-secondary-container', 'border-secondary', 'ring-2', 'ring-secondary/20');
+            const label = element.querySelector('span:not(.material-symbols-outlined)');
+            label.classList.remove('text-on-secondary-container');
+            label.classList.add('text-primary');
+        }
+
+        // Add a subtle fade-in effect to the image on load
+        window.addEventListener('load', () => {
+            const img = document.querySelector('img');
+            img.style.opacity = '0';
+            img.style.transition = 'opacity 1.5s ease-in-out';
+            setTimeout(() => {
+                img.style.opacity = '1';
+            }, 100);
+        });
+    </script>
+</body></html>

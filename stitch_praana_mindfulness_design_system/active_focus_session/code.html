@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Praana | Focus Session</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "on-surface-variant": "#424842",
+                "secondary": "#606129",
+                "tertiary-fixed": "#bcf0b6",
+                "on-secondary": "#ffffff",
+                "error": "#ba1a1a",
+                "outline": "#727971",
+                "surface-container": "#f0eee2",
+                "primary": "#0d2e19",
+                "outline-variant": "#c2c8c0",
+                "tertiary": "#003009",
+                "secondary-fixed": "#e6e7a1",
+                "on-secondary-container": "#66672f",
+                "on-primary-container": "#8db293",
+                "inverse-surface": "#303129",
+                "surface-container-high": "#eae9dc",
+                "shadow-olive": "#5A5B2C",
+                "surface-dim": "#dcdacf",
+                "on-tertiary-fixed": "#002205",
+                "on-tertiary-fixed-variant": "#235025",
+                "surface-bright": "#fbfaed",
+                "surface-container-lowest": "#ffffff",
+                "surface-herbal": "#C3E5B2",
+                "on-error": "#ffffff",
+                "primary-container": "#24452d",
+                "primary-fixed-dim": "#aad0af",
+                "on-tertiary-container": "#84b680",
+                "on-primary-fixed": "#00210d",
+                "on-tertiary": "#ffffff",
+                "background": "#fbfaed",
+                "border-dusty": "#A0AC9D",
+                "surface-container-low": "#f5f4e8",
+                "on-background": "#1b1c15",
+                "error-container": "#ffdad6",
+                "on-primary": "#ffffff",
+                "inverse-primary": "#aad0af",
+                "on-surface": "#1b1c15",
+                "surface-variant": "#e4e3d7",
+                "surface-mint": "#E7F6E6",
+                "on-secondary-fixed-variant": "#484914",
+                "secondary-fixed-dim": "#caca87",
+                "on-secondary-fixed": "#1c1d00",
+                "surface-container-highest": "#e4e3d7",
+                "surface-tint": "#44664c",
+                "primary-fixed": "#c6ecca",
+                "surface": "#fbfaed",
+                "tertiary-container": "#1a471d",
+                "on-primary-fixed-variant": "#2d4e35",
+                "tertiary-fixed-dim": "#a1d39b",
+                "inverse-on-surface": "#f3f1e5",
+                "on-error-container": "#93000a",
+                "secondary-container": "#e6e7a1"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+            },
+            "spacing": {
+                "margin-mobile": "20px",
+                "margin-desktop": "40px",
+                "unit": "4px",
+                "xl": "32px",
+                "lg": "24px",
+                "md": "16px",
+                "xs": "4px",
+                "gutter": "16px",
+                "sm": "8px"
+            },
+            "fontFamily": {
+                "headline-lg-mobile": ["Sora"],
+                "body-md": ["Inter"],
+                "label-md": ["Inter"],
+                "label-sm": ["Inter"],
+                "display-lg": ["Sora"],
+                "title-lg": ["Inter"],
+                "headline-md": ["Sora"],
+                "headline-lg": ["Sora"],
+                "body-lg": ["Inter"]
+            },
+            "fontSize": {
+                "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.1); opacity: 0.6; }
+        }
+        .breathing-bg {
+            animation: breathe 8s ease-in-out infinite;
+        }
+        .timer-glow {
+            text-shadow: 0 0 40px rgba(13, 46, 25, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden h-screen flex flex-col">
+<!-- Top Navigation Suppression: Not rendered as per the "Task-Focused" rule for active sessions -->
+<header class="w-full top-0 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md z-10">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="spa">spa</span>
+<span class="font-headline-md text-headline-md font-bold text-primary">Praana</span>
+</div>
+<div class="text-label-md font-label-md text-outline">Active Focus</div>
+</header>
+<main class="flex-grow flex flex-col items-center justify-center relative px-margin-mobile overflow-hidden">
+<!-- Immersive Low-Stimulation Background -->
+<div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+<div class="breathing-bg w-[150%] h-[150%] rounded-full bg-gradient-to-tr from-surface-mint via-surface-bright to-surface-herbal blur-3xl opacity-30"></div>
+</div>
+<!-- Session Content Container -->
+<div class="relative z-10 flex flex-col items-center text-center max-w-md w-full">
+<!-- Focus Icon -->
+<div class="mb-xl opacity-60">
+<span class="material-symbols-outlined text-[48px] text-primary" data-icon="adjust">adjust</span>
+</div>
+<!-- Digital Timer -->
+<div class="font-display-lg text-[80px] md:text-[120px] leading-none font-bold text-primary timer-glow tracking-tighter mb-lg transition-all" id="timer">
+                24:58
+            </div>
+<!-- Status Text -->
+<div class="space-y-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface-variant transition-opacity duration-1000" id="status-text">
+                    Your attention is settling.
+                </h2>
+<p class="font-body-md text-outline max-w-[280px] mx-auto">
+                    Take a deep breath. The world can wait for a few moments.
+                </p>
+</div>
+<!-- Visual Progress Pulse -->
+<div class="mt-xl flex gap-unit">
+<div class="h-1 w-8 rounded-full bg-primary/20 overflow-hidden">
+<div class="h-full bg-primary w-1/3 transition-all duration-1000"></div>
+</div>
+<div class="h-1 w-8 rounded-full bg-primary/10"></div>
+<div class="h-1 w-8 rounded-full bg-primary/10"></div>
+</div>
+</div>
+<!-- Secondary End Session Action -->
+<div class="absolute bottom-12 w-full flex justify-center px-margin-mobile">
+<button class="px-lg py-md border border-border-dusty rounded-xl text-on-surface-variant font-label-md hover:bg-surface-variant/50 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]" data-icon="close">close</span>
+                End Session
+            </button>
+</div>
+</main>
+<!-- Contextual "Focus" Graphic (Subtle) -->
+<div class="fixed bottom-0 right-0 p-margin-desktop hidden md:block opacity-10">
+<img alt="A subtle abstract botanical texture" class="w-64 h-64 object-contain grayscale" data-alt="A highly minimalist and serene digital art piece featuring a singular, delicately detailed botanical leaf structure with translucent layers. The color palette is composed of soft Sage greens and muted Mint creams on a pristine white background. The lighting is diffused and ethereal, creating a sense of quietude and profound focus. The overall aesthetic is editorial and sophisticated, emphasizing negative space and natural geometry." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNJQkM7Sq2unvDdN2jHpaGm1MNoqc5mgI87cvDDqcNJGBubUUDb-jhXg381Rov5nQ4P_f4Nm3fAO3BY-Gq_KFDUXBHuwt2-K28JlfoguAcGb0nAYbLbRdSE_0Im5yOKiQdW7f-01blAkZNOW6jecTeHW-6FRG8AhSQ60nLgp8Wm1omjgNCCW0plNDdK5xc0UMJV11NG3TRrkOUlK6DnF0sBNJaEw5JAjdoScr8Zmoj67IBQWsw-0r9bCw55itOAZ40i8fh8MgAorA"/>
+</div>
+<script>
+        // Simple Timer Logic
+        let timeLeft = 1498; // 24:58 in seconds
+        const timerElement = document.getElementById('timer');
+        const statusElement = document.getElementById('status-text');
+        
+        const statusMessages = [
+            "Your attention is settling.",
+            "Stay with what matters.",
+            "The breath is your anchor.",
+            "Gentle awareness only.",
+            "Presence over performance."
+        ];
+
+        let messageIndex = 0;
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            if (timeLeft > 0) {
+                timeLeft--;
+            } else {
+                timerElement.textContent = "Done";
+                statusElement.textContent = "Session Complete";
+            }
+        }
+
+        // Cycle through status messages slowly
+        function rotateStatus() {
+            statusElement.style.opacity = 0;
+            setTimeout(() => {
+                messageIndex = (messageIndex + 1) % statusMessages.length;
+                statusElement.textContent = statusMessages[messageIndex];
+                statusElement.style.opacity = 1;
+            }, 1000);
+        }
+
+        setInterval(updateTimer, 1000);
+        setInterval(rotateStatus, 15000);
+
+        // Interaction subtle effect
+        document.addEventListener('mousemove', (e) => {
+            const moveX = (e.clientX - window.innerWidth / 2) / 100;
+            const moveY = (e.clientY - window.innerHeight / 2) / 100;
+            timerElement.style.transform = `translate(${moveX}px, ${moveY}px)`;
+        });
+    </script>
+</body></html>

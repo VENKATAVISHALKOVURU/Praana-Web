@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Sora:wght@500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "on-error-container": "#93000a",
+                  "surface-herbal": "#C3E5B2",
+                  "on-background": "#1b1c15",
+                  "on-surface": "#1b1c15",
+                  "surface-container-low": "#f5f4e8",
+                  "on-tertiary-container": "#84b680",
+                  "outline-variant": "#c2c8c0",
+                  "secondary-fixed": "#e6e7a1",
+                  "inverse-primary": "#aad0af",
+                  "surface-tint": "#44664c",
+                  "surface-variant": "#e4e3d7",
+                  "border-dusty": "#A0AC9D",
+                  "on-tertiary": "#ffffff",
+                  "outline": "#727971",
+                  "on-secondary-fixed-variant": "#484914",
+                  "on-secondary-container": "#66672f",
+                  "surface-dim": "#dcdacf",
+                  "tertiary": "#003009",
+                  "secondary": "#606129",
+                  "inverse-surface": "#303129",
+                  "on-secondary-fixed": "#1c1d00",
+                  "tertiary-fixed": "#bcf0b6",
+                  "on-error": "#ffffff",
+                  "on-secondary": "#ffffff",
+                  "background": "#fbfaed",
+                  "on-surface-variant": "#424842",
+                  "shadow-olive": "#5A5B2C",
+                  "tertiary-fixed-dim": "#a1d39b",
+                  "secondary-fixed-dim": "#caca87",
+                  "primary-container": "#24452d",
+                  "primary": "#0d2e19",
+                  "surface-container-high": "#eae9dc",
+                  "surface-bright": "#fbfaed",
+                  "on-primary": "#ffffff",
+                  "secondary-container": "#e6e7a1",
+                  "surface-container-highest": "#e4e3d7",
+                  "surface": "#fbfaed",
+                  "tertiary-container": "#1a471d",
+                  "surface-container-lowest": "#ffffff",
+                  "surface-container": "#f0eee2",
+                  "primary-fixed": "#c6ecca",
+                  "primary-fixed-dim": "#aad0af",
+                  "surface-mint": "#E7F6E6",
+                  "error": "#ba1a1a",
+                  "on-tertiary-fixed-variant": "#235025",
+                  "on-primary-fixed-variant": "#2d4e35",
+                  "on-primary-fixed": "#00210d",
+                  "on-tertiary-fixed": "#002205",
+                  "on-primary-container": "#8db293",
+                  "error-container": "#ffdad6",
+                  "inverse-on-surface": "#f3f1e5"
+          },
+          "borderRadius": {
+                  "DEFAULT": "0.25rem",
+                  "lg": "0.5rem",
+                  "xl": "0.75rem",
+                  "full": "9999px"
+          },
+          "spacing": {
+                  "xs": "4px",
+                  "unit": "4px",
+                  "margin-desktop": "40px",
+                  "gutter": "16px",
+                  "margin-mobile": "20px",
+                  "md": "16px",
+                  "lg": "24px",
+                  "sm": "8px",
+                  "xl": "32px"
+          },
+          "fontFamily": {
+                  "label-sm": ["Inter"],
+                  "display-lg": ["Sora"],
+                  "label-md": ["Inter"],
+                  "body-lg": ["Inter"],
+                  "headline-lg": ["Sora"],
+                  "body-md": ["Inter"],
+                  "headline-md": ["Sora"],
+                  "headline-lg-mobile": ["Sora"],
+                  "title-lg": ["Inter"]
+          },
+          "fontSize": {
+                  "label-sm": ["12px", {"lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                  "display-lg": ["40px", {"lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "600"}],
+                  "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.02em", "fontWeight": "500"}],
+                  "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                  "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "500"}],
+                  "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                  "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "500"}],
+                  "headline-lg-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "500"}],
+                  "title-lg": ["20px", {"lineHeight": "28px", "fontWeight": "600"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+    }
+    
+    .option-card {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .option-card:active {
+      transform: scale(0.98);
+    }
+
+    .progress-pill {
+      transition: width 1s ease-in-out;
+    }
+
+    .bg-mesh {
+      background-image: radial-gradient(at 0% 0%, #E7F6E6 0%, transparent 50%),
+                        radial-gradient(at 100% 100%, #C3E5B2 0%, transparent 50%);
+      opacity: 0.4;
+    }
+  </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background font-body-md min-h-screen flex flex-col overflow-x-hidden">
+<!-- Top AppBar Fragment -->
+<header class="bg-surface sticky top-0 z-50 flex justify-between items-center w-full px-margin-mobile py-sm md:px-margin-desktop">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-primary" data-icon="bubble_chart">bubble_chart</span>
+<h1 class="font-headline-md text-headline-md text-primary tracking-tight">Praana</h1>
+</div>
+<button aria-label="Close onboarding" class="p-sm rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="close">close</span>
+</button>
+</header>
+<main class="flex-grow flex flex-col items-center px-margin-mobile pt-xl pb-margin-mobile relative">
+<!-- Atmospheric background element -->
+<div class="absolute inset-0 bg-mesh -z-10 pointer-events-none"></div>
+<!-- Progress Indicator -->
+<div class="w-full max-w-md mb-xl">
+<div class="flex justify-between items-center mb-xs">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Step 2 of 5</span>
+<span class="font-label-sm text-label-sm text-primary font-bold">40%</span>
+</div>
+<div class="h-1 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="progress-pill h-full bg-primary" style="width: 40%"></div>
+</div>
+</div>
+<!-- Question Content -->
+<div class="w-full max-w-lg flex flex-col items-center text-center mb-xl">
+<div class="w-20 h-20 mb-lg rounded-full bg-surface-herbal flex items-center justify-center text-primary shadow-lg shadow-shadow-olive/5">
+<span class="material-symbols-outlined !text-[40px]" data-icon="visibility_lock">visibility_lock</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface mb-md">
+        When do you feel most lost in scrolling?
+      </h2>
+<p class="font-body-md text-body-md text-on-surface-variant px-md">
+        Identifying your triggers is the first step toward reclaiming your digital boundaries.
+      </p>
+</div>
+<!-- Options List -->
+<div class="w-full max-w-lg space-y-md">
+<!-- Option 1 -->
+<button class="option-card group w-full flex items-center justify-between p-lg bg-surface-mint border border-border-dusty/30 rounded-xl hover:border-primary/40 hover:bg-surface-container-low text-left" onclick="selectOption(this)">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+</div>
+<span class="font-title-lg text-title-lg text-on-surface">Late at night</span>
+</div>
+<div class="radio-indicator w-6 h-6 rounded-full border-2 border-outline-variant group-hover:border-primary transition-colors flex items-center justify-center">
+<div class="dot w-2.5 h-2.5 rounded-full bg-primary opacity-0 transition-opacity"></div>
+</div>
+</button>
+<!-- Option 2 -->
+<button class="option-card group w-full flex items-center justify-between p-lg bg-surface-mint border border-border-dusty/30 rounded-xl hover:border-primary/40 hover:bg-surface-container-low text-left" onclick="selectOption(this)">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="psychology">psychology</span>
+</div>
+<span class="font-title-lg text-title-lg text-on-surface">During stress</span>
+</div>
+<div class="radio-indicator w-6 h-6 rounded-full border-2 border-outline-variant group-hover:border-primary transition-colors flex items-center justify-center">
+<div class="dot w-2.5 h-2.5 rounded-full bg-primary opacity-0 transition-opacity"></div>
+</div>
+</button>
+<!-- Option 3 -->
+<button class="option-card group w-full flex items-center justify-between p-lg bg-surface-mint border border-border-dusty/30 rounded-xl hover:border-primary/40 hover:bg-surface-container-low text-left" onclick="selectOption(this)">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="coffee">coffee</span>
+</div>
+<span class="font-title-lg text-title-lg text-on-surface">During study/work breaks</span>
+</div>
+<div class="radio-indicator w-6 h-6 rounded-full border-2 border-outline-variant group-hover:border-primary transition-colors flex items-center justify-center">
+<div class="dot w-2.5 h-2.5 rounded-full bg-primary opacity-0 transition-opacity"></div>
+</div>
+</button>
+<!-- Option 4 -->
+<button class="option-card group w-full flex items-center justify-between p-lg bg-surface-mint border border-border-dusty/30 rounded-xl hover:border-primary/40 hover:bg-surface-container-low text-left" onclick="selectOption(this)">
+<div class="flex items-center gap-md">
+<div class="w-10 h-10 rounded-lg bg-white flex items-center justify-center text-on-surface-variant group-hover:text-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="auto_mode">auto_mode</span>
+</div>
+<span class="font-title-lg text-title-lg text-on-surface">Randomly throughout the day</span>
+</div>
+<div class="radio-indicator w-6 h-6 rounded-full border-2 border-outline-variant group-hover:border-primary transition-colors flex items-center justify-center">
+<div class="dot w-2.5 h-2.5 rounded-full bg-primary opacity-0 transition-opacity"></div>
+</div>
+</button>
+</div>
+<!-- Sticky Bottom Actions -->
+<div class="w-full max-w-lg mt-xl flex gap-md">
+<button class="flex-1 py-lg rounded-xl border border-border-dusty font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-all">
+        Previous
+      </button>
+<button class="flex-[2] py-lg rounded-xl bg-primary text-on-primary font-label-md text-label-md shadow-lg shadow-shadow-olive/10 disabled:opacity-40 disabled:cursor-not-allowed transition-all active:scale-95" disabled="" id="next-btn">
+        Continue
+      </button>
+</div>
+<!-- Decorative Image Column (Desktop only side hint) -->
+<div class="hidden xl:block absolute right-10 top-1/2 -translate-y-1/2 w-64">
+<img alt="Mindfulness visual" class="w-full h-80 object-cover rounded-2xl shadow-2xl rotate-3 opacity-80" data-alt="A serene close-up photograph of a small green succulent plant in a textured ceramic pot, sitting on a wooden table. The background is softly blurred with warm, dappled sunlight filtering through a window, creating a peaceful and introspective mood. The color palette consists of soft herbal greens, warm wood tones, and cream highlights, perfectly reflecting a minimalist wellness aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBi1OkNAGDqPCqc5qBfbP7UWwBnTxweuzVpw6Hpp814XzoOtdb8SXOZxDs34eChuhRwI6p7PIt2-5keT3uagepmGIHZZtYuP3S5dHiYA_z1XlA-FZIV2qkcEQqe-i9zzr--qWnlOL6bJJI1c0oBC-HJWXyxuIWw3FJxhRBr5UvADcLv9ftI0WawVuxtMEblL9kr4dP-x8UpVUD5xErvYkSxiv_bxp_WrN87jyo909-z_MPJKibnk7QVP0jW8sJ_MHKtFHeiXRqZznw"/>
+</div>
+</main>
+<!-- Footer/Copyright suppression for focus -->
+<script>
+    function selectOption(element) {
+      // Clear previous selections
+      document.querySelectorAll('.option-card').forEach(card => {
+        card.classList.remove('ring-2', 'ring-primary', 'bg-surface-herbal/30', 'border-primary/40');
+        card.querySelector('.dot').classList.add('opacity-0');
+        card.querySelector('.radio-indicator').classList.remove('border-primary');
+      });
+
+      // Apply selection to clicked element
+      element.classList.add('ring-2', 'ring-primary', 'bg-surface-herbal/30', 'border-primary/40');
+      element.querySelector('.dot').classList.remove('opacity-0');
+      element.querySelector('.radio-indicator').classList.add('border-primary');
+
+      // Enable the next button
+      const nextBtn = document.getElementById('next-btn');
+      nextBtn.disabled = false;
+      nextBtn.classList.remove('opacity-40');
+      
+      // Haptic feedback simulation
+      if (window.navigator.vibrate) {
+        window.navigator.vibrate(10);
+      }
+    }
+
+    // Subtle atmospheric animation for the mesh background
+    document.addEventListener('mousemove', (e) => {
+      const mesh = document.querySelector('.bg-mesh');
+      const x = e.clientX / window.innerWidth;
+      const y = e.clientY / window.innerHeight;
+      mesh.style.backgroundPosition = `${x * 20}% ${y * 20}%`;
+    });
+  </script>
+</body></html>
