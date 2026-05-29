@@ -1,11 +1,27 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { auth, googleProvider, signInWithPopup, signInWithRedirect } from '../firebase';
+import { useState, useEffect } from 'react';
+import { auth, googleProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from '../firebase';
 
 export default function Signup() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    // Check if user is returning from a mobile Google login redirect
+    getRedirectResult(auth).then((result) => {
+      if (result) {
+        const user = result.user;
+        console.log("Logged in successfully via redirect as:", user.displayName);
+        localStorage.setItem('praana_userId', user.uid);
+        localStorage.setItem('praana_userName', user.displayName);
+        navigate('/onboarding');
+      }
+    }).catch((error) => {
+      console.error("Redirect login failed:", error);
+      alert("Login failed: " + error.message);
+    });
+  }, [navigate]);
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -18,15 +34,25 @@ export default function Signup() {
 
   const handleGoogleLogin = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      localStorage.setItem('praana_userId', user.uid);
-      localStorage.setItem('praana_userName', user.displayName);
-      navigate('/onboarding');
+      const isMobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        // Use redirect exclusively on mobile to prevent popup blocking and cross-site tracking issues
+        await signInWithRedirect(auth, googleProvider);
+      } else {
+        // Use popup on desktop
+        const result = await signInWithPopup(auth, googleProvider);
+        const user = result.user;
+        localStorage.setItem('praana_userId', user.uid);
+        localStorage.setItem('praana_userName', user.displayName);
+        navigate('/onboarding');
+      }
     } catch (error) {
       console.error("Google Popup login failed:", error);
+      
+      // Fallback just in case
       if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-user') {
-        alert("Popup was blocked or closed. Redirecting instead...");
+        alert("Popup was blocked. Redirecting instead...");
         try {
           await signInWithRedirect(auth, googleProvider);
         } catch (redirectErr) {

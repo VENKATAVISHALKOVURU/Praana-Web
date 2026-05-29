@@ -35,17 +35,25 @@ export default function Login() {
 
   const handleGoogleLogin = async () => {
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
-      localStorage.setItem('praana_userId', user.uid);
-      localStorage.setItem('praana_userName', user.displayName);
-      navigate('/onboarding');
+      const isMobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        // Use redirect exclusively on mobile to prevent popup blocking and cross-site tracking issues
+        await signInWithRedirect(auth, googleProvider);
+      } else {
+        // Use popup on desktop
+        const result = await signInWithPopup(auth, googleProvider);
+        const user = result.user;
+        localStorage.setItem('praana_userId', user.uid);
+        localStorage.setItem('praana_userName', user.displayName);
+        navigate('/onboarding');
+      }
     } catch (error) {
       console.error("Google Popup login failed:", error);
       
-      // If popup is blocked or closed, fallback to redirect
+      // Fallback just in case
       if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-user') {
-        alert("Popup was blocked or closed. Redirecting instead...");
+        alert("Popup was blocked. Redirecting instead...");
         try {
           await signInWithRedirect(auth, googleProvider);
         } catch (redirectErr) {
