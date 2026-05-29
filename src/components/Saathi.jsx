@@ -42,7 +42,11 @@ export default function Saathi() {
         isFromUser: !m.isBot
       }));
 
-      const res = await fetch('http://localhost:3000/api/saathi/chat', {
+      const apiUrl = import.meta.env.DEV 
+        ? 'http://localhost:3000/api/saathi/chat'
+        : 'https://saathi-chat-bot.onrender.com/api/saathi/chat';
+        
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userId, message: text, chatHistory })
