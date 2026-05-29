@@ -1,9 +1,33 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export default function Focus() {
   const [activeMindStates, setActiveMindStates] = useState([]);
   const [selectedFocus, setSelectedFocus] = useState('');
-  const [timerDuration, setTimerDuration] = useState(25);
+  const [timerDuration, setTimerDuration] = useState(25); // initial selected minutes
+  const [timeLeft, setTimeLeft] = useState(25 * 60); // time left in seconds
+  const [isRunning, setIsRunning] = useState(false);
+
+  useEffect(() => {
+    // Reset time left when duration selection changes and timer is not running
+    if (!isRunning) {
+      setTimeLeft(timerDuration * 60);
+    }
+  }, [timerDuration, isRunning]);
+
+  useEffect(() => {
+    let interval = null;
+    if (isRunning && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+    } else if (timeLeft === 0) {
+      setIsRunning(false);
+      clearInterval(interval);
+      // Optional: Play a sound or show notification when done
+      alert("Focus session complete! Great job.");
+    }
+    return () => clearInterval(interval);
+  }, [isRunning, timeLeft]);
 
   const toggleMindState = (state) => {
     setActiveMindStates(prev => 
@@ -22,6 +46,16 @@ export default function Focus() {
   ];
 
   const blockedApps = ['Instagram', 'YouTube', 'WhatsApp', 'Facebook', 'X', 'Snapchat'];
+
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s < 10 ? '0' : ''}${s}`;
+  };
+
+  const totalSeconds = timerDuration * 60;
+  const progress = totalSeconds > 0 ? (timeLeft / totalSeconds) : 0;
+  const strokeDashoffset = 691 - (progress * 691);
 
   return (
     <div className="min-h-full pb-12">
@@ -92,18 +126,20 @@ export default function Focus() {
             <svg className="absolute inset-0 w-full h-full -rotate-90">
               <circle className="text-surface-container-high" cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" strokeWidth="6"></circle>
               <circle 
-                className="text-primary transition-all duration-700 ease-out" 
+                className="text-primary transition-all duration-[1000ms] ease-linear" 
                 cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" 
                 strokeDasharray="691" 
-                strokeDashoffset={691 - (timerDuration / 60) * 691} 
+                strokeDashoffset={strokeDashoffset} 
                 strokeLinecap="round" strokeWidth="6"
               ></circle>
             </svg>
             <div className="text-center">
               <span className="font-display-lg text-5xl font-semibold text-primary tracking-tight">
-                {timerDuration}:00
+                {formatTime(timeLeft)}
               </span>
-              <p className="font-label-sm text-xs text-on-surface-variant font-bold uppercase tracking-[0.2em] mt-2">minutes</p>
+              <p className="font-label-sm text-xs text-on-surface-variant font-bold uppercase tracking-[0.2em] mt-2">
+                {isRunning ? 'remaining' : 'minutes'}
+              </p>
             </div>
           </div>
           
@@ -113,18 +149,21 @@ export default function Focus() {
               return (
                 <button 
                   key={mins}
-                  onClick={() => setTimerDuration(mins)}
+                  onClick={() => {
+                    if (!isRunning) setTimerDuration(mins);
+                  }}
+                  disabled={isRunning}
                   className={`w-14 h-10 rounded-full font-bold text-sm transition-all ${
                     isActive 
                       ? 'bg-primary text-white shadow-md' 
                       : 'text-on-surface-variant hover:bg-surface-mint hover:text-primary'
-                  }`}
+                  } ${isRunning ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   {mins}
                 </button>
               );
             })}
-            <button className="px-4 h-10 rounded-full font-semibold text-sm text-on-surface-variant hover:bg-surface-mint hover:text-primary transition-colors">
+            <button disabled={isRunning} className={`px-4 h-10 rounded-full font-semibold text-sm transition-colors ${isRunning ? 'text-on-surface-variant/50 cursor-not-allowed' : 'text-on-surface-variant hover:bg-surface-mint hover:text-primary'}`}>
               Custom
             </button>
           </div>
@@ -147,10 +186,33 @@ export default function Focus() {
         </section>
 
         {/* Call to Action */}
-        <div className="pt-8">
-          <button className="w-full md:w-auto md:px-16 md:mx-auto md:block py-4 rounded-2xl bg-primary text-white font-semibold text-lg shadow-[0_8px_24px_rgba(13,46,25,0.25)] hover:shadow-[0_12px_32px_rgba(13,46,25,0.35)] hover:bg-[#0a2313] transition-all active:scale-[0.98]">
-            Begin Focus Session
-          </button>
+        <div className="pt-8 flex flex-col sm:flex-row gap-4 justify-center">
+          {!isRunning ? (
+            <button 
+              onClick={() => setIsRunning(true)}
+              className="w-full sm:w-auto px-16 py-4 rounded-2xl bg-primary text-white font-semibold text-lg shadow-[0_8px_24px_rgba(13,46,25,0.25)] hover:shadow-[0_12px_32px_rgba(13,46,25,0.35)] hover:bg-[#0a2313] transition-all active:scale-[0.98]"
+            >
+              Begin Focus Session
+            </button>
+          ) : (
+            <>
+              <button 
+                onClick={() => setIsRunning(false)}
+                className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-surface-container-high text-on-surface font-semibold text-lg shadow-sm hover:bg-surface-container-highest transition-all active:scale-[0.98]"
+              >
+                Pause Session
+              </button>
+              <button 
+                onClick={() => {
+                  setIsRunning(false);
+                  setTimeLeft(timerDuration * 60);
+                }}
+                className="w-full sm:w-auto px-10 py-4 rounded-2xl bg-white border-2 border-error/20 text-error font-semibold text-lg hover:bg-error/5 transition-all active:scale-[0.98]"
+              >
+                End Early
+              </button>
+            </>
+          )}
         </div>
       </main>
     </div>

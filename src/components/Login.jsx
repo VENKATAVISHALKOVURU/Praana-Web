@@ -33,20 +33,21 @@ export default function Login() {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
     if (isMobile) {
-      // This will redirect the page to Google, and come back to this page triggering the useEffect above
-      signInWithRedirect(auth, googleProvider);
+      try {
+        await signInWithRedirect(auth, googleProvider);
+      } catch (err) {
+        console.error("Error during redirect setup: " + err.message);
+      }
     } else {
       try {
         const result = await signInWithPopup(auth, googleProvider);
         const user = result.user;
-        console.log("Logged in successfully as:", user.displayName);
         
         localStorage.setItem('praana_userId', user.uid);
         localStorage.setItem('praana_userName', user.displayName);
         navigate('/onboarding');
       } catch (error) {
         console.error("Google login failed:", error.message);
-        alert("Failed to login with Google: " + error.message);
       }
     }
   };
