@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Praana — Awareness Before Impulse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #fbfaed;
+    --bg-dim: #dcdacf;
+    --surface: #f0eee2;
+    --surface-low: #f5f4e8;
+    --surface-mint: #E7F6E6;
+    --surface-herbal: #C3E5B2;
+    --primary: #0d2e19;
+    --primary-container: #24452d;
+    --on-primary: #ffffff;
+    --secondary: #606129;
+    --secondary-container: #e6e7a1;
+    --on-surface: #1b1c15;
+    --on-surface-variant: #424842;
+    --outline: #727971;
+    --outline-variant: #c2c8c0;
+    --border-dusty: #A0AC9D;
+    --shadow-olive: rgba(90,91,44,0.12);
+    --error: #ba1a1a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--on-surface);
+    font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 40px;
+    background: rgba(251,250,237,0.88);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--outline-variant);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 10px;
+    font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 600;
+    color: var(--primary); text-decoration: none;
+  }
+  .nav-logo svg { width: 28px; height: 28px; }
+  .nav-links {
+    display: flex; gap: 32px; list-style: none;
+  }
+  .nav-links a {
+    font-size: 14px; font-weight: 500; color: var(--on-surface-variant);
+    text-decoration: none; letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--primary); }
+  .nav-cta {
+    background: var(--primary); color: var(--on-primary);
+    font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 500;
+    padding: 10px 24px; border-radius: 999px; border: none; cursor: pointer;
+    letter-spacing: 0.02em; transition: background 0.2s;
+  }
+  .nav-cta:hover { background: var(--primary-container); }
+
+  /* SECTIONS */
+  section { padding: 100px 40px; max-width: 1200px; margin: 0 auto; }
+
+  /* HERO / SPLASH */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; text-align: center;
+    padding-top: 80px;
+    max-width: 100%; position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, #c3e5b2 0%, #e7f6e6 30%, #fbfaed 70%);
+    z-index: 0;
+  }
+  .hero-inner { position: relative; z-index: 1; }
+
+  .hero-logo-mark {
+    width: 72px; height: 72px; background: rgba(231,246,230,0.9);
+    border-radius: 20px; display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 24px;
+    box-shadow: 0 4px 24px var(--shadow-olive);
+  }
+  .hero-logo-mark svg { width: 40px; height: 40px; color: var(--primary); }
+
+  .hero h1 {
+    font-family: 'Sora', sans-serif; font-size: clamp(48px, 8vw, 80px);
+    font-weight: 600; letter-spacing: -0.02em; line-height: 1.1;
+    color: var(--primary); margin-bottom: 16px;
+  }
+  .hero-tagline {
+    font-family: 'Inter', sans-serif; font-size: 18px; font-weight: 400;
+    color: var(--on-surface-variant); margin-bottom: 8px;
+  }
+  .hero-label {
+    font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--outline);
+    margin-bottom: 48px;
+  }
+  .hero-buttons { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--primary); color: var(--on-primary);
+    font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 500;
+    padding: 16px 36px; border-radius: 999px; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--primary-container); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent; color: var(--primary);
+    font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 500;
+    padding: 15px 36px; border-radius: 999px; border: 1.5px solid var(--border-dusty);
+    cursor: pointer; transition: border-color 0.2s, transform 0.15s;
+  }
+  .btn-secondary:hover { border-color: var(--primary); transform: translateY(-1px); }
+
+  /* PHONE MOCKUP GRID */
+  .screens-section {
+    padding: 80px 40px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--outline); margin-bottom: 12px;
+  }
+  .section-title {
+    font-family: 'Sora', sans-serif; font-size: clamp(28px, 4vw, 40px);
+    font-weight: 500; letter-spacing: -0.01em; color: var(--primary);
+    margin-bottom: 16px; line-height: 1.2;
+  }
+  .section-desc {
+    font-size: 16px; font-weight: 400; color: var(--on-surface-variant);
+    max-width: 520px; line-height: 1.7; margin-bottom: 56px;
+  }
+
+  /* FEATURE CARDS */
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+  }
+  .feature-card {
+    background: var(--surface-mint);
+    border-radius: 16px; padding: 32px;
+    border: 1px solid var(--border-dusty);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px var(--shadow-olive);
+  }
+  .feature-icon {
+    width: 48px; height: 48px; background: var(--primary);
+    border-radius: 12px; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .feature-icon svg { width: 24px; height: 24px; color: white; }
+  .feature-card h3 {
+    font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 500;
+    color: var(--primary); margin-bottom: 10px;
+  }
+  .feature-card p {
+    font-size: 14px; line-height: 1.7; color: var(--on-surface-variant);
+  }
+
+  /* APP SCREENS SHOWCASE */
+  .screens-showcase {
+    background: var(--surface-low);
+    border-radius: 24px; padding: 60px 40px;
+    margin: 0 40px;
+    overflow: hidden;
+  }
+  .screens-nav {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 48px;
+  }
+  .screen-tab {
+    font-family: 'Inter', sans-serif; font-size: 13px; font-weight: 500;
+    padding: 8px 18px; border-radius: 999px; border: 1px solid var(--border-dusty);
+    background: transparent; color: var(--on-surface-variant);
+    cursor: pointer; letter-spacing: 0.02em; transition: all 0.2s;
+  }
+  .screen-tab.active, .screen-tab:hover {
+    background: var(--primary); color: white; border-color: var(--primary);
+  }
+  .screens-display {
+    display: flex; gap: 24px; align-items: flex-start;
+    overflow-x: auto; padding-bottom: 16px;
+    scrollbar-width: thin; scrollbar-color: var(--border-dusty) transparent;
+  }
+  .phone-frame {
+    flex-shrink: 0;
+    width: 220px;
+    background: var(--on-surface);
+    border-radius: 32px;
+    padding: 8px;
+    box-shadow: 0 20px 60px rgba(13,46,25,0.2);
+    transition: transform 0.3s;
+  }
+  .phone-frame:hover { transform: translateY(-8px); }
+  .phone-screen {
+    background: var(--bg); border-radius: 26px; overflow: hidden;
+    position: relative;
+  }
+  /* Simulated phone screens */
+  .sim-screen {
+    width: 100%; padding: 24px 16px;
+    min-height: 380px; display: flex; flex-direction: column;
+  }
+
+  /* LOGIN screen sim */
+  .sim-login { background: var(--bg); }
+  .sim-logo-sm {
+    display: flex; flex-direction: column; align-items: center;
+    margin-bottom: 20px;
+  }
+  .sim-logo-sm .logo-icon {
+    width: 36px; height: 36px; background: var(--surface-mint);
+    border-radius: 10px; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 8px;
+  }
+  .sim-title { font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 500; color: var(--primary); }
+  .sim-subtitle { font-size: 11px; color: var(--on-surface-variant); text-align: center; }
+  .sim-card {
+    background: var(--surface-mint); border-radius: 16px; padding: 16px;
+    flex: 1;
+  }
+  .sim-input-group { margin-bottom: 12px; }
+  .sim-label { font-size: 10px; font-weight: 500; color: var(--on-surface-variant); margin-bottom: 4px; }
+  .sim-input {
+    width: 100%; background: var(--bg); border: 1px solid var(--border-dusty);
+    border-radius: 8px; padding: 8px 10px; font-size: 11px;
+    color: var(--on-surface-variant); font-family: 'Inter', sans-serif;
+  }
+  .sim-btn {
+    width: 100%; background: var(--primary); color: white;
+    border: none; border-radius: 10px; padding: 10px;
+    font-size: 12px; font-weight: 500; font-family: 'Inter', sans-serif;
+    cursor: pointer; margin-top: 4px;
+  }
+  .sim-divider {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 10px; color: var(--outline); margin: 10px 0;
+  }
+  .sim-divider::before, .sim-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--border-dusty);
+  }
+  .sim-google {
+    width: 100%; background: white; border: 1px solid var(--border-dusty);
+    border-radius: 10px; padding: 8px; font-size: 11px;
+    font-family: 'Inter', sans-serif; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+
+  /* BREATHING screen */
+  .sim-breathing {
+    background: linear-gradient(180deg, #c8cdc4 0%, #b5bfb0 100%);
+    align-items: center; justify-content: space-between;
+  }
+  .sim-brand-top {
+    font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 400;
+    color: var(--primary-container); letter-spacing: 0.02em;
+  }
+  .breath-orb {
+    width: 130px; height: 130px; border-radius: 50%;
+    background: radial-gradient(circle at 38% 35%, #8db494, #4a7a55);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 32px rgba(13,46,25,0.25);
+    animation: breathe 4s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.08); }
+  }
+  .breath-text { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 500; color: white; }
+  .breath-footer { text-align: center; }
+  .breath-caption { font-size: 9px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--primary-container); }
+  .breath-sub { font-family: 'Sora', sans-serif; font-size: 12px; font-style: italic; color: var(--primary); margin: 4px 0 10px; }
+  .breath-cta {
+    background: rgba(255,255,255,0.3); border: none; border-radius: 999px;
+    padding: 8px 20px; font-size: 11px; font-family: 'Inter', sans-serif;
+    color: var(--primary); cursor: pointer;
+  }
+
+  /* FOCUS SESSION */
+  .sim-focus {
+    background: var(--bg); align-items: center; justify-content: space-between;
+  }
+  .focus-header {
+    display: flex; justify-content: space-between; align-items: center; width: 100%;
+  }
+  .focus-brand { display: flex; align-items: center; gap: 6px; }
+  .focus-brand span { font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 600; color: var(--primary); }
+  .focus-badge { font-size: 10px; color: var(--outline); }
+  .focus-body { text-align: center; }
+  .focus-dot { width: 32px; height: 32px; border: 2px solid var(--border-dusty); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 12px; }
+  .focus-dot-inner { width: 10px; height: 10px; background: var(--outline); border-radius: 50%; }
+  .focus-timer { font-family: 'Sora', sans-serif; font-size: 40px; font-weight: 600; color: var(--primary); letter-spacing: -0.02em; }
+  .focus-msg { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 500; color: var(--on-surface); margin: 8px 0; }
+  .focus-sub { font-size: 11px; color: var(--on-surface-variant); line-height: 1.5; }
+  .focus-end {
+    background: transparent; border: 1px solid var(--border-dusty);
+    border-radius: 10px; padding: 10px 24px; font-size: 12px;
+    font-family: 'Inter', sans-serif; color: var(--on-surface); cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* SAATHI CHAT */
+  .sim-saathi { background: var(--bg); }
+  .saathi-header {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 16px;
+    padding-bottom: 12px; border-bottom: 1px solid var(--outline-variant);
+  }
+  .saathi-back { width: 20px; height: 20px; color: var(--on-surface); }
+  .saathi-info h4 { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 500; color: var(--primary); }
+  .saathi-status { display: flex; align-items: center; gap: 4px; font-size: 10px; color: #44664c; }
+  .status-dot { width: 6px; height: 6px; background: #44664c; border-radius: 50%; }
+  .chat-messages { flex: 1; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+  .msg { border-radius: 12px; padding: 10px 12px; font-size: 11px; line-height: 1.6; max-width: 90%; }
+  .msg-saathi { background: var(--surface-mint); color: var(--on-surface); align-self: flex-start; }
+  .msg-user { background: var(--surface); color: var(--on-surface); align-self: flex-end; }
+  .msg-saathi-accent { background: #d4eecf; color: var(--on-surface); align-self: flex-start; }
+  .msg-time { font-size: 9px; color: var(--outline); margin-top: 2px; }
+  .chat-chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+  .chip {
+    background: transparent; border: 1px solid var(--border-dusty);
+    border-radius: 999px; padding: 4px 10px; font-size: 10px;
+    font-family: 'Inter', sans-serif; color: var(--on-surface-variant); cursor: pointer;
+  }
+
+  /* ROOM SESSION */
+  .sim-room { background: var(--surface-mint); align-items: center; justify-content: space-between; }
+  .room-header { display: flex; align-items: center; gap: 8px; width: 100%; }
+  .room-close { width: 28px; height: 28px; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 1px solid var(--border-dusty); font-size: 12px; }
+  .room-info { text-align: center; flex: 1; }
+  .room-info h4 { font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 500; color: var(--primary); }
+  .room-souls { font-size: 10px; color: var(--on-surface-variant); display: flex; align-items: center; gap: 4px; justify-content: center; }
+  .room-souls::before { content: '●'; font-size: 8px; color: #44664c; }
+  .room-timer-circle {
+    width: 150px; height: 150px; border-radius: 50%;
+    border: 2.5px solid var(--primary); background: transparent;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .room-time { font-family: 'Sora', sans-serif; font-size: 30px; font-weight: 600; color: var(--primary); }
+  .room-time-label { font-size: 9px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--on-surface-variant); }
+  .room-quote { font-family: 'Sora', sans-serif; font-size: 12px; font-style: italic; color: var(--primary); text-align: center; }
+  .room-caption { font-size: 10px; color: var(--on-surface-variant); text-align: center; margin-top: 2px; }
+  .room-avatars { display: flex; gap: -4px; }
+  .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--surface-herbal); border: 2px solid white; margin-left: -6px; display: flex; align-items: center; justify-content: center; font-size: 10px; }
+  .avatar:first-child { margin-left: 0; }
+  .room-controls { display: flex; gap: 16px; align-items: center; width: 100%; justify-content: center; }
+  .ctrl-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    background: transparent; border: none; cursor: pointer;
+  }
+  .ctrl-icon { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--border-dusty); background: white; display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .ctrl-icon.main { background: var(--primary); border-color: var(--primary); }
+  .ctrl-label { font-size: 10px; color: var(--on-surface-variant); font-family: 'Inter', sans-serif; }
+  .ctrl-label.main { font-weight: 600; color: var(--primary); }
+  .ctrl-label.danger { color: var(--error); }
+
+  /* BOTTOM NAV */
+  .sim-bottomnav {
+    display: flex; justify-content: space-around; align-items: center;
+    padding: 8px 0; border-top: 1px solid var(--outline-variant);
+    background: var(--bg); margin-top: auto;
+  }
+  .nav-item { display: flex; flex-direction: column; align-items: center; gap: 2px; cursor: pointer; }
+  .nav-icon { font-size: 16px; }
+  .nav-item-label { font-size: 9px; font-weight: 500; color: var(--on-surface-variant); font-family: 'Inter', sans-serif; }
+  .nav-item.active .nav-item-label { color: var(--primary); }
+  .nav-pill { background: var(--secondary-container); border-radius: 999px; padding: 4px 12px; }
+  .nav-pill .nav-icon { font-size: 16px; }
+
+  /* INLINE SCREEN SECTIONS */
+  .screen-section {
+    padding: 80px 40px;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .two-col {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+    align-items: center;
+  }
+  .two-col.reverse { direction: rtl; }
+  .two-col.reverse > * { direction: ltr; }
+  .col-text {}
+  .col-visual {
+    display: flex; justify-content: center;
+  }
+  .single-phone {
+    width: 260px;
+    background: var(--on-surface); border-radius: 40px; padding: 10px;
+    box-shadow: 0 24px 80px rgba(13,46,25,0.22);
+  }
+  .single-phone .phone-screen { border-radius: 32px; overflow: hidden; }
+
+  /* PERMISSIONS screen */
+  .sim-perms { background: var(--bg); }
+  .perms-img { width: 100%; height: 100px; background: linear-gradient(135deg, var(--surface-herbal), var(--surface-mint)); border-radius: 12px; margin-bottom: 16px; display: flex; align-items: center; justify-content: center; }
+  .perms-icon-big { font-size: 36px; }
+  .perms-title { font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 500; color: var(--primary); margin-bottom: 8px; }
+  .perms-desc { font-size: 11px; line-height: 1.6; color: var(--on-surface-variant); margin-bottom: 16px; }
+  .perm-row { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--outline-variant); }
+  .perm-row:last-of-type { border-bottom: none; }
+  .perm-icon { font-size: 16px; }
+  .perm-text { flex: 1; }
+  .perm-name { font-size: 12px; font-weight: 500; color: var(--on-surface); }
+  .perm-why { font-size: 10px; color: var(--on-surface-variant); }
+  .perm-toggle { width: 32px; height: 18px; background: var(--primary); border-radius: 999px; position: relative; cursor: pointer; }
+  .perm-toggle::after { content: ''; position: absolute; width: 14px; height: 14px; background: white; border-radius: 50%; top: 2px; right: 2px; }
+
+  /* PROTECTED APPS */
+  .sim-apps { background: var(--bg); }
+  .apps-title { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 500; color: var(--primary); margin-bottom: 4px; }
+  .apps-sub { font-size: 11px; color: var(--on-surface-variant); margin-bottom: 16px; }
+  .apps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .app-item { display: flex; flex-direction: column; align-items: center; gap: 4px; cursor: pointer; }
+  .app-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; position: relative; }
+  .app-check { position: absolute; bottom: -2px; right: -2px; width: 16px; height: 16px; background: var(--primary); border-radius: 50%; border: 2px solid var(--bg); display: flex; align-items: center; justify-content: center; font-size: 8px; color: white; }
+  .app-name { font-size: 9px; color: var(--on-surface-variant); text-align: center; }
+  .app-icon.insta { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+  .app-icon.twitter { background: #000; }
+  .app-icon.youtube { background: #ff0000; }
+  .app-icon.tiktok { background: #010101; }
+  .app-icon.fb { background: #1877f2; }
+  .app-icon.reddit { background: #ff4500; }
+  .app-icon.snap { background: #fffc00; }
+  .app-icon.ln { background: #0a66c2; }
+
+  /* STORY REFLECTION */
+  .sim-story { background: var(--surface-low); justify-content: space-between; }
+  .story-header { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+  .story-title { font-family: 'Sora', sans-serif; font-size: 14px; font-weight: 500; color: var(--primary); }
+  .story-day { font-size: 10px; color: var(--outline); }
+  .story-quote {
+    background: var(--surface-mint); border-radius: 16px; padding: 16px;
+    border-left: 3px solid var(--primary); font-family: 'Sora', sans-serif;
+    font-size: 12px; font-style: italic; line-height: 1.6; color: var(--on-surface);
+    margin: 8px 0;
+  }
+  .story-prompts { display: flex; flex-direction: column; gap: 8px; }
+  .story-prompt { background: var(--bg); border: 1px solid var(--border-dusty); border-radius: 10px; padding: 10px; }
+  .story-prompt-q { font-size: 11px; font-weight: 500; color: var(--primary); }
+  .story-prompt-a { font-size: 10px; color: var(--on-surface-variant); margin-top: 4px; line-height: 1.5; }
+  .story-cta { background: var(--primary); color: white; border: none; border-radius: 10px; padding: 12px; width: 100%; font-size: 12px; font-family: 'Inter', sans-serif; cursor: pointer; }
+
+  /* TESTIMONIALS */
+  .testimonials { background: var(--surface); border-radius: 24px; padding: 64px 48px; margin: 0 40px 80px; }
+  .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 48px; }
+  .testimonial-card { background: var(--bg); border-radius: 16px; padding: 28px; border: 1px solid var(--border-dusty); }
+  .testimonial-card blockquote { font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 400; font-style: italic; line-height: 1.7; color: var(--on-surface); margin-bottom: 20px; }
+  .testimonial-author { display: flex; align-items: center; gap: 12px; }
+  .author-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--surface-herbal); display: flex; align-items: center; justify-content: center; font-size: 14px; }
+  .author-name { font-size: 13px; font-weight: 500; color: var(--primary); }
+  .author-role { font-size: 11px; color: var(--outline); }
+
+  /* HOW IT WORKS */
+  .how-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0; position: relative; }
+  .how-grid::before {
+    content: ''; position: absolute; top: 24px; left: 10%; right: 10%; height: 1px;
+    background: var(--border-dusty); z-index: 0;
+  }
+  .how-step { text-align: center; padding: 0 16px; position: relative; z-index: 1; }
+  .step-num {
+    width: 48px; height: 48px; border-radius: 50%; background: var(--bg);
+    border: 1.5px solid var(--border-dusty); display: flex; align-items: center;
+    justify-content: center; font-family: 'Sora', sans-serif; font-size: 18px;
+    font-weight: 500; color: var(--primary); margin: 0 auto 20px;
+  }
+  .step-num.active { background: var(--primary); color: white; border-color: var(--primary); }
+  .how-step h4 { font-family: 'Sora', sans-serif; font-size: 16px; font-weight: 500; color: var(--primary); margin-bottom: 8px; }
+  .how-step p { font-size: 13px; color: var(--on-surface-variant); line-height: 1.6; }
+
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin: 64px 0; }
+  .stat-card { text-align: center; padding: 32px 16px; background: var(--surface-mint); border-radius: 16px; }
+  .stat-num { font-family: 'Sora', sans-serif; font-size: 40px; font-weight: 600; color: var(--primary); letter-spacing: -0.02em; }
+  .stat-label { font-size: 13px; color: var(--on-surface-variant); margin-top: 4px; }
+
+  /* CTA SECTION */
+  .cta-section {
+    text-align: center; padding: 100px 40px;
+    background: var(--primary); margin: 0; max-width: 100%;
+  }
+  .cta-section h2 { font-family: 'Sora', sans-serif; font-size: clamp(32px, 5vw, 56px); font-weight: 500; color: white; letter-spacing: -0.01em; margin-bottom: 16px; }
+  .cta-section p { font-size: 18px; color: rgba(255,255,255,0.7); margin-bottom: 40px; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .cta-btn { background: var(--secondary-container); color: var(--primary); font-family: 'Inter', sans-serif; font-size: 16px; font-weight: 600; padding: 16px 40px; border-radius: 999px; border: none; cursor: pointer; transition: opacity 0.2s; }
+  .cta-btn:hover { opacity: 0.85; }
+
+  /* FOOTER */
+  footer {
+    background: var(--on-surface); color: rgba(255,255,255,0.6);
+    padding: 60px 40px 32px;
+  }
+  .footer-inner { max-width: 1200px; margin: 0 auto; }
+  .footer-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 48px; flex-wrap: wrap; gap: 32px; }
+  .footer-brand { }
+  .footer-logo { display: flex; align-items: center; gap: 10px; font-family: 'Sora', sans-serif; font-size: 20px; font-weight: 500; color: white; margin-bottom: 12px; }
+  .footer-tagline { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .footer-links h4 { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: white; margin-bottom: 16px; }
+  .footer-links ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .footer-links a { font-size: 14px; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: white; }
+  .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 12px; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.7s ease forwards; }
+  .fade-up-delay-1 { animation-delay: 0.1s; opacity: 0; animation-fill-mode: both; }
+  .fade-up-delay-2 { animation-delay: 0.2s; opacity: 0; animation-fill-mode: both; }
+  .fade-up-delay-3 { animation-delay: 0.3s; opacity: 0; animation-fill-mode: both; }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    section, .screen-section, .screens-section { padding: 60px 20px; }
+    .screens-showcase { margin: 0 20px; padding: 40px 20px; }
+    .testimonials { margin: 0 20px 60px; padding: 40px 24px; }
+    .two-col { grid-template-columns: 1fr; gap: 40px; }
+    .two-col.reverse { direction: ltr; }
+    .stats-row { grid-template-columns: repeat(2, 1fr); }
+    .how-grid::before { display: none; }
+    .footer-top { flex-direction: column; }
+    .cta-section { padding: 72px 20px; }
+    footer { padding: 48px 20px 24px; }
+    .hero { padding: 100px 20px 60px; }
+  }
+
+  /* SCREEN TABS CONTENT */
+  .screen-group { display: none; }
+  .screen-group.visible { display: flex; gap: 24px; align-items: flex-start; overflow-x: auto; padding-bottom: 16px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 28 28" fill="none">
+      <circle cx="18" cy="8" r="7" stroke="currentColor" stroke-width="2.2"/>
+      <circle cx="8" cy="18" r="5" stroke="currentColor" stroke-width="2"/>
+      <circle cx="21" cy="21" r="3" stroke="currentColor" stroke-width="1.8"/>
+    </svg>
+    Praana
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Features</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#screens">App Screens</a></li>
+    <li><a href="#saathi">Saathi AI</a></li>
+  </ul>
+  <button class="nav-cta" onclick="document.getElementById('signup').scrollIntoView({behavior:'smooth'})">Begin Journey</button>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-logo-mark fade-up">
+      <svg viewBox="0 0 40 40" fill="none">
+        <circle cx="26" cy="12" r="10" stroke="currentColor" stroke-width="2.8"/>
+        <circle cx="11" cy="25" r="7" stroke="currentColor" stroke-width="2.5"/>
+        <circle cx="30" cy="30" r="4.5" stroke="currentColor" stroke-width="2.2"/>
+      </svg>
+    </div>
+    <h1 class="fade-up fade-up-delay-1">Praana</h1>
+    <p class="hero-tagline fade-up fade-up-delay-2">Your conscious layer between impulse and action.</p>
+    <p class="hero-label fade-up fade-up-delay-2">AWARENESS BEFORE IMPULSE</p>
+    <div class="hero-buttons fade-up fade-up-delay-3">
+      <button class="btn-primary" onclick="document.getElementById('signup').scrollIntoView({behavior:'smooth'})">Enter Space</button>
+      <button class="btn-secondary" onclick="document.getElementById('screens').scrollIntoView({behavior:'smooth'})">See the App</button>
+    </div>
+  </div>
+</div>
+
+<!-- STATS -->
+<section>
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="stat-num">47%</div>
+      <div class="stat-label">Reduction in mindless app opens</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">2.8×</div>
+      <div class="stat-label">Deeper focus sessions reported</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">12k+</div>
+      <div class="stat-label">Active souls in focus rooms</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-num">94%</div>
+      <div class="stat-label">Feel more intentional daily</div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features" class="screens-section">
+  <p class="section-label">What Praana Does</p>
+  <h2 class="section-title">A digital buffer for your nervous system.</h2>
+  <p class="section-desc">Praana intercepts the scroll-impulse loop with gentle friction — breathing exercises, emotional check-ins, and focus rooms — restoring your capacity to choose.</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      </div>
+      <h3>Focus Sessions</h3>
+      <p>Lock into timed deep work with a minimal timer, calming prompts, and zero distractions. Your attention is settling — let it.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20z"/><path d="M12 8v4M12 16h.01"/></svg>
+      </div>
+      <h3>Breathing Overlay</h3>
+      <p>Before opening a distracting app, Praana prompts a mindful transition — a breathing orb that guides you back to center before you decide to continue.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>Focus Rooms</h3>
+      <p>Co-work in silence with strangers. A shared canopy of focus — 12 active souls, one timer, the quiet comfort of collective intentionality.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h3>Saathi AI</h3>
+      <p>A conscious AI companion — not a chatbot, but a reflective space. Saathi listens quietly and holds space for whatever is weighing on you.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>
+      </div>
+      <h3>Story Reflection</h3>
+      <p>At the end of each day, Praana surfaces a gentle reflection — a quote, prompts, and space to write. Your journal as a wellness ritual.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      </div>
+      <h3>App Protection</h3>
+      <p>Choose the apps that trigger you most. Praana wraps them in a conscious layer — a breath, a question, a pause — before letting you through.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" style="padding-bottom: 0;">
+  <p class="section-label">How It Works</p>
+  <h2 class="section-title">Presence through friction.</h2>
+  <p class="section-desc">Praana is designed to interrupt the autopilot. A few gentle steps each time restores your power to choose.</p>
+  <div class="how-grid" style="margin-top: 48px;">
+    <div class="how-step">
+      <div class="step-num active">1</div>
+      <h4>You open an app</h4>
+      <p>Instagram, TikTok, whatever triggers the scroll. Praana notices.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">2</div>
+      <h4>Breathing overlay</h4>
+      <p>A soft orb guides one conscious breath. Pause before impulse.</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">3</div>
+      <h4>Emotional check-in</h4>
+      <p>A single question. Why are you here right now? What do you need?</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">4</div>
+      <h4>You choose</h4>
+      <p>Continue with intent — or return to focus. Either way, it was a choice.</p>
+    </div>
+  </div>
+</section>
+
+<!-- APP SCREENS SHOWCASE -->
+<section id="screens" style="padding-top: 80px;">
+  <p class="section-label">App Screens</p>
+  <h2 class="section-title">Every screen, a moment of stillness.</h2>
+</section>
+
+<div class="screens-showcase">
+  <div class="screens-nav">
+    <button class="screen-tab active" onclick="showTab('auth')">Login & Signup</button>
+    <button class="screen-tab" onclick="showTab('breathing')">Breathing</button>
+    <button class="screen-tab" onclick="showTab('focus')">Focus Session</button>
+    <button class="screen-tab" onclick="showTab('rooms')">Focus Rooms</button>
+    <button class="screen-tab" onclick="showTab('saathi')">Saathi AI</button>
+    <button class="screen-tab" onclick="showTab('reflection')">Reflection</button>
+    <button class="screen-tab" onclick="showTab('apps')">App Protection</button>
+  </div>
+
+  <!-- AUTH -->
+  <div id="tab-auth" class="screen-group visible">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="sim-screen sim-login">
+          <div class="sim-logo-sm">
+            <div class="logo-icon">
+              <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
+                <circle cx="18" cy="8" r="7" stroke="#0d2e19" stroke-width="2.2"/>
+                <circle cx="8" cy="18" r="5" stroke="#0d2e19" stroke-width="2"/>
+                <circle cx="21" cy="21" r="3" stroke="#0d2e19" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <div class="sim-title">Praana</div>
+            <div class="sim-subtitle">Return to your center.</div>
+          </div>
+          <div class="sim-card">
+            <div class="sim-input-group">
+              <div class="sim-label">Email Address</div>
+              <input class="sim-input" placeholder="name@example.com" readonly>
+            </div>
+            <div class="sim-input-group">
+              <div class="sim-label" style="display:flex;justify-content:space-between"><span>Password</span><span style="color:#606129;font-weight:500">Forgot?</span></div>
+              <input class="sim-input" type="password" value="••••••••" readonly>
+            </div>
+            <button class="sim-btn">Enter Space</button>
+            <div class="sim-divider">or continue with</div>
+            <button class="sim-google">
+              <svg width="14" height="14" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.706A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.706V4.962H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.038l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.962L3.964 6.294C4.672 4.169 6.656 3.58 9 3.58z"/></svg>
+              Continue with Google
+            </button>
+          </div>
+          <div style="text-align:center;margin-top:12px;font-size:11px;color:var(--on-surface-variant)">New to the breath? <strong style="color:var(--primary)">Create an Account</strong></div>
+          <div style="text-align:center;margin-top:auto;padding-top:12px;font-size:9px;letter-spacing:0.08em;text-transform:uppercase;color:var(--outline)">PRESENCE THROUGH FOCUS</div>
+        </div>
+      </div>
+    </div>
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="sim-screen sim-login">
+          <div class="sim-logo-sm">
+            <div class="logo-icon">
+              <svg width="20" height="20" viewBox="0 0 28 28" fill="none">
+                <circle cx="18" cy="8" r="7" stroke="#0d2e19" stroke-width="2.2"/>
+                <circle cx="8" cy="18" r="5" stroke="#0d2e19" stroke-width="2"/>
+                <circle cx="21" cy="21" r="3" stroke="#0d2e19" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <div class="sim-title">Praana</div>
+          </div>
+          <div style="width:100%;height:80px;background:linear-gradient(135deg,#1a472a,#44664c,#8db293);border-radius:12px;margin-bottom:14px;"></div>
+          <div style="font-family:'Sora',sans-serif;font-size:17px;font-weight:500;color:var(--primary);margin-bottom:4px;">Begin your journey</div>
+          <div style="font-size:11px;font-style:italic;color:var(--on-surface-variant);margin-bottom:14px;">This space adapts gently to you.</div>
+          <div class="sim-input-group">
+            <div class="sim-label">Full Name</div>
+            <input class="sim-input" placeholder="Elias Thorne" readonly>
+          </div>
+          <div class="sim-input-group">
+            <div class="sim-label">Email Address</div>
+            <input class="sim-input" placeholder="hello@praana.co" readonly>
+          </div>
+          <div class="sim-input-group">
+            <div class="sim-label">Create Password</div>
+            <input class="sim-input" type="password" value="••••••••" readonly>
+          </div>
+          <button class="sim-btn">Continue</button>
+          <button class="sim-google" style="margin-top:8px;"><svg width="14" height="14" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.964 10.706A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.706V4.962H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.038l3.007-2.332z"/><path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.962L3.964 6.294C4.672 4.169 6.656 3.58 9 3.58z"/></svg> Continue with Google</button>
+          <div style="text-align:center;margin-top:10px;font-size:10px;color:var(--on-surface-variant)">Already have an account? <strong style="color:var(--primary)">Log in</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BREATHING -->
+  <div id="tab-breathing" class="screen-group">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="sim-screen sim-breathing">
+          <div class="sim-brand-top">⬤◎ Praana</div>
+          <div class="breath-orb"><span class="breath-text">Inhale slowly</span></div>
+          <div class="breath-footer">
+            <div class="breath-caption">MINDFUL TRANSITION</div>
+            <div class="breath-sub">Pause before impulse</div>
+            <button class="breath-cta">Continue with Intent</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; max-width: 400px;">
+      <p class="section-label">Breathing Overlay</p>
+      <h3 style="font-family:'Sora',sans-serif;font-size:28px;font-weight:500;color:var(--primary);margin-bottom:16px;line-height:1.3;">A breath before the scroll.</h3>
+      <p style="font-size:15px;color:var(--on-surface-variant);line-height:1.8;margin-bottom:24px;">When you try to open a protected app, Praana surfaces a breathing overlay. The pulsing orb guides a single conscious inhale. You decide what happens next — with awareness, not habit.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <div style="background:var(--surface-mint);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--primary);font-weight:500;">✦ 4-7-8 breathing</div>
+        <div style="background:var(--surface-mint);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--primary);font-weight:500;">✦ Box breathing</div>
+        <div style="background:var(--surface-mint);border-radius:10px;padding:12px 16px;font-size:13px;color:var(--primary);font-weight:500;">✦ Natural breath</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOCUS -->
+  <div id="tab-focus" class="screen-group">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="sim-screen sim-focus">
+          <div class="focus-header">
+            <div class="focus-brand">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2z" stroke="#0d2e19" stroke-width="2"/><path d="M8 12l2 2 4-4" stroke="#0d2e19" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Praana</span>
+            </div>
+            <span class="focus-badge">Active Focus</span>
+          </div>
+          <div class="focus-body">
+            <div class="focus-dot"><div class="focus-dot-inner"></div></div>
+            <div class="focus-timer">24:57</div>
+            <div class="focus-msg">Your attention is settling.</div>
+            <div class="focus-sub">Take a deep breath. The world can<br>wait for a few moments.</div>
+          </div>
+          <button class="focus-end">✕ End Session</button>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:400px;">
+      <p class="section-label">Focus Sessions</p>
+      <h3 style="font-family:'Sora',sans-serif;font-size:28px;font-weight:500;color:var(--primary);margin-bottom:16px;line-height:1.3;">Your attention is settling.</h3>
+      <p style="font-size:15px;color:var(--on-surface-variant);line-height:1.8;margin-bottom:24px;">A minimal timer, a gentle reminder, and nothing else. The focus screen holds space for deep work without the visual noise of a productivity app. One thing at a time.</p>
+      <div style="background:var(--surface-mint);border-radius:12px;padding:16px 20px;border-left:3px solid var(--primary);">
+        <p style="font-family:'Sora',sans-serif;font-size:14px;font-style:italic;color:var(--on-surface);line-height:1.6;">"Take a deep breath. The world can wait for a few moments."</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROOMS -->
+  <div id="tab-rooms" class="screen-group">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="sim-screen sim-room">
+          <div class="room-header">
+            <div class="room-close">✕</div>
+            <div class="room-info">
+              <h4>Focus Room #24</h4>
+              <div class="room-souls">12 active souls</div>
+            </div>
+            <div style="width:28px;"></div>
+          </div>
+          <div class="room-timer-circle">
+            <div class="room-time">24:56</div>
+            <div class="room-time-label">MINUTES LEFT</div>
+          </div>
+          <div>
+            <div class="room-quote">"Everyone is focusing quietly"</div>
+            <div class="room-caption">A shared canopy of silence</div>
+            <div class="room-avatars" style="margin-top:10px;justify-content:center;display:flex;">
+              <div class="avatar">👤</div>
+              <div class="avatar">🧘</div>
+              <div class="avatar">🌿</div>
+              <div class="avatar" style="background:var(--surface-low);font-size:9px;font-weight:600;color:var(--primary)">+9</div>
+            </div>
+          </div>
+          <div class="room-controls">
+            <button class="ctrl-btn">
+              <div class="ctrl-icon">↺+</div>
+              <div class="ctrl-label">Extend</div>
+            </button>
+            <button class="ctrl-btn">
+              <div class="ctrl-icon main" style="font-size:16px;color:white;">⏸</div>
+              <div class="ctrl-label main">Focusing</div>
+            </button>
+            <button class="ctrl-btn">
+              <div class="ctrl-icon">→</div>
+              <div class="ctrl-label danger">Leave</div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:400px;">
+      <p class="section-label">Focus Rooms</p>
+      <h3 style="font-family:'Sora',sans-serif;font-size:28px;font-weight:500;color:var(--primary);margin-bottom:16px;line-height:1.3;">A shared canopy of silence.</h3>
+      <p style="font-size:15px;color:var(--on-surface-variant);line-height:1.8;margin-bottom:24px;">Join a live focus room with strangers who are also doing the work. No chat. No status updates. Just a shared timer and the quiet knowledge that you are not alone in trying.</p>
+    </div>
+  </div>
+
+  <!-- SAATHI -->
+  <div id="tab-saathi" class="screen-group">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="sim-screen sim-saathi" style="padding-bottom:8px;">
+          <div class="saathi-header">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1b1c15" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+            <div class="saathi-info">
+              <h4>Saathi</h4>
+              <div class="saathi-status"><div class="status-dot"></div>Listening quietly</div>
+            </div>
+          </div>
+          <div class="chat-messages">
+            <div class="msg msg-saathi">Take a deep breath. I'm here to hold space for whatever is weighing on you.</div>
+            <div class="msg-time" style="font-size:9px;color:var(--outline)">Just now</div>
+            <div class="msg msg-user">I feel like I'm constantly rushing but never getting anywhere. My thoughts are tangled.</div>
+            <div class="msg msg-saathi-accent">It sounds like your mind is searching for a boundary that doesn't exist right now. When we rush without direction, we're often trying to outrun an internal feeling...<br><br><em>If you were to sit with that feeling—</em></div>
+          </div>
+          <div class="chat-chips">
+            <div class="chip">I can't focus</div>
+            <div class="chip">I feel tired</div>
+            <div class="chip">Help me</div>
+          </div>
+          <div class="sim-bottomnav">
+            <div class="nav-item"><div class="nav-icon">🏠</div><div class="nav-item-label">Home</div></div>
+            <div class="nav-item"><div class="nav-icon">⏱</div><div class="nav-item-label">Focus</div></div>
+            <div class="nav-item"><div class="nav-icon">👥</div><div class="nav-item-label">Rooms</div></div>
+            <div class="nav-item active"><div class="nav-pill"><div class="nav-icon">✦</div></div><div class="nav-item-label">Saathi</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:400px;">
+      <p class="section-label">Saathi AI</p>
+      <h3 style="font-family:'Sora',sans-serif;font-size:28px;font-weight:500;color:var(--primary);margin-bottom:16px;line-height:1.3;">Not a chatbot. A conscious presence.</h3>
+      <p style="font-size:15px;color:var(--on-surface-variant);line-height:1.8;margin-bottom:24px;">Saathi (Sanskrit for companion) doesn't try to fix you. It holds space — reflecting your words back with insight, asking the question that opens the door. It listens quietly.</p>
+    </div>
+  </div>
+
+  <!-- REFLECTION -->
+  <div id="tab-reflection" class="screen-group">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="sim-screen sim-story">
+          <div class="story-header">
+            <div class="story-title">Evening Reflection</div>
+            <div class="story-day">Day 14</div>
+          </div>
+          <div class="story-quote">"Every moment of stillness is a reclaiming of your own mind."</div>
+          <div class="story-prompts">
+            <div class="story-prompt">
+              <div class="story-prompt-q">What pulled you away from presence today?</div>
+              <div class="story-prompt-a">I opened Instagram three times without meaning to. Each time felt automatic.</div>
+            </div>
+            <div class="story-prompt">
+              <div class="story-prompt-q">What did you choose with intention?</div>
+              <div class="story-prompt-a">I finished the deep work session. That felt like mine.</div>
+            </div>
+          </div>
+          <button class="story-cta">Save Reflection</button>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:400px;">
+      <p class="section-label">Story Reflection</p>
+      <h3 style="font-family:'Sora',sans-serif;font-size:28px;font-weight:500;color:var(--primary);margin-bottom:16px;line-height:1.3;">End each day with stillness.</h3>
+      <p style="font-size:15px;color:var(--on-surface-variant);line-height:1.8;">A daily reflection ritual — a quote, two prompts, and space to write. Not a productivity tracker. A journal for your attention.</p>
+    </div>
+  </div>
+
+  <!-- APPS -->
+  <div id="tab-apps" class="screen-group">
+    <div class="phone-frame">
+      <div class="phone-screen">
+        <div class="sim-screen sim-apps">
+          <div class="apps-title">Protected Apps</div>
+          <div class="apps-sub">Praana wraps these in conscious intention</div>
+          <div class="apps-grid">
+            <div class="app-item">
+              <div class="app-icon insta">📷<div class="app-check">✓</div></div>
+              <div class="app-name">Instagram</div>
+            </div>
+            <div class="app-item">
+              <div class="app-icon twitter">𝕏<div class="app-check">✓</div></div>
+              <div class="app-name">X / Twitter</div>
+            </div>
+            <div class="app-item">
+              <div class="app-icon youtube">▶<div class="app-check">✓</div></div>
+              <div class="app-name">YouTube</div>
+            </div>
+            <div class="app-item">
+              <div class="app-icon tiktok">♪</div>
+              <div class="app-name">TikTok</div>
+            </div>
+            <div class="app-item">
+              <div class="app-icon fb">f<div class="app-check">✓</div></div>
+              <div class="app-name">Facebook</div>
+            </div>
+            <div class="app-item">
+              <div class="app-icon reddit">👾</div>
+              <div class="app-name">Reddit</div>
+            </div>
+            <div class="app-item">
+              <div class="app-icon snap">👻</div>
+              <div class="app-name">Snapchat</div>
+            </div>
+            <div class="app-item">
+              <div class="app-icon ln">in</div>
+              <div class="app-name">LinkedIn</div>
+            </div>
+          </div>
+          <div style="margin-top:16px;">
+            <button class="sim-btn">Save Selection</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;justify-content:center;max-width:400px;">
+      <p class="section-label">App Protection</p>
+      <h3 style="font-family:'Sora',sans-serif;font-size:28px;font-weight:500;color:var(--primary);margin-bottom:16px;line-height:1.3;">Choose what gets the conscious layer.</h3>
+      <p style="font-size:15px;color:var(--on-surface-variant);line-height:1.8;">Select the apps that trigger autopilot in you. Praana doesn't block them — it wraps them in a pause. Breathing, a question, awareness. Then you decide.</p>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="testimonials" id="saathi" style="margin-top:80px;">
+  <p class="section-label" style="text-align:center;">From the community</p>
+  <h2 class="section-title" style="text-align:center;margin-bottom:0;">What souls are saying.</h2>
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <blockquote>"The breathing overlay actually stopped me mid-scroll three times yesterday. I didn't open Instagram once on autopilot. That's never happened."</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">🌿</div>
+        <div>
+          <div class="author-name">Aditi R.</div>
+          <div class="author-role">Product designer, Bengaluru</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <blockquote>"The focus rooms are unlike anything I've used. Knowing 12 strangers are working in silence with you is oddly motivating. No chat. No pings. Just time."</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">🧘</div>
+        <div>
+          <div class="author-name">Marcus L.</div>
+          <div class="author-role">Researcher, Amsterdam</div>
+        </div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <blockquote>"Saathi doesn't feel like a bot. It asked me one question that I've been sitting with for two days. 'What are you actually looking for when you open your phone?'"</blockquote>
+      <div class="testimonial-author">
+        <div class="author-avatar">✨</div>
+        <div>
+          <div class="author-name">Priya K.</div>
+          <div class="author-role">Writer, Mumbai</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGNUP CTA -->
+<div id="signup">
+  <div class="cta-section">
+    <h2>Begin your journey.</h2>
+    <p>A digital space that slows you down, so you can finally move with intent.</p>
+    <button class="cta-btn" onclick="alert('Welcome to Praana. Your journey begins here.')">Enter Space — It\'s Free</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+            <circle cx="18" cy="8" r="7" stroke="white" stroke-width="2.2"/>
+            <circle cx="8" cy="18" r="5" stroke="white" stroke-width="2"/>
+            <circle cx="21" cy="21" r="3" stroke="white" stroke-width="1.8"/>
+          </svg>
+          Praana
+        </div>
+        <div class="footer-tagline">AWARENESS BEFORE IMPULSE</div>
+      </div>
+      <div class="footer-links">
+        <h4>Product</h4>
+        <ul>
+          <li><a href="#">Features</a></li>
+          <li><a href="#">Focus Rooms</a></li>
+          <li><a href="#">Saathi AI</a></li>
+          <li><a href="#">App Protection</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Philosophy</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Careers</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="#">Privacy</a></li>
+          <li><a href="#">Terms</a></li>
+          <li><a href="#">Cookie Policy</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Praana. Built with intentionality.</span>
+      <span style="font-size:11px;letter-spacing:0.06em;text-transform:uppercase;">PRESENCE THROUGH FOCUS</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+function showTab(name) {
+  document.querySelectorAll('.screen-group').forEach(g => g.classList.remove('visible'));
+  document.querySelectorAll('.screen-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('visible');
+  event.target.classList.add('active');
+}
+
+// Intersection observer for animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.style.opacity = '1';
+      e.target.style.transform = 'translateY(0)';
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.feature-card, .stat-card, .testimonial-card, .how-step').forEach(el => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(20px)';
+  el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+  observer.observe(el);
+});
+</script>
+</body>
+</html>

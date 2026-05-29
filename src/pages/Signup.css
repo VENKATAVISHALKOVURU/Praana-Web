@@ -1,0 +1,320 @@
+.signup-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+  position: relative;
+}
+
+.ambient-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.ambient-orb {
+  position: absolute;
+  width: 384px;
+  height: 384px;
+  border-radius: 50%;
+  filter: blur(100px);
+}
+
+.mint-orb {
+  top: -96px;
+  right: -96px;
+  background-color: var(--surface-mint);
+  opacity: 0.6;
+}
+
+.herbal-orb {
+  bottom: -96px;
+  left: -96px;
+  background-color: var(--surface-herbal);
+  opacity: 0.3;
+}
+
+.signup-main {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 420px;
+  padding: var(--spacing-xl) var(--margin-mobile);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .signup-main {
+    padding: var(--margin-desktop);
+  }
+}
+
+.brand-identity {
+  margin-bottom: var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.logo-icon-large {
+  font-size: 48px;
+  color: var(--primary);
+  opacity: 0.9;
+}
+
+.brand-title {
+  font-family: var(--font-display);
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--primary);
+  letter-spacing: -0.01em;
+}
+
+.hero-visual {
+  width: 100%;
+  margin-bottom: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 10px 30px -5px rgba(90, 91, 44, 0.1);
+  background-color: var(--surface-mint);
+  aspect-ratio: 16 / 9;
+  position: relative;
+}
+
+.hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  mix-blend-mode: multiply;
+  opacity: 0.8;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(231, 246, 230, 0.8), transparent);
+}
+
+.welcome-text {
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.welcome-heading {
+  font-family: var(--font-display);
+  font-size: 28px;
+  line-height: 36px;
+  color: var(--on-surface);
+}
+
+.welcome-subtext {
+  font-style: italic;
+  color: var(--on-surface-variant);
+}
+
+.signup-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.input-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+  margin-left: var(--spacing-sm);
+}
+
+.input-wrapper {
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.input-wrapper:focus-within {
+  transform: translateY(-2px);
+}
+
+.form-input {
+  width: 100%;
+  background-color: #f5f4e8; /* surface-container-low */
+  border: 1px solid var(--border-dusty);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--on-surface);
+  transition: all 0.3s;
+}
+
+.form-input::placeholder {
+  color: var(--outline);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: #44664c; /* surface-tint */
+  background-color: #ffffff;
+}
+
+.toggle-password {
+  position: absolute;
+  right: var(--spacing-md);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--on-surface-variant);
+  opacity: 0.6;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toggle-password:hover {
+  opacity: 1;
+}
+
+.form-actions {
+  padding-top: var(--spacing-sm);
+}
+
+.btn-primary {
+  width: 100%;
+  background-color: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--font-body);
+  font-size: 20px;
+  font-weight: 600;
+  padding: var(--spacing-md) 0;
+  border-radius: var(--radius-lg);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 10px 30px -5px rgba(90, 91, 44, 0.1);
+  transition: transform 0.2s, background-color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: var(--primary-container);
+  color: var(--on-primary-container);
+}
+
+.btn-primary:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.btn-primary.submitting {
+  background-color: #1a471d; /* tertiary-container roughly */
+  cursor: default;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.google-auth {
+  padding-top: var(--spacing-md);
+}
+
+.btn-google {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  background: transparent;
+  border: 1px solid var(--border-dusty);
+  color: var(--on-surface);
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  padding: var(--spacing-md) 0;
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-google:hover {
+  background-color: #f5f4e8; /* surface-container-low */
+}
+
+.btn-google:active {
+  transform: scale(0.98);
+}
+
+.google-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.signup-footer {
+  margin-top: var(--spacing-xl);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.login-prompt {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--on-surface-variant);
+}
+
+.login-link {
+  color: var(--primary);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
+.editorial-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-md);
+}
+
+.divider-line {
+  height: 1px;
+  width: 32px;
+  background-color: var(--border-dusty);
+}
+
+.divider-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--outline);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}

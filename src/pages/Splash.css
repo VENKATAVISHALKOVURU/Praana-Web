@@ -1,0 +1,207 @@
+.splash-container {
+  background-color: var(--surface);
+  color: var(--on-surface);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}
+
+.background-layers {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.layer {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.herbal-base {
+  top: -25%;
+  left: -25%;
+  width: 150%;
+  height: 150%;
+  background: radial-gradient(circle at center, rgba(195, 229, 178, 0.3), transparent);
+  animation: organic-drift 20s ease-in-out infinite alternate;
+}
+
+.mint-mist {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  background: radial-gradient(circle at center, rgba(231, 246, 230, 0.4), transparent);
+  opacity: 0.6;
+  animation: organic-drift 25s ease-in-out infinite reverse;
+}
+
+.sage-accents {
+  bottom: -25%;
+  right: -25%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(194, 200, 192, 0.1), transparent);
+}
+
+.top-spacer {
+  height: 20px;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .top-spacer {
+    height: 40px;
+  }
+}
+
+.main-content {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+.logo-pulse-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.pulsing-aura {
+  position: absolute;
+  width: 128px;
+  height: 128px;
+  background-color: rgba(195, 229, 178, 0.2);
+  border-radius: 50%;
+  animation: breathe 6s ease-in-out infinite;
+  filter: blur(24px);
+}
+
+.pulsing-border {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  border: 1px solid rgba(195, 229, 178, 0.3);
+  border-radius: 50%;
+  animation: breathe 6s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+@media (min-width: 768px) {
+  .pulsing-aura {
+    width: 192px;
+    height: 192px;
+  }
+  .pulsing-border {
+    width: 144px;
+    height: 144px;
+  }
+}
+
+.branding-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.logo-icon {
+  color: var(--primary);
+  font-size: 64px;
+  margin-bottom: var(--spacing-md);
+  animation: breathe 6s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .logo-icon {
+    font-size: 80px;
+  }
+}
+
+.logo-text {
+  font-family: var(--font-display);
+  font-size: 32px;
+  line-height: 40px;
+  color: var(--primary);
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .logo-text {
+    font-size: 40px;
+    line-height: 48px;
+    letter-spacing: -0.02em;
+  }
+}
+
+.footer {
+  position: relative;
+  z-index: 20;
+  padding-bottom: var(--spacing-xl);
+  padding-left: var(--margin-mobile);
+  padding-right: var(--margin-mobile);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    padding-bottom: var(--margin-desktop);
+  }
+}
+
+.progress-indicator {
+  width: 64px;
+  height: 2px;
+  background-color: rgba(194, 200, 192, 0.2);
+  margin-bottom: var(--spacing-lg);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-bar {
+  position: absolute;
+  height: 100%;
+  background-color: rgba(13, 46, 25, 0.4);
+  width: 33.333%;
+  animation: shimmer 3s infinite ease-in-out;
+}
+
+.footer-text {
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 500;
+  color: rgba(66, 72, 66, 0.7);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  
+  /* Entrance animation */
+  animation: slideUpFadeIn 2s cubic-bezier(0.2, 0, 0.4, 1) forwards;
+  animation-delay: 1s;
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+@keyframes slideUpFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
