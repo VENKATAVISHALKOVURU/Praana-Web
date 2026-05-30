@@ -4,9 +4,8 @@ import { useState, useRef, useEffect } from 'react';
 
 export default function Saathi() {
   const [message, setMessage] = useState('');
-  const [messages, setMessages] = useState([
-    { text: "Take a deep breath. I'm here to hold space for whatever is weighing on you.", isBot: true }
-  ]);
+  const [userName, setUserName] = useState('');
+  const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
@@ -14,6 +13,64 @@ export default function Saathi() {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
+  
+  useEffect(() => {
+    const storedName = localStorage.getItem('praana_userName') || 'Friend';
+    const firstName = storedName.split(' ')[0];
+    setUserName(firstName);
+    
+    let userId = localStorage.getItem('praana_userId');
+    if (!userId) {
+      userId = 'web-guest-' + Math.random().toString(36).substring(7);
+      localStorage.setItem('praana_userId', userId);
+    }
+
+    setIsTyping(true);
+
+    const fetchWelcomeMessage = async () => {
+      try {
+        const welcomeUrl = import.meta.env.DEV 
+          ? 'http://localhost:3000/api/v1/chat/welcome'
+          : 'https://saathi-chat-bot.onrender.com/api/v1/chat/welcome';
+          
+        const res = await fetch(welcomeUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            userId,
+            behavioralContext: {
+              emotionalState: 'neutral',
+              repeatOpenCount: 1
+            }
+          })
+        });
+        
+        const data = await res.json();
+        
+        setMessages([
+          { 
+            text: data.saathi?.message || data.reply || `Good day, ${firstName}. I'm here.`, 
+            isBot: true, 
+            isWelcome: true 
+          }
+        ]);
+      } catch (err) {
+        const hour = new Date().getHours();
+        let greeting = 'Good evening';
+        if (hour >= 5 && hour < 12) greeting = 'Good morning';
+        else if (hour >= 12 && hour < 17) greeting = 'Good afternoon';
+        
+        setMessages([
+          { text: `${greeting}, ${firstName}. What's on your mind?`, isBot: true, isWelcome: true }
+        ]);
+      } finally {
+        setIsTyping(false);
+      }
+    };
+
+    fetchWelcomeMessage();
+  }, []);
+
   useEffect(() => {
     scrollToBottom();
   }, [messages, isTyping]);
@@ -49,7 +106,7 @@ export default function Saathi() {
       const res = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, message: text, chatHistory })
+        body: JSON.stringify({ userId, userName, message: text, chatHistory })
       });
       
       const data = await res.json();
@@ -85,8 +142,16 @@ export default function Saathi() {
 
       <div className="chat-container">
         {messages.map((msg, idx) => (
-          <div key={idx} className={`chat-message ${msg.isBot ? 'bot' : 'user'} ${msg.highlight ? 'highlight' : ''}`}>
-            <div className="msg-bubble" dangerouslySetInnerHTML={{ __html: msg.text.replace(/\n/g, '<br/>') }}></div>
+          <div key={idx} className={`chat-message ${msg.isBot ? 'bot' : 'user'} ${msg.highlight ? 'highlight' : ''} ${msg.isWelcome ? 'welcome-message flex flex-col items-center mt-12' : ''}`}>
+            {msg.isWelcome && (
+              <div className="glowing-orb-wrapper relative flex justify-center items-center mb-6">
+                <div className="absolute w-24 h-24 rounded-full bg-gradient-to-br from-[#c3e5b2] to-[#1a3821] blur-xl animate-pulse opacity-60"></div>
+                <div className="relative z-10 w-16 h-16 rounded-full bg-gradient-to-tr from-surface-mint to-white flex items-center justify-center shadow-[0_0_30px_rgba(195,229,178,0.6)] border border-white/50">
+                  <span className="material-symbols-outlined text-primary text-2xl">auto_awesome</span>
+                </div>
+              </div>
+            )}
+            <div className={`msg-bubble ${msg.isWelcome ? 'text-center text-lg md:text-xl font-medium bg-transparent shadow-none !text-primary px-4' : ''}`} dangerouslySetInnerHTML={{ __html: msg.text.replace(/\n/g, '<br/>') }}></div>
           </div>
         ))}
         {isTyping && (
