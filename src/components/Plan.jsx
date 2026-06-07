@@ -31,8 +31,7 @@ export default function Plan() {
           setCurrentDay(data.plan.currentDay || 1);
           setIsLoading(false);
         } else {
-          // Generate plan if it doesn't exist
-          generatePlan(data.onboarding);
+          setIsLoading(false);
         }
       } else {
         setIsLoading(false);
@@ -127,8 +126,21 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
 
   if (!plan) {
     return (
-      <div className="flex flex-col min-h-full bg-[#f8f7f2] items-center justify-center text-center p-6 pb-32">
-        <p className="text-on-surface-variant mb-4">{t('plan.noPlan')}</p>
+      <div className="flex flex-col min-h-[80vh] items-center justify-center text-center p-6">
+        <div className="w-20 h-20 bg-surface-mint rounded-3xl flex items-center justify-center mb-6 shadow-sm border border-primary/10">
+          <span className="material-symbols-outlined text-4xl text-primary" style={{ fontVariationSettings: '"FILL" 1' }}>map</span>
+        </div>
+        <h2 className="text-3xl font-headline-md font-bold text-primary mb-3">Your Journey Awaits</h2>
+        <p className="text-on-surface-variant max-w-md text-lg mb-8">
+          You don't have a personalized 21-day behavioral roadmap yet. Generate one based on your onboarding profile to begin your transformation.
+        </p>
+        <button 
+          onClick={() => generatePlan()}
+          className="bg-primary text-white font-bold text-lg px-8 py-4 rounded-xl hover:bg-primary-container transition-all shadow-md active:scale-95 flex items-center gap-2"
+        >
+          <span className="material-symbols-outlined text-xl">magic_button</span>
+          Generate 21-Day Plan
+        </button>
       </div>
     );
   }
@@ -136,13 +148,20 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
   const todayMission = plan.missions[currentDay - 1];
 
   return (
-    <div className="flex flex-col min-h-full bg-[#f8f7f2] text-on-surface">
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl px-6 py-6 border-b border-border-dusty/10">
-        <h1 className="font-headline-md text-2xl text-primary tracking-tight font-bold">{t('plan.actionPlan')}</h1>
-        <p className="text-sm text-on-surface-variant font-medium mt-1">{t('plan.journey')}</p>
+    <div className="flex flex-col min-h-full text-on-surface">
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl px-8 py-6 border-b border-border-dusty/10">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div>
+            <h1 className="font-headline-md text-3xl text-primary tracking-tight font-bold">{t('plan.actionPlan')}</h1>
+            <p className="text-on-surface-variant text-lg font-medium mt-1">{t('plan.journey')}</p>
+          </div>
+          <div className="bg-surface-mint/50 px-4 py-2 rounded-xl border border-primary/10 text-primary font-bold">
+            Day {currentDay} of 21
+          </div>
+        </div>
       </header>
       
-      <main className="flex-1 px-6 pt-6 pb-32 max-w-3xl mx-auto w-full">
+      <main className="flex-1 px-8 pt-10 pb-32 max-w-7xl mx-auto w-full">
         {/* Today's Mission Card */}
         <section className="mb-10">
           <div className="bg-primary text-white rounded-3xl p-8 relative overflow-hidden shadow-lg">
@@ -164,12 +183,12 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
 
         {/* Journey Map */}
         <section>
-          <div className="flex justify-between items-end mb-6">
-            <h3 className="text-xl text-primary font-bold tracking-tight">{t('plan.journeyMap')}</h3>
-            <span className="text-xs font-bold uppercase tracking-widest text-outline">{t('plan.days21')}</span>
+          <div className="flex justify-between items-end mb-8">
+            <h3 className="text-2xl text-primary font-bold tracking-tight">{t('plan.journeyMap')}</h3>
+            <span className="text-sm font-bold uppercase tracking-widest text-outline">{t('plan.days21')}</span>
           </div>
 
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {plan.missions.map((mission) => {
               const { day, title, description } = mission;
               const isCompleted = day < currentDay;
@@ -206,7 +225,7 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
                       {isCurrent ? t('plan.todaysFocus') : isCompleted ? t('plan.dayCompleted', { day }) : t('plan.dayMission', { day })}
                     </h4>
                     {!isLocked && (
-                      <p className="text-sm text-on-surface-variant mt-1">
+                      <p className="text-on-surface-variant mt-2 text-sm leading-relaxed">
                         {title}
                       </p>
                     )}

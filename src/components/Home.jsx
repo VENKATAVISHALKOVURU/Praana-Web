@@ -8,36 +8,7 @@ import { ref, onValue } from 'firebase/database';
 import { rtdb } from '../firebase.js';
 import { useTranslation } from 'react-i18next';
 
-function DashboardBreathingOrb() {
-  const meshRef = React.useRef();
-  
-  useFrame((state) => {
-    if (meshRef.current) {
-      // 8-second breathing cycle
-      const t = state.clock.getElapsedTime();
-      const cycle = Math.sin((t * Math.PI * 2) / 8); 
-      
-      const scale = 1.8 + cycle * 0.2;
-      meshRef.current.scale.setScalar(scale);
-      meshRef.current.rotation.y += 0.005;
-      meshRef.current.rotation.x += 0.002;
-    }
-  });
-
-  return (
-    <Sphere ref={meshRef} visible args={[1, 64, 64]} scale={1.8}>
-      <MeshDistortMaterial
-        color="#c3e5b2"
-        attach="material"
-        distort={0.4}
-        speed={1.0}
-        roughness={0.5}
-        transparent
-        opacity={0.6}
-      />
-    </Sphere>
-  );
-}
+// Removed DashboardBreathingOrb
 
 export default function Home() {
   const { t } = useTranslation();
@@ -48,6 +19,43 @@ export default function Home() {
   const [currentDate, setCurrentDate] = useState('Today');
   const [insightIndex, setInsightIndex] = useState(0);
   const [activeParticipants, setActiveParticipants] = useState(0);
+  
+  // Breathing Exercise State
+  const [breathingActive, setBreathingActive] = useState(false);
+  const [breathingTimeLeft, setBreathingTimeLeft] = useState(120); // 2 minutes
+  const [breathingInterval, setBreathingInterval] = useState(null);
+
+  const startBreathing = () => {
+    setBreathingActive(true);
+    setBreathingTimeLeft(120);
+    const interval = setInterval(() => {
+      setBreathingTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setBreathingActive(false);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    setBreathingInterval(interval);
+  };
+
+  const stopBreathing = () => {
+    if (breathingInterval) clearInterval(breathingInterval);
+    setBreathingActive(false);
+    setBreathingTimeLeft(0);
+  };
+
+  const extendBreathing = () => {
+    setBreathingTimeLeft((prev) => prev + 60); // Add 1 minute
+  };
+
+  useEffect(() => {
+    return () => {
+      if (breathingInterval) clearInterval(breathingInterval);
+    };
+  }, [breathingInterval]);
 
   useEffect(() => {
     // Set greeting based on time of day
@@ -130,9 +138,9 @@ export default function Home() {
           <span className="font-label-sm text-xs md:text-sm text-on-surface-variant/80 italic font-medium">{t('home.awarenessSubtitle')}</span>
         </div>
         <div className="flex items-center gap-4">
-          <Link to="/focus" className="w-10 h-10 rounded-full bg-surface-mint flex items-center justify-center text-primary hover:shadow-md transition-all duration-300">
+          <button onClick={startBreathing} className="w-10 h-10 rounded-full bg-surface-mint flex items-center justify-center text-primary hover:shadow-md transition-all duration-300">
             <span className="material-symbols-outlined text-[20px]">hourglass_empty</span>
-          </Link>
+          </button>
           <Link to="/saathi" className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-on-surface-variant hover:text-primary hover:shadow-md transition-all duration-300">
             <span className="material-symbols-outlined text-[20px]">notifications</span>
           </Link>
@@ -157,24 +165,6 @@ export default function Home() {
 
       <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-24 flex flex-col gap-6">
         
-        {/* Missing Permissions Warning (Conditional) */}
-        <section className="animate-in slide-in-from-top-4 fade-in duration-500">
-          <div className="bg-red-50 border border-red-200 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 shrink-0">
-                <span className="material-symbols-outlined">warning</span>
-              </div>
-              <div>
-                <h3 className="font-bold text-red-800 text-sm md:text-base">{t('home.a11yDisabled')}</h3>
-                <p className="text-red-600/90 text-xs md:text-sm font-medium mt-0.5">{t('home.a11yDesc')}</p>
-              </div>
-            </div>
-            <Link to="/profile" className="w-full sm:w-auto px-6 py-2.5 bg-red-600 text-white rounded-xl font-bold text-sm hover:bg-red-700 transition-colors shadow-sm text-center">
-              {t('home.enable')}
-            </Link>
-          </div>
-        </section>
-
         {/* ROW 1: Hero & Saathi */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 stagger-fade-in" style={{ animationDelay: '0.1s' }}>
           
@@ -357,45 +347,64 @@ export default function Home() {
             </div>
           </div>
           
-          {/* Breathing Regulation Card */}
-          <div className="lg:col-span-3 bg-gradient-to-b from-[#1a3821] to-primary rounded-3xl p-6 flex flex-col items-center justify-center relative overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.08)] group min-h-[260px]">
-            <div className="absolute top-5 left-5 z-10 flex items-center gap-1.5">
-              <span className="material-symbols-outlined text-surface-mint text-[14px]">air</span>
-              <span className="uppercase text-[9px] font-bold tracking-widest text-surface-mint/80">{t('home.breathe')}</span>
-            </div>
-            
-            {/* 3D Breathing Orb */}
-            <div className="absolute inset-0 z-0">
-              <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 5], fov: 45 }}>
-                <ambientLight intensity={1.5} />
-                <directionalLight position={[0, 5, 5]} intensity={1} />
-                <DashboardBreathingOrb />
-              </Canvas>
-            </div>
-
-            {/* Pulsing Text */}
-            <div className="z-10 mt-4 pointer-events-none">
-              <style>{`
-                @keyframes breathe-text {
-                  0%, 10% { opacity: 0; transform: scale(0.9); }
-                  20%, 40% { opacity: 1; transform: scale(1); content: "Inhale"; }
-                  50%, 60% { opacity: 0; transform: scale(0.9); }
-                  70%, 90% { opacity: 1; transform: scale(1); content: "Exhale"; }
-                  100% { opacity: 0; transform: scale(0.9); }
-                }
-                .inhale-exhale-text::after {
-                  content: "Breathe";
-                  animation: breathe-text 8s infinite ease-in-out;
-                }
-              `}</style>
-              <div className="inhale-exhale-text font-display-lg text-2xl text-surface-mint tracking-tight font-medium drop-shadow-md"></div>
-            </div>
-            <p className="z-10 absolute bottom-5 text-[10px] text-surface-mint/60 font-bold uppercase tracking-widest">{t('home.pause')}</p>
-          </div>
-
+          {/* Removed Breathing Regulation Card since it is now at the top */}
         </div>
       </main>
       
+      {/* Full-Screen Breathing Overlay */}
+      {breathingActive && (
+        <div className="fixed inset-0 z-50 bg-[#1a3821]/95 backdrop-blur-md flex flex-col items-center justify-center animate-in fade-in duration-300">
+          <div className="absolute top-8 right-8 z-20 flex gap-4">
+            <button 
+              onClick={extendBreathing}
+              className="bg-white/10 hover:bg-white/20 text-white px-5 py-2.5 rounded-2xl font-bold text-sm backdrop-blur-md transition-colors flex items-center gap-2 border border-white/20"
+            >
+              <span className="material-symbols-outlined text-[20px]">add</span>
+              1 Min
+            </button>
+            <button 
+              onClick={stopBreathing}
+              className="bg-white hover:bg-gray-100 text-primary px-5 py-2.5 rounded-2xl font-bold text-sm shadow-lg transition-colors flex items-center gap-2"
+            >
+              <span className="material-symbols-outlined text-[20px]">close</span>
+              Stop
+            </button>
+          </div>
+
+          <style>{`
+            @keyframes breathe-circle-full {
+              0%, 10% { transform: scale(0.6); opacity: 0.3; }
+              30%, 40% { transform: scale(1.4); opacity: 0.8; }
+              60%, 70% { transform: scale(0.6); opacity: 0.3; }
+              100% { transform: scale(0.6); opacity: 0.3; }
+            }
+            @keyframes breathe-text-full {
+              0%, 10% { opacity: 0; transform: translateY(10px); }
+              20%, 35% { opacity: 1; transform: translateY(0); content: "Inhale"; }
+              45%, 55% { opacity: 0; transform: translateY(-10px); }
+              65%, 80% { opacity: 1; transform: translateY(0); content: "Exhale"; }
+              90%, 100% { opacity: 0; transform: translateY(10px); }
+            }
+            .breathing-orb-full {
+              animation: breathe-circle-full 8s infinite ease-in-out;
+            }
+            .inhale-exhale-text-full::after {
+              content: "Breathe";
+              animation: breathe-text-full 8s infinite ease-in-out;
+            }
+          `}</style>
+          
+          <div className="relative w-64 h-64 flex items-center justify-center z-10 mb-12">
+            <div className="absolute inset-0 bg-surface-mint rounded-full blur-3xl opacity-20"></div>
+            <div className="absolute inset-0 bg-gradient-to-tr from-surface-mint to-[#e6f4e1] rounded-full breathing-orb-full shadow-[0_0_80px_rgba(195,229,178,0.5)]"></div>
+            <div className="relative text-primary font-display text-4xl bg-white/90 backdrop-blur-md w-32 h-32 rounded-full flex items-center justify-center shadow-inner font-bold tracking-tight">
+              {Math.floor(breathingTimeLeft / 60)}:{(breathingTimeLeft % 60).toString().padStart(2, '0')}
+            </div>
+          </div>
+
+          <div className="inhale-exhale-text-full font-display-lg text-5xl text-surface-mint tracking-tight font-semibold drop-shadow-md z-10 h-12 flex items-center justify-center"></div>
+        </div>
+      )}
     </div>
   );
 }
