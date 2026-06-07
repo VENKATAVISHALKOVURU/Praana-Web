@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { ref, onValue, set, remove, onDisconnect } from 'firebase/database';
 import { rtdb } from '../firebase';
+import { useTranslation } from 'react-i18next';
 
 export default function Rooms() {
+  const { t } = useTranslation();
   const [participants, setParticipants] = useState([]);
   const [isJoined, setIsJoined] = useState(false);
   
@@ -56,12 +58,12 @@ export default function Rooms() {
     <div className="flex flex-col min-h-full bg-[#fcfbf7] text-on-surface">
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl px-6 py-6 border-b border-border-dusty/10 flex justify-between items-center">
         <div>
-          <h1 className="font-headline-md text-2xl text-primary tracking-tight font-bold">Focus Room</h1>
-          <p className="text-sm text-on-surface-variant font-medium mt-1">Global Collective Space</p>
+          <h1 className="font-headline-md text-2xl text-primary tracking-tight font-bold">{t('rooms.focusRoom')}</h1>
+          <p className="text-sm text-on-surface-variant font-medium mt-1">{t('rooms.globalSpace')}</p>
         </div>
         <div className="flex items-center gap-2 bg-surface-mint/30 px-3 py-1.5 rounded-full border border-surface-herbal/20">
           <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
-          <span className="text-xs font-bold text-primary">{participants.length} Active</span>
+          <span className="text-xs font-bold text-primary">{t('rooms.activeCount', { count: participants.length })}</span>
         </div>
       </header>
       
@@ -76,12 +78,12 @@ export default function Rooms() {
               {isJoined ? 'self_improvement' : 'group_work'}
             </span>
             <h2 className="text-2xl font-headline-md font-medium tracking-tight mb-2 text-primary">
-              {isJoined ? "You are in the flow." : "Ready to focus together?"}
+              {isJoined ? t('rooms.inFlow') : t('rooms.readyFocus')}
             </h2>
             <p className="text-on-surface-variant text-sm max-w-sm mb-8">
               {isJoined 
-                ? "Your presence is contributing to the collective energy of the room. Stay mindful." 
-                : "Join the room to signal your intent. Seeing others focus helps anchor your own attention."}
+                ? t('rooms.presenceContributing') 
+                : t('rooms.joinToSignal')}
             </p>
             
             {isJoined ? (
@@ -89,14 +91,14 @@ export default function Rooms() {
                 onClick={handleLeave}
                 className="bg-white/80 backdrop-blur text-primary font-bold px-8 py-3.5 rounded-xl hover:bg-white transition-all shadow-sm active:scale-95 border border-primary/10"
               >
-                Leave Room
+                {t('rooms.leaveRoom')}
               </button>
             ) : (
               <button 
                 onClick={handleJoin}
                 className="bg-primary text-surface-mint font-bold px-8 py-3.5 rounded-xl hover:bg-[#0a2313] transition-all shadow-md active:scale-95"
               >
-                Join Room
+                {t('rooms.joinRoom')}
               </button>
             )}
           </div>
@@ -106,12 +108,12 @@ export default function Rooms() {
         <section>
           <h3 className="text-lg font-bold text-primary mb-6 flex items-center gap-2">
             <span className="material-symbols-outlined text-[20px]">people</span>
-            Fellow Explorers
+            {t('rooms.fellowExplorers')}
           </h3>
           
           {participants.length === 0 ? (
             <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-border-dusty/40">
-              <p className="text-on-surface-variant text-sm font-medium">The room is currently empty.<br/>Be the first to start focusing.</p>
+              <p className="text-on-surface-variant text-sm font-medium" dangerouslySetInnerHTML={{ __html: t('rooms.roomEmpty') }}></p>
             </div>
           ) : (
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
@@ -124,7 +126,7 @@ export default function Rooms() {
                       <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
                     </div>
                     <span className="text-sm font-semibold text-on-surface truncate w-full text-center">
-                      {isMe ? 'You' : p.name}
+                      {isMe ? t('rooms.you') : p.name}
                     </span>
                     <span className="text-[10px] uppercase tracking-wider font-bold text-outline mt-1">
                       {p.status}

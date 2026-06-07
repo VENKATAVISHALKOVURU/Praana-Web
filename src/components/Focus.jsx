@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial } from '@react-three/drei';
+import { useTranslation } from 'react-i18next';
 
 function BreathingOrb3D() {
   const meshRef = useRef();
@@ -38,6 +39,7 @@ function BreathingOrb3D() {
 }
 
 export default function Focus() {
+  const { t } = useTranslation();
   const [activeMindStates, setActiveMindStates] = useState([]);
   const [selectedFocus, setSelectedFocus] = useState('');
   const [timerDuration, setTimerDuration] = useState(25); // initial selected minutes
@@ -45,13 +47,7 @@ export default function Focus() {
   const [isRunning, setIsRunning] = useState(false);
   const [statusMessageIndex, setStatusMessageIndex] = useState(0);
 
-  const statusMessages = [
-      "Your attention is settling.",
-      "Stay with what matters.",
-      "The breath is your anchor.",
-      "Gentle awareness only.",
-      "Presence over performance."
-  ];
+  const statusMessages = t('focus.statusMessages', { returnObjects: true }) || [];
 
   useEffect(() => {
     // Reset time left when duration selection changes and timer is not running
@@ -132,7 +128,7 @@ export default function Focus() {
             <span className="material-symbols-outlined text-primary">spa</span>
             <span className="font-headline-md text-headline-md font-bold text-primary">Praana</span>
           </div>
-          <div className="text-label-md font-label-md text-outline">Active Focus</div>
+          <div className="text-label-md font-label-md text-outline">{t('focus.activeFocus')}</div>
         </header>
         
         <main className="flex-grow flex flex-col items-center justify-center relative px-margin-mobile overflow-hidden">
@@ -158,7 +154,7 @@ export default function Focus() {
                   {statusMessages[statusMessageIndex]}
               </h2>
               <p className="font-body-md text-outline max-w-[280px] mx-auto">
-                  Take a deep breath. The world can wait for a few moments.
+                  {t('focus.deepBreath')}
               </p>
             </div>
             
@@ -180,7 +176,7 @@ export default function Focus() {
               className="px-lg py-md border border-border-dusty rounded-xl text-on-surface-variant font-label-md hover:bg-surface-variant/50 transition-colors flex items-center gap-2"
             >
               <span className="material-symbols-outlined text-[18px]">close</span>
-              End Session
+              {t('focus.endSession')}
             </button>
           </div>
         </main>
@@ -213,8 +209,8 @@ export default function Focus() {
 
       <main className="max-w-2xl mx-auto px-6 pt-10 space-y-12">
         <header className="space-y-2">
-          <h2 className="font-headline-lg text-4xl text-primary font-bold tracking-tight">Focus Rooms</h2>
-          <p className="font-body-md text-on-surface-variant opacity-80">Focus quietly together</p>
+          <h2 className="font-headline-lg text-4xl text-primary font-bold tracking-tight">{t('focus.focusRooms')}</h2>
+          <p className="font-body-md text-on-surface-variant opacity-80">{t('focus.focusQuietly')}</p>
         </header>
 
         {/* Setup App Limits Card */}
@@ -226,12 +222,12 @@ export default function Focus() {
                   <span className="material-symbols-outlined text-primary">phonelink_lock</span>
                 </div>
                 <div>
-                  <h3 className="font-title-lg text-xl text-primary font-bold">App Limits</h3>
-                  <p className="text-sm text-on-surface-variant font-medium">Protect your attention</p>
+                  <h3 className="font-title-lg text-xl text-primary font-bold">{t('focus.appLimits')}</h3>
+                  <p className="text-sm text-on-surface-variant font-medium">{t('focus.protectAttention')}</p>
                 </div>
               </div>
               <button className="bg-surface-container-low text-primary px-4 py-2 rounded-full font-bold text-sm hover:bg-surface-mint transition-colors">
-                Manage
+                {t('focus.manage')}
               </button>
             </div>
             <div className="flex gap-2">
@@ -245,7 +241,7 @@ export default function Focus() {
         {/* Focus Rooms Carousel */}
         <section>
           <div className="flex justify-between items-end mb-4">
-            <h3 className="text-xl text-primary font-bold tracking-tight">Quick Focus</h3>
+            <h3 className="text-xl text-primary font-bold tracking-tight">{t('focus.quickFocus')}</h3>
           </div>
           <div className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory hide-scrollbar -mx-6 px-6 md:mx-0 md:px-0">
             {focusOptions.map(option => (
@@ -276,8 +272,8 @@ export default function Focus() {
             </div>
             <div className="relative z-10 flex justify-between items-center">
               <div>
-                <h3 className="text-2xl font-bold text-white mb-1">Host a Room</h3>
-                <p className="text-surface-mint/80 font-medium">Create a space for your circle</p>
+                <h3 className="text-2xl font-bold text-white mb-1">{t('focus.hostRoom')}</h3>
+                <p className="text-surface-mint/80 font-medium">{t('focus.createSpace')}</p>
               </div>
               <div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-transform">
                 <span className="material-symbols-outlined text-white text-3xl">add</span>
@@ -289,10 +285,10 @@ export default function Focus() {
         {/* Active Rooms */}
         <section>
           <div className="flex justify-between items-end mb-6">
-            <h3 className="text-xl text-primary font-bold tracking-tight">Active Rooms</h3>
+            <h3 className="text-xl text-primary font-bold tracking-tight">{t('focus.activeRooms')}</h3>
             <span className="text-[10px] font-bold uppercase tracking-widest text-primary bg-surface-mint px-3 py-1.5 rounded-lg flex items-center gap-1.5">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
-              Live now
+              {t('focus.liveNow')}
             </span>
           </div>
           
@@ -320,7 +316,7 @@ export default function Focus() {
                   onClick={() => setIsRunning(true)}
                   className="flex-1 md:flex-none px-8 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary-container transition-colors shadow-sm"
                 >
-                  Join
+                  {t('focus.join')}
                 </button>
               </div>
             </div>
@@ -330,7 +326,7 @@ export default function Focus() {
         {/* Join by Room ID */}
         <section>
           <div className="bg-surface-container-low rounded-3xl p-6 md:p-8 border border-dashed border-border-dusty/50">
-            <h3 className="text-lg text-primary font-bold mb-4">Join by Room ID</h3>
+            <h3 className="text-lg text-primary font-bold mb-4">{t('focus.joinRoomId')}</h3>
             <div className="flex gap-3">
               <input 
                 type="text" 
@@ -338,7 +334,7 @@ export default function Focus() {
                 className="flex-1 px-4 py-3 rounded-xl border border-border-dusty bg-white focus:outline-none focus:border-primary transition-colors font-medium tracking-wide uppercase"
               />
               <button className="px-8 py-3 bg-surface-mint text-primary rounded-xl font-bold hover:bg-white hover:shadow-sm transition-all border border-transparent hover:border-border-dusty/20">
-                Join
+                {t('focus.join')}
               </button>
             </div>
           </div>

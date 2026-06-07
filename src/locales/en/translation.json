@@ -1,0 +1,143 @@
+{
+  "landing": {
+    "navBeginJourney": "Begin Journey",
+    "heroTagline": "Your conscious layer between impulse and action.",
+    "heroLabel": "AWARENESS BEFORE IMPULSE",
+    "btnEnterSpace": "Enter Space",
+    "btnSeeApp": "See the App"
+  },
+  "onboarding": {
+    "skip": "Skip",
+    "chooseAllThatApply": "Choose all that apply",
+    "continue": "Continue",
+    "saving": "Saving...",
+    "pressEnter": "Press Enter ↵",
+    "q1": {
+      "title": "How do you usually feel after long scrolling sessions?",
+      "subtitle": "Observe the resonance of these words in your body.",
+      "options": ["Mentally drained", "Numb", "Guilty", "Unsatisfied", "Completely fine"]
+    },
+    "q2": {
+      "title": "What do you want more space for in your life?",
+      "subtitle": "We’ll tailor your experience to help you cultivate the intentionality you need.",
+      "options": ["Better focus", "Better sleep", "Calmness", "Creativity", "Discipline"]
+    },
+    "q3": {
+      "title": "What usually triggers your mindless scrolling?",
+      "subtitle": "Understanding the root helps us build better boundaries.",
+      "options": ["Boredom", "Stress/Anxiety", "Procrastination", "Loneliness", "Habit"]
+    },
+    "q4": {
+      "title": "When are you most vulnerable to losing time?",
+      "subtitle": "We will be extra attentive during these windows.",
+      "options": ["Early Morning", "Mid-workday", "Evening / Wind-down", "Late night", "Weekends"]
+    },
+    "q5": {
+      "title": "How should Praana gently interrupt you?",
+      "subtitle": "You can adjust this anytime in your preferences.",
+      "options": ["Soft nudge", "Mindful breathing", "Reflective prompt", "Strict block", "No interruptions"]
+    }
+  },
+  "home": {
+    "awarenessSubtitle": "Awareness grows through noticing.",
+    "a11yDisabled": "Accessibility Service Disabled",
+    "a11yDesc": "Praana cannot block apps without this permission.",
+    "enable": "Enable",
+    "mainInsight": "Main Insight",
+    "saathiMirror": "Saathi's Mirror",
+    "saathiQuote": "\"What actually needed your attention today?\"",
+    "reflectBtn": "Reflect with Saathi",
+    "streak": "Streak",
+    "consciousEvenings": "Conscious Evenings",
+    "rooms": "Rooms",
+    "activeSouls": "Active Souls",
+    "awarenessRhythm": "Awareness Rhythm",
+    "weeklyFlow": "Weekly Flow",
+    "focusVsDistraction": "Focus vs Distraction",
+    "todaysBalance": "Today's balance",
+    "today": "Today",
+    "screenTime": "Screen Time",
+    "focusRooms": "Focus Rooms",
+    "topApps": "Top Apps",
+    "breathe": "Breathe",
+    "pause": "Pause",
+    "goodMorning": "Good morning",
+    "goodAfternoon": "Good afternoon",
+    "goodEvening": "Good evening",
+    "days": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    "insights": [
+      "Your attention feels more fragmented after 11 PM lately.",
+      "You've had 3 deep focus sessions this week. Keep it up!",
+      "Mornings seem to be your most conscious and mindful time.",
+      "Notice how stress often triggers a spike in social media usage.",
+      "You're maintaining a great balance of digital wellness lately.",
+      "Your screen time dropped by 15% yesterday. Great job!"
+    ]
+  },
+  "focus": {
+    "activeFocus": "Active Focus",
+    "endSession": "End Session",
+    "focusRooms": "Focus Rooms",
+    "focusQuietly": "Focus quietly together",
+    "appLimits": "App Limits",
+    "protectAttention": "Protect your attention",
+    "manage": "Manage",
+    "quickFocus": "Quick Focus",
+    "hostRoom": "Host a Room",
+    "createSpace": "Create a space for your circle",
+    "activeRooms": "Active Rooms",
+    "liveNow": "Live now",
+    "join": "Join",
+    "joinRoomId": "Join by Room ID",
+    "deepBreath": "Take a deep breath. The world can wait for a few moments.",
+    "statusMessages": [
+      "Your attention is settling.",
+      "Stay with what matters.",
+      "The breath is your anchor.",
+      "Gentle awareness only.",
+      "Presence over performance."
+    ]
+  },
+  "saathi": {
+    "welcomeFallback": "Good day, {{name}}. I'm here.",
+    "greetingFallback": "{{greeting}}, {{name}}. What's on your mind?",
+    "errorResting": "Sorry, I'm resting right now.",
+    "errorNetwork": "Saathi is resting right now. Try again in a moment.",
+    "thinking": "Thinking...",
+    "listening": "Listening quietly",
+    "cantFocus": "I can't focus",
+    "feelTired": "I feel tired",
+    "helpMe": "Help me",
+    "typeThoughts": "Type your thoughts..."
+  },
+  "plan": {
+    "synthesizing": "Synthesizing your profile...",
+    "loading": "Loading your journey...",
+    "crafting": "We are crafting a personalized 21-day psychological roadmap based on your responses.",
+    "preparing": "Preparing your space.",
+    "noPlan": "No plan found. Please complete onboarding.",
+    "actionPlan": "Action Plan",
+    "journey": "Your 21-Day Psychological Journey",
+    "todaysMissionLabel": "Day {{day}} • Today's Mission",
+    "completeMission": "Complete Mission",
+    "journeyMap": "Journey Map",
+    "days21": "21 Days",
+    "todaysFocus": "Today's Focus",
+    "dayCompleted": "Day {{day}} Completed",
+    "dayMission": "Day {{day}} Mission"
+  },
+  "rooms": {
+    "focusRoom": "Focus Room",
+    "globalSpace": "Global Collective Space",
+    "activeCount": "{{count}} Active",
+    "inFlow": "You are in the flow.",
+    "readyFocus": "Ready to focus together?",
+    "presenceContributing": "Your presence is contributing to the collective energy of the room. Stay mindful.",
+    "joinToSignal": "Join the room to signal your intent. Seeing others focus helps anchor your own attention.",
+    "leaveRoom": "Leave Room",
+    "joinRoom": "Join Room",
+    "fellowExplorers": "Fellow Explorers",
+    "roomEmpty": "The room is currently empty.<br/>Be the first to start focusing.",
+    "you": "You"
+  }
+}

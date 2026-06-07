@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export default function Onboarding() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [step, setStep] = useState(1);
   const [fadeKey, setFadeKey] = useState(1);
   const [answers, setAnswers] = useState({
@@ -18,38 +20,38 @@ export default function Onboarding() {
   const questions = [
     {
       id: 'q1',
-      title: 'How do you usually feel after long scrolling sessions?',
-      subtitle: 'Observe the resonance of these words in your body.',
+      title: t('onboarding.q1.title'),
+      subtitle: t('onboarding.q1.subtitle'),
       type: 'single',
-      options: ['Mentally drained', 'Numb', 'Guilty', 'Unsatisfied', 'Completely fine']
+      options: t('onboarding.q1.options', { returnObjects: true })
     },
     {
       id: 'q2',
-      title: 'What do you want more space for in your life?',
-      subtitle: 'We’ll tailor your experience to help you cultivate the intentionality you need.',
+      title: t('onboarding.q2.title'),
+      subtitle: t('onboarding.q2.subtitle'),
       type: 'multiple',
-      options: ['Better focus', 'Better sleep', 'Calmness', 'Creativity', 'Discipline']
+      options: t('onboarding.q2.options', { returnObjects: true })
     },
     {
       id: 'q3',
-      title: 'What usually triggers your mindless scrolling?',
-      subtitle: 'Understanding the root helps us build better boundaries.',
+      title: t('onboarding.q3.title'),
+      subtitle: t('onboarding.q3.subtitle'),
       type: 'single',
-      options: ['Boredom', 'Stress/Anxiety', 'Procrastination', 'Loneliness', 'Habit']
+      options: t('onboarding.q3.options', { returnObjects: true })
     },
     {
       id: 'q4',
-      title: 'When are you most vulnerable to losing time?',
-      subtitle: 'We will be extra attentive during these windows.',
+      title: t('onboarding.q4.title'),
+      subtitle: t('onboarding.q4.subtitle'),
       type: 'single',
-      options: ['Early Morning', 'Mid-workday', 'Evening / Wind-down', 'Late night', 'Weekends']
+      options: t('onboarding.q4.options', { returnObjects: true })
     },
     {
       id: 'q5',
-      title: 'How should Praana gently interrupt you?',
-      subtitle: 'You can adjust this anytime in your preferences.',
+      title: t('onboarding.q5.title'),
+      subtitle: t('onboarding.q5.subtitle'),
       type: 'single',
-      options: ['Soft nudge', 'Mindful breathing', 'Reflective prompt', 'Strict block', 'No interruptions']
+      options: t('onboarding.q5.options', { returnObjects: true })
     }
   ];
 
@@ -143,7 +145,7 @@ export default function Onboarding() {
           onClick={() => navigate('/home')} 
           className="text-sm font-semibold text-on-surface-variant hover:text-primary transition-colors"
         >
-          Skip
+          {t('onboarding.skip')}
         </button>
       </header>
 
@@ -159,7 +161,7 @@ export default function Onboarding() {
             </h1>
             <p className="font-body-md text-lg text-on-surface-variant/80 italic">
               {currentQ.subtitle}
-              {currentQ.type === 'multiple' && <span className="block mt-1 text-sm font-semibold text-primary/60 not-italic">Choose all that apply</span>}
+              {currentQ.type === 'multiple' && <span className="block mt-1 text-sm font-semibold text-primary/60 not-italic">{t('onboarding.chooseAllThatApply')}</span>}
             </p>
           </div>
 
@@ -211,11 +213,11 @@ export default function Onboarding() {
               }`}
             >
               {isSaving ? <span className="material-symbols-outlined animate-spin">progress_activity</span> : null}
-              {isSaving ? 'Saving...' : 'Continue'}
+              {isSaving ? t('onboarding.saving') : t('onboarding.continue')}
             </button>
             {canContinue && (
               <span className="hidden md:inline text-sm text-on-surface-variant font-medium animate-pulse">
-                Press Enter ↵
+                {t('onboarding.pressEnter')}
               </span>
             )}
           </div>

@@ -12,10 +12,12 @@ import Plan from './components/Plan';
 import Saathi from './components/Saathi';
 import Profile from './components/Profile';
 import Rooms from './components/Rooms';
+import LanguageSwitcher from './components/LanguageSwitcher';
 
 function App() {
   return (
     <div className="app-container">
+      <LanguageSwitcher />
       <Routes>
         {/* Public Routes */}
         <Route path="/" element={<Landing />} />

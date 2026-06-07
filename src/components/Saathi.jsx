@@ -1,8 +1,10 @@
 import './app-pages.css';
 import { Sparkles, Send } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export default function Saathi() {
+  const { t } = useTranslation();
   const [message, setMessage] = useState('');
   const [userName, setUserName] = useState('');
   const [messages, setMessages] = useState([]);
@@ -49,19 +51,19 @@ export default function Saathi() {
         
         setMessages([
           { 
-            text: data.saathi?.message || data.reply || `Good day, ${firstName}. I'm here.`, 
+            text: data.saathi?.message || data.reply || t('saathi.welcomeFallback', { name: firstName }), 
             isBot: true, 
             isWelcome: true 
           }
         ]);
       } catch (err) {
         const hour = new Date().getHours();
-        let greeting = 'Good evening';
-        if (hour >= 5 && hour < 12) greeting = 'Good morning';
-        else if (hour >= 12 && hour < 17) greeting = 'Good afternoon';
+        let greetingKey = 'home.goodEvening';
+        if (hour >= 5 && hour < 12) greetingKey = 'home.goodMorning';
+        else if (hour >= 12 && hour < 17) greetingKey = 'home.goodAfternoon';
         
         setMessages([
-          { text: `${greeting}, ${firstName}. What's on your mind?`, isBot: true, isWelcome: true }
+          { text: t('saathi.greetingFallback', { greeting: t(greetingKey), name: firstName }), isBot: true, isWelcome: true }
         ]);
       } finally {
         setIsTyping(false);
@@ -111,9 +113,9 @@ export default function Saathi() {
       
       const data = await res.json();
       
-      setMessages(prev => [...prev, { text: data.reply || "Sorry, I'm resting right now.", isBot: true, highlight: data.emotion === 'crisis' }]);
+      setMessages(prev => [...prev, { text: data.reply || t('saathi.errorResting'), isBot: true, highlight: data.emotion === 'crisis' }]);
     } catch (err) {
-      setMessages(prev => [...prev, { text: "Saathi is resting right now. Try again in a moment.", isBot: true }]);
+      setMessages(prev => [...prev, { text: t('saathi.errorNetwork'), isBot: true }]);
     } finally {
       setIsTyping(false);
     }
@@ -134,7 +136,7 @@ export default function Saathi() {
             <h2>Saathi</h2>
             <div className="saathi-status">
               <span className="status-dot"></span>
-              {isTyping ? 'Thinking...' : 'Listening quietly'}
+              {isTyping ? t('saathi.thinking') : t('saathi.listening')}
             </div>
           </div>
         </div>
@@ -166,15 +168,15 @@ export default function Saathi() {
 
       <div className="chat-input-area">
         <div className="suggestion-chips">
-          <button className="chip" onClick={() => handleSend("I can't focus")}>I can't focus</button>
-          <button className="chip" onClick={() => handleSend("I feel tired")}>I feel tired</button>
-          <button className="chip" onClick={() => handleSend("Help me")}>Help me</button>
+          <button className="chip" onClick={() => handleSend(t('saathi.cantFocus'))}>{t('saathi.cantFocus')}</button>
+          <button className="chip" onClick={() => handleSend(t('saathi.feelTired'))}>{t('saathi.feelTired')}</button>
+          <button className="chip" onClick={() => handleSend(t('saathi.helpMe'))}>{t('saathi.helpMe')}</button>
         </div>
         
         <div className="message-input-wrapper">
           <input 
             type="text" 
-            placeholder="Type your thoughts..." 
+            placeholder={t('saathi.typeThoughts')} 
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             onKeyDown={handleKeyDown}

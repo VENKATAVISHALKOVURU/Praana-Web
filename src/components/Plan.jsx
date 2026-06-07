@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
+import { useTranslation } from 'react-i18next';
 
 export default function Plan() {
+  const { t } = useTranslation();
   const [currentDay, setCurrentDay] = useState(1);
   const [plan, setPlan] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -114,10 +116,10 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
       <div className="flex flex-col min-h-full bg-[#f8f7f2] items-center justify-center text-center p-6 pb-32">
         <span className="material-symbols-outlined animate-spin text-primary text-5xl mb-6">progress_activity</span>
         <h2 className="text-2xl font-headline-md font-bold text-primary tracking-tight mb-2">
-          {isGenerating ? "Synthesizing your profile..." : "Loading your journey..."}
+          {isGenerating ? t('plan.synthesizing') : t('plan.loading')}
         </h2>
         <p className="text-on-surface-variant max-w-sm">
-          {isGenerating ? "We are crafting a personalized 21-day psychological roadmap based on your responses." : "Preparing your space."}
+          {isGenerating ? t('plan.crafting') : t('plan.preparing')}
         </p>
       </div>
     );
@@ -126,7 +128,7 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
   if (!plan) {
     return (
       <div className="flex flex-col min-h-full bg-[#f8f7f2] items-center justify-center text-center p-6 pb-32">
-        <p className="text-on-surface-variant mb-4">No plan found. Please complete onboarding.</p>
+        <p className="text-on-surface-variant mb-4">{t('plan.noPlan')}</p>
       </div>
     );
   }
@@ -136,8 +138,8 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
   return (
     <div className="flex flex-col min-h-full bg-[#f8f7f2] text-on-surface">
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl px-6 py-6 border-b border-border-dusty/10">
-        <h1 className="font-headline-md text-2xl text-primary tracking-tight font-bold">Action Plan</h1>
-        <p className="text-sm text-on-surface-variant font-medium mt-1">Your 21-Day Psychological Journey</p>
+        <h1 className="font-headline-md text-2xl text-primary tracking-tight font-bold">{t('plan.actionPlan')}</h1>
+        <p className="text-sm text-on-surface-variant font-medium mt-1">{t('plan.journey')}</p>
       </header>
       
       <main className="flex-1 px-6 pt-6 pb-32 max-w-3xl mx-auto w-full">
@@ -146,7 +148,7 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
           <div className="bg-primary text-white rounded-3xl p-8 relative overflow-hidden shadow-lg">
             <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full blur-3xl -translate-y-10 translate-x-10 pointer-events-none"></div>
             <div className="relative z-10">
-              <span className="uppercase text-xs font-bold tracking-widest text-surface-mint/80 mb-2 block">Day {currentDay} • Today's Mission</span>
+              <span className="uppercase text-xs font-bold tracking-widest text-surface-mint/80 mb-2 block">{t('plan.todaysMissionLabel', { day: currentDay })}</span>
               <h2 className="text-3xl font-headline-md font-medium tracking-tight leading-tight mb-4">
                 {todayMission.title}
               </h2>
@@ -154,7 +156,7 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
                 {todayMission.description}
               </p>
               <button className="bg-surface-mint text-primary font-bold px-6 py-3 rounded-full hover:bg-white transition-colors shadow-md active:scale-95">
-                Complete Mission
+                {t('plan.completeMission')}
               </button>
             </div>
           </div>
@@ -163,8 +165,8 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
         {/* Journey Map */}
         <section>
           <div className="flex justify-between items-end mb-6">
-            <h3 className="text-xl text-primary font-bold tracking-tight">Journey Map</h3>
-            <span className="text-xs font-bold uppercase tracking-widest text-outline">21 Days</span>
+            <h3 className="text-xl text-primary font-bold tracking-tight">{t('plan.journeyMap')}</h3>
+            <span className="text-xs font-bold uppercase tracking-widest text-outline">{t('plan.days21')}</span>
           </div>
 
           <div className="space-y-4">
@@ -201,7 +203,7 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
                   
                   <div className="flex-1">
                     <h4 className={`font-semibold ${isCurrent ? 'text-primary' : 'text-on-surface'}`}>
-                      {isCurrent ? "Today's Focus" : isCompleted ? `Day ${day} Completed` : `Day ${day} Mission`}
+                      {isCurrent ? t('plan.todaysFocus') : isCompleted ? t('plan.dayCompleted', { day }) : t('plan.dayMission', { day })}
                     </h4>
                     {!isLocked && (
                       <p className="text-sm text-on-surface-variant mt-1">

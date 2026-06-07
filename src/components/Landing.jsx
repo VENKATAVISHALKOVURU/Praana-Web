@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import '../landing.css';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial } from '@react-three/drei';
@@ -63,6 +64,7 @@ function AnimatedOrb() {
 export default function Landing() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('auth');
+  const { t } = useTranslation();
 
   React.useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -118,7 +120,7 @@ export default function Landing() {
     <li><a href="#screens">App Screens</a></li>
     <li><a href="#saathi">Saathi AI</a></li>
   </ul>
-  <button className="nav-cta" onClick={handleBeginJourney}>Begin Journey</button>
+  <button className="nav-cta" onClick={handleBeginJourney}>{t('landing.navBeginJourney')}</button>
 </nav>
 
 
@@ -132,11 +134,11 @@ export default function Landing() {
       </svg>
     </div>
     <h1 className="fade-up fade-up-delay-1">Praana</h1>
-    <p className="hero-tagline fade-up fade-up-delay-2">Your conscious layer between impulse and action.</p>
-    <p className="hero-label fade-up fade-up-delay-2">AWARENESS BEFORE IMPULSE</p>
+    <p className="hero-tagline fade-up fade-up-delay-2">{t('landing.heroTagline')}</p>
+    <p className="hero-label fade-up fade-up-delay-2">{t('landing.heroLabel')}</p>
     <div className="hero-buttons fade-up fade-up-delay-3">
-      <button className="btn-primary" onClick={handleEnterSpace}>Enter Space</button>
-      <button className="btn-secondary" onClick={() => document.getElementById('screens')?.scrollIntoView({behavior:'smooth'})}>See the App</button>
+      <button className="btn-primary" onClick={handleEnterSpace}>{t('landing.btnEnterSpace')}</button>
+      <button className="btn-secondary" onClick={() => document.getElementById('screens')?.scrollIntoView({behavior:'smooth'})}>{t('landing.btnSeeApp')}</button>
     </div>
   </div>
 </div>

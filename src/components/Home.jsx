@@ -4,6 +4,9 @@ import { auth } from '../firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sphere, MeshDistortMaterial } from '@react-three/drei';
+import { ref, onValue } from 'firebase/database';
+import { rtdb } from '../firebase.js';
+import { useTranslation } from 'react-i18next';
 
 function DashboardBreathingOrb() {
   const meshRef = React.useRef();
@@ -37,22 +40,24 @@ function DashboardBreathingOrb() {
 }
 
 export default function Home() {
-  const [greeting, setGreeting] = useState('Good evening');
+  const { t } = useTranslation();
+  const [timeOfDay, setTimeOfDay] = useState('evening');
   const [userName, setUserName] = useState('');
   const [userInitials, setUserInitials] = useState('P');
   const [userPhoto, setUserPhoto] = useState(null);
   const [currentDate, setCurrentDate] = useState('Today');
-  const [insight, setInsight] = useState("Your attention feels more fragmented after 11 PM lately.");
+  const [insightIndex, setInsightIndex] = useState(0);
+  const [activeParticipants, setActiveParticipants] = useState(0);
 
   useEffect(() => {
     // Set greeting based on time of day
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) {
-      setGreeting('Good morning');
+      setTimeOfDay('morning');
     } else if (hour >= 12 && hour < 17) {
-      setGreeting('Good afternoon');
+      setTimeOfDay('afternoon');
     } else {
-      setGreeting('Good evening');
+      setTimeOfDay('evening');
     }
 
     // Set dynamic date
@@ -61,19 +66,12 @@ export default function Home() {
     setCurrentDate(today.toLocaleDateString('en-US', options));
 
     // Set dynamic insight based on day
-    const insights = [
-      "Your attention feels more fragmented after 11 PM lately.",
-      "You've had 3 deep focus sessions this week. Keep it up!",
-      "Mornings seem to be your most conscious and mindful time.",
-      "Notice how stress often triggers a spike in social media usage.",
-      "You're maintaining a great balance of digital wellness lately.",
-      "Your screen time dropped by 15% yesterday. Great job!"
-    ];
+    const insightsCount = 6;
     const dayOfYear = Math.floor((today - new Date(today.getFullYear(), 0, 0)) / (1000 * 60 * 60 * 24));
-    setInsight(insights[dayOfYear % insights.length]);
+    setInsightIndex(dayOfYear % insightsCount);
 
     // Listen to Firebase auth and get real user data
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       if (user) {
         // Set photo
         setUserPhoto(user.photoURL || null);
@@ -101,7 +99,21 @@ export default function Home() {
       }
     });
 
-    return () => unsubscribe();
+    // Listen to active rooms
+    const roomRef = ref(rtdb, 'rooms/global/participants');
+    const unsubscribeRooms = onValue(roomRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        setActiveParticipants(Object.keys(data).length);
+      } else {
+        setActiveParticipants(0);
+      }
+    });
+
+    return () => {
+      unsubscribeAuth();
+      unsubscribeRooms();
+    };
   }, []);
 
   return (
@@ -110,9 +122,12 @@ export default function Home() {
       <header className="sticky top-0 z-40 bg-[#f8f7f2]/80 backdrop-blur-xl border-b border-border-dusty/10 flex justify-between items-center w-full px-6 py-4 md:px-12 md:py-6 shadow-[0_4px_32px_rgba(0,0,0,0.02)] transition-all">
         <div className="flex flex-col gap-0.5">
           <div className="flex items-center gap-2">
-            <span className="font-headline-md text-xl md:text-2xl text-primary tracking-tight font-semibold">{greeting}{userName ? `, ${userName}` : ''}</span>
+            <span className="font-headline-md text-xl md:text-2xl text-primary tracking-tight font-semibold">
+              {timeOfDay === 'morning' ? t('home.goodMorning') : timeOfDay === 'afternoon' ? t('home.goodAfternoon') : t('home.goodEvening')}
+              {userName ? `, ${userName}` : ''}
+            </span>
           </div>
-          <span className="font-label-sm text-xs md:text-sm text-on-surface-variant/80 italic font-medium">Awareness grows through noticing.</span>
+          <span className="font-label-sm text-xs md:text-sm text-on-surface-variant/80 italic font-medium">{t('home.awarenessSubtitle')}</span>
         </div>
         <div className="flex items-center gap-4">
           <Link to="/focus" className="w-10 h-10 rounded-full bg-surface-mint flex items-center justify-center text-primary hover:shadow-md transition-all duration-300">
@@ -150,12 +165,12 @@ export default function Home() {
                 <span className="material-symbols-outlined">warning</span>
               </div>
               <div>
-                <h3 className="font-bold text-red-800 text-sm md:text-base">Accessibility Service Disabled</h3>
-                <p className="text-red-600/90 text-xs md:text-sm font-medium mt-0.5">Praana cannot block apps without this permission.</p>
+                <h3 className="font-bold text-red-800 text-sm md:text-base">{t('home.a11yDisabled')}</h3>
+                <p className="text-red-600/90 text-xs md:text-sm font-medium mt-0.5">{t('home.a11yDesc')}</p>
               </div>
             </div>
             <Link to="/profile" className="w-full sm:w-auto px-6 py-2.5 bg-red-600 text-white rounded-xl font-bold text-sm hover:bg-red-700 transition-colors shadow-sm text-center">
-              Enable
+              {t('home.enable')}
             </Link>
           </div>
         </section>
@@ -173,7 +188,7 @@ export default function Home() {
             <div className="relative z-10 flex justify-between items-start mb-12">
               <div className="flex items-center gap-2 bg-black/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
                 <span className="w-2 h-2 rounded-full bg-surface-mint animate-pulse"></span>
-                <span className="font-label-sm text-[10px] font-bold uppercase tracking-[0.15em] text-surface-mint">Main Insight</span>
+                <span className="font-label-sm text-[10px] font-bold uppercase tracking-[0.15em] text-surface-mint">{t('home.mainInsight')}</span>
               </div>
               <span className="font-label-sm text-xs font-bold text-white/90 tracking-widest uppercase bg-black/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
                 {currentDate}
@@ -182,7 +197,7 @@ export default function Home() {
 
             <div className="relative z-10">
               <h1 className="text-white max-w-[95%] md:max-w-[85%] font-headline-md text-3xl md:text-4xl lg:text-5xl leading-[1.15] font-medium tracking-tight drop-shadow-md">
-                {insight}
+                {t('home.insights', { returnObjects: true })[insightIndex]}
               </h1>
             </div>
           </div>
@@ -196,12 +211,12 @@ export default function Home() {
             </div>
             
             <div className="space-y-1.5 z-10 mb-6 w-full">
-              <h3 className="font-semibold text-xl text-white tracking-tight">Saathi's Mirror</h3>
-              <p className="text-sm font-medium text-surface-mint/80 leading-relaxed px-4">"What actually needed your attention today?"</p>
+              <h3 className="font-semibold text-xl text-white tracking-tight">{t('home.saathiMirror')}</h3>
+              <p className="text-sm font-medium text-surface-mint/80 leading-relaxed px-4">{t('home.saathiQuote')}</p>
             </div>
             
             <Link to="/saathi" className="w-full bg-surface-mint text-primary py-3.5 rounded-xl font-bold text-sm transition-all hover:bg-white hover:scale-[1.02] active:scale-[0.98] shadow-md z-10 block text-center mt-auto">
-              Reflect with Saathi
+              {t('home.reflectBtn')}
             </Link>
           </div>
         </div>
@@ -215,41 +230,45 @@ export default function Home() {
               <div className="w-10 h-10 rounded-2xl bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-surface-mint transition-colors duration-300">
                 <span className="material-symbols-outlined text-xl">nightlight</span>
               </div>
-              <span className="uppercase text-[10px] font-bold tracking-widest text-outline">Streak</span>
+              <span className="uppercase text-[10px] font-bold tracking-widest text-outline">{t('home.streak')}</span>
             </div>
             <div className="mt-6">
               <span className="block text-4xl font-display-lg text-primary tracking-tight font-semibold">12 Days</span>
-              <span className="text-sm font-medium text-on-surface-variant mt-1 block">Conscious Evenings</span>
+              <span className="text-sm font-medium text-on-surface-variant mt-1 block">{t('home.consciousEvenings')}</span>
             </div>
           </div>
 
           {/* Completed Sessions Card */}
-          <div className="lg:col-span-3 bg-white p-6 rounded-3xl flex flex-col justify-between min-h-[160px] shadow-sm border border-border-dusty/30 hover:border-border-dusty/60 hover:shadow-md transition-all duration-300 group cursor-default">
-            <div className="flex justify-between items-start">
+          <Link to="/rooms" className="lg:col-span-3 bg-white p-6 rounded-3xl flex flex-col justify-between min-h-[160px] shadow-sm border border-border-dusty/30 hover:border-border-dusty/60 hover:shadow-md transition-all duration-300 group cursor-pointer relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-24 h-24 bg-surface-mint/20 rounded-full blur-xl -translate-y-10 translate-x-10 pointer-events-none"></div>
+            <div className="flex justify-between items-start relative z-10">
               <div className="w-10 h-10 rounded-2xl bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-surface-mint transition-colors duration-300">
-                <span className="material-symbols-outlined text-xl">task_alt</span>
+                <span className="material-symbols-outlined text-xl">group_work</span>
               </div>
-              <span className="uppercase text-[10px] font-bold tracking-widest text-outline">Sessions</span>
+              <span className="uppercase text-[10px] font-bold tracking-widest text-outline flex items-center gap-1">
+                {activeParticipants > 0 ? <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> : null}
+                {t('home.rooms')}
+              </span>
             </div>
-            <div className="mt-6">
-              <span className="block text-4xl font-display-lg text-primary tracking-tight font-semibold">47</span>
-              <span className="text-sm font-medium text-on-surface-variant mt-1 block">Focus Rooms</span>
+            <div className="mt-6 relative z-10">
+              <span className="block text-4xl font-display-lg text-primary tracking-tight font-semibold">{activeParticipants}</span>
+              <span className="text-sm font-medium text-on-surface-variant mt-1 block">{t('home.activeSouls')}</span>
             </div>
-          </div>
+          </Link>
 
           {/* Awareness Heatmap Card */}
           <div className="sm:col-span-2 lg:col-span-6 bg-white p-6 rounded-3xl shadow-sm border border-border-dusty/30 hover:border-border-dusty/60 hover:shadow-md transition-all duration-300 flex flex-col justify-between">
             <div className="flex justify-between items-center mb-6">
               <div className="flex flex-col gap-1">
-                <span className="uppercase text-[10px] tracking-widest text-outline font-bold">Awareness Rhythm</span>
-                <span className="font-display text-xl text-primary font-semibold tracking-tight">Weekly Flow</span>
+                <span className="uppercase text-[10px] tracking-widest text-outline font-bold">{t('home.awarenessRhythm')}</span>
+                <span className="font-display text-xl text-primary font-semibold tracking-tight">{t('home.weeklyFlow')}</span>
               </div>
               <div className="w-10 h-10 rounded-2xl bg-surface-container-low flex items-center justify-center text-primary">
                 <span className="material-symbols-outlined text-xl">calendar_today</span>
               </div>
             </div>
             <div className="flex justify-between items-center gap-2 lg:gap-4 mt-auto">
-              {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, idx) => (
+              {t('home.days', { returnObjects: true }).map((day, idx) => (
                 <div key={day} className="flex flex-col items-center gap-2.5 flex-1 group cursor-pointer">
                   <span className={`uppercase font-bold text-[10px] md:text-[11px] transition-colors ${idx === 3 ? 'text-primary' : 'text-outline group-hover:text-on-surface-variant'}`}>{day}</span>
                   <div className={`w-full max-w-[48px] aspect-square rounded-xl md:rounded-2xl flex items-center justify-center relative transition-all duration-300
@@ -271,16 +290,16 @@ export default function Home() {
           <div className="lg:col-span-5 bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-border-dusty/30 hover:border-border-dusty/60 hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[260px]">
             <div className="flex justify-between items-start mb-8">
               <div>
-                <h2 className="text-xl font-semibold tracking-tight text-primary">Focus vs Distraction</h2>
-                <p className="text-xs text-on-surface-variant font-medium mt-1">Today's balance</p>
+                <h2 className="text-xl font-semibold tracking-tight text-primary">{t('home.focusVsDistraction')}</h2>
+                <p className="text-xs text-on-surface-variant font-medium mt-1">{t('home.todaysBalance')}</p>
               </div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-outline bg-surface-container-low px-3 py-1.5 rounded-lg">Today</span>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-outline bg-surface-container-low px-3 py-1.5 rounded-lg">{t('home.today')}</span>
             </div>
             
             <div className="space-y-6 mt-auto">
               <div className="space-y-2 group">
                 <div className="flex justify-between text-sm">
-                  <span className="text-on-surface font-semibold group-hover:text-primary transition-colors">Screen Time</span>
+                  <span className="text-on-surface font-semibold group-hover:text-primary transition-colors">{t('home.screenTime')}</span>
                   <span className="text-on-surface-variant text-xs font-bold bg-surface-container-low px-2 py-0.5 rounded-md">2h 45m</span>
                 </div>
                 <div className="w-full h-3 bg-surface-container rounded-full overflow-hidden shadow-inner relative">
@@ -289,7 +308,7 @@ export default function Home() {
               </div>
               <div className="space-y-2 group">
                 <div className="flex justify-between text-sm">
-                  <span className="text-on-surface font-semibold group-hover:text-primary transition-colors">Focus Rooms</span>
+                  <span className="text-on-surface font-semibold group-hover:text-primary transition-colors">{t('home.focusRooms')}</span>
                   <span className="text-on-surface-variant text-xs font-bold bg-surface-container-low px-2 py-0.5 rounded-md">1h 15m</span>
                 </div>
                 <div className="w-full h-3 bg-surface-container rounded-full overflow-hidden shadow-inner relative">
@@ -302,7 +321,7 @@ export default function Home() {
           {/* Top Apps Today Section */}
           <div className="lg:col-span-4 bg-white rounded-3xl p-6 shadow-sm border border-border-dusty/30 hover:border-border-dusty/60 hover:shadow-md transition-all duration-300 flex flex-col min-h-[260px]">
             <div className="flex justify-between items-center mb-5">
-              <h2 className="text-xl font-semibold tracking-tight text-primary">Top Apps</h2>
+              <h2 className="text-xl font-semibold tracking-tight text-primary">{t('home.topApps')}</h2>
             </div>
             
             <div className="space-y-3 flex-1 flex flex-col justify-center">
@@ -342,7 +361,7 @@ export default function Home() {
           <div className="lg:col-span-3 bg-gradient-to-b from-[#1a3821] to-primary rounded-3xl p-6 flex flex-col items-center justify-center relative overflow-hidden shadow-[0_4px_24px_rgba(0,0,0,0.08)] group min-h-[260px]">
             <div className="absolute top-5 left-5 z-10 flex items-center gap-1.5">
               <span className="material-symbols-outlined text-surface-mint text-[14px]">air</span>
-              <span className="uppercase text-[9px] font-bold tracking-widest text-surface-mint/80">Breathe</span>
+              <span className="uppercase text-[9px] font-bold tracking-widest text-surface-mint/80">{t('home.breathe')}</span>
             </div>
             
             {/* 3D Breathing Orb */}
@@ -371,7 +390,7 @@ export default function Home() {
               `}</style>
               <div className="inhale-exhale-text font-display-lg text-2xl text-surface-mint tracking-tight font-medium drop-shadow-md"></div>
             </div>
-            <p className="z-10 absolute bottom-5 text-[10px] text-surface-mint/60 font-bold uppercase tracking-widest">Pause</p>
+            <p className="z-10 absolute bottom-5 text-[10px] text-surface-mint/60 font-bold uppercase tracking-widest">{t('home.pause')}</p>
           </div>
 
         </div>
