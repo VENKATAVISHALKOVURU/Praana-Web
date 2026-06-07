@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 
 export default function Saathi() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [message, setMessage] = useState('');
   const [userName, setUserName] = useState('');
   const [messages, setMessages] = useState([]);
@@ -43,7 +43,8 @@ export default function Saathi() {
             behavioralContext: {
               emotionalState: 'neutral',
               repeatOpenCount: 1
-            }
+            },
+            language: i18n.language
           })
         });
         
@@ -108,7 +109,7 @@ export default function Saathi() {
       const res = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, userName, message: text, chatHistory })
+        body: JSON.stringify({ userId, userName, message: text, chatHistory, language: i18n.language })
       });
       
       const data = await res.json();
