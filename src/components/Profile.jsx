@@ -127,50 +127,6 @@ export default function Profile() {
           </div>
         </div>
 
-        {/* System Permissions */}
-        <div className="settings-section">
-          <h4 className="section-title">System Permissions</h4>
-          
-          <div className="settings-list">
-            <div className="settings-item">
-              <div className="settings-item-left">
-                <div className="settings-icon"><Smartphone size={20} /></div>
-                <div className="settings-text">
-                  <h5>Accessibility Service</h5>
-                  <p>Required for App Limits</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[#4CAF50]">check_circle</span>
-              </div>
-            </div>
-
-            <div className="settings-item">
-              <div className="settings-item-left">
-                <div className="settings-icon"><Activity size={20} /></div>
-                <div className="settings-text">
-                  <h5>Usage Stats API</h5>
-                  <p>Required for Screen Time tracking</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="material-symbols-outlined text-[#F44336]">cancel</span>
-              </div>
-            </div>
-            
-            <div className="settings-item cursor-pointer hover:bg-surface-container-low transition-colors" onClick={() => setShowOverlay(true)}>
-              <div className="settings-item-left">
-                <div className="settings-icon"><Shield size={20} /></div>
-                <div className="settings-text">
-                  <h5>Simulate Interruption Overlay</h5>
-                  <p>Test the breathing screen (Web Demo)</p>
-                </div>
-              </div>
-              <ChevronRight size={20} color="var(--on-surface-variant)" />
-            </div>
-          </div>
-        </div>
-
         {/* Privacy */}
         <div className="settings-section">
           <h4 className="section-title">Privacy & Data</h4>

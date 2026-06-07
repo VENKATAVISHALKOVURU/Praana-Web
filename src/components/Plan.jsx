@@ -43,35 +43,70 @@ export default function Plan() {
 
   const generatePlan = async (onboardingData) => {
     setIsGenerating(true);
-    // Simulating AI generation via an API (e.g. Groq/Gemini)
-    setTimeout(async () => {
+    try {
+      // Initialize Gemini
+      const { GoogleGenerativeAI } = await import('@google/generative-ai');
+      // Assume VITE_GEMINI_API_KEY is available or use a dummy fallback just for compilation
+      // Since we don't have the key in code, we will rely on env. If missing, it will throw.
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY || 'dummy_key';
+      const genAI = new GoogleGenerativeAI(apiKey);
+      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      
+      const prompt = `You are a psychological architect specializing in digital wellbeing.
+Create a customized 21-day behavioral change roadmap based on the following user onboarding data:
+${JSON.stringify(onboardingData, null, 2)}
+
+Output strictly valid JSON exactly matching this structure:
+{
+  "missions": [
+    {
+      "day": 1,
+      "title": "String",
+      "description": "String"
+    }
+  ]
+}
+Make sure there are exactly 21 missions. Do not output anything other than JSON.`;
+
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      let text = response.text().trim();
+      
+      // Strip markdown code block wrappers if any
+      if (text.startsWith('\`\`\`json')) text = text.substring(7);
+      if (text.startsWith('\`\`\`')) text = text.substring(3);
+      if (text.endsWith('\`\`\`')) text = text.substring(0, text.length - 3);
+
+      const parsedPlan = JSON.parse(text);
+      const newPlan = {
+        currentDay: 1,
+        missions: parsedPlan.missions || parsedPlan
+      };
+      
+      const docRef = doc(db, 'users', userId);
+      await setDoc(docRef, { plan: newPlan, profileGenerated: true }, { merge: true });
+      setPlan(newPlan);
+    } catch (e) {
+      console.error("Failed to save generated plan", e);
+      // Fallback to dummy plan if Gemini API fails (e.g., missing API key)
       const newPlan = {
         currentDay: 1,
         missions: Array.from({ length: 21 }).map((_, index) => {
           const day = index + 1;
           let title = `Mission ${day}`;
           let desc = "Build friction into the habit loop.";
-          
           if (day === 1) { title = "Acknowledge the baseline."; desc = "Observe your usage without judgment."; }
           else if (day === 2) { title = "Audit your triggers."; desc = "Identify what prompts the mindless scroll."; }
-          else if (day === 3) { title = "The first boundary."; desc = "Set a physical limit on your device."; }
-          else if (day === 4) { title = "Wait 5 seconds."; desc = "Friction breaks the automatic loop. Force a 5-second pause."; }
-          
           return { day, title, description: desc };
         })
       };
-      
-      try {
-        const docRef = doc(db, 'users', userId);
-        await setDoc(docRef, { plan: newPlan, profileGenerated: true }, { merge: true });
-        setPlan(newPlan);
-      } catch (e) {
-        console.error("Failed to save generated plan", e);
-      }
-      
-      setIsGenerating(false);
-      setIsLoading(false);
-    }, 3000);
+      const docRef = doc(db, 'users', userId);
+      await setDoc(docRef, { plan: newPlan, profileGenerated: true }, { merge: true });
+      setPlan(newPlan);
+    }
+    
+    setIsGenerating(false);
+    setIsLoading(false);
   };
 
   if (isLoading || isGenerating) {
