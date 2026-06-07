@@ -1,4 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Sphere, MeshDistortMaterial } from '@react-three/drei';
+
+function BreathingOrb3D() {
+  const meshRef = useRef();
+  
+  useFrame((state) => {
+    if (meshRef.current) {
+      // 8-second breathing cycle (match the CSS animation duration)
+      // Math.sin(time) goes from -1 to 1.
+      const t = state.clock.getElapsedTime();
+      const cycle = Math.sin((t * Math.PI * 2) / 8); 
+      
+      // Scale between 2.0 and 2.2
+      const scale = 2.0 + cycle * 0.1;
+      meshRef.current.scale.setScalar(scale);
+      
+      // Slow rotation
+      meshRef.current.rotation.y += 0.005;
+      meshRef.current.rotation.x += 0.002;
+    }
+  });
+
+  return (
+    <Sphere ref={meshRef} visible args={[1, 64, 64]} scale={2.0}>
+      <MeshDistortMaterial
+        color="#c3e5b2"
+        attach="material"
+        distort={0.4}
+        speed={1.0}
+        roughness={0.5}
+        transparent
+        opacity={0.3}
+      />
+    </Sphere>
+  );
+}
 
 export default function Focus() {
   const [activeMindStates, setActiveMindStates] = useState([]);
@@ -99,8 +136,12 @@ export default function Focus() {
         </header>
         
         <main className="flex-grow flex flex-col items-center justify-center relative px-margin-mobile overflow-hidden">
-          <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-            <div className="breathing-bg w-[150%] h-[150%] rounded-full bg-gradient-to-tr from-surface-mint via-surface-bright to-surface-herbal blur-3xl opacity-30"></div>
+          <div className="absolute inset-0 pointer-events-none flex items-center justify-center z-0">
+            <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 5], fov: 45 }}>
+              <ambientLight intensity={1.5} />
+              <directionalLight position={[0, 5, 5]} intensity={1} />
+              <BreathingOrb3D />
+            </Canvas>
           </div>
           
           <div className="relative z-10 flex flex-col items-center text-center max-w-md w-full">
@@ -155,129 +196,154 @@ export default function Focus() {
   // VIEW: FOCUS SETUP
   // ----------------------------------------------------------------------
   return (
-    <div className="bg-background text-on-surface font-body-md selection:bg-surface-herbal min-h-screen pb-24">
-      <header className="w-full top-0 z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop py-md bg-surface dark:bg-surface-dim transition-all duration-300 ease-in-out">
+    <div className="bg-[#f8f7f2] text-[#1b1c15] font-body-md selection:bg-surface-herbal min-h-screen pb-24">
+      <header className="w-full top-0 z-50 flex justify-between items-center px-6 md:px-12 py-6 bg-white/80 backdrop-blur-xl border-b border-border-dusty/10 transition-all duration-300 ease-in-out">
         <div className="flex items-center gap-2">
-          <span className="material-symbols-outlined text-primary dark:text-inverse-primary">spa</span>
-          <h1 className="font-headline-md text-headline-md font-bold text-primary dark:text-tertiary-fixed-dim">Praana</h1>
+          <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center text-white shadow-sm">
+            <span className="material-symbols-outlined text-[20px]">bubble_chart</span>
+          </div>
+          <h1 className="font-headline-md text-2xl font-bold text-primary">Praana</h1>
         </div>
         <div className="flex items-center gap-4">
-          <button className="p-2 rounded-full hover:bg-surface-mint dark:hover:bg-primary-container transition-colors">
-            <span className="material-symbols-outlined text-on-surface-variant dark:text-outline">account_circle</span>
+          <button className="p-2.5 rounded-full hover:bg-surface-container-low transition-colors">
+            <span className="material-symbols-outlined text-on-surface-variant">search</span>
           </button>
         </div>
       </header>
 
-      <main className="max-w-2xl mx-auto px-margin-mobile pt-lg space-y-xl">
-        <header className="text-center space-y-xs">
-          <h2 className="font-headline-lg text-headline-lg text-primary">Focus</h2>
-          <p className="font-body-md text-on-surface-variant italic">Protect your attention intentionally.</p>
+      <main className="max-w-2xl mx-auto px-6 pt-10 space-y-12">
+        <header className="space-y-2">
+          <h2 className="font-headline-lg text-4xl text-primary font-bold tracking-tight">Focus Rooms</h2>
+          <p className="font-body-md text-on-surface-variant opacity-80">Focus quietly together</p>
         </header>
 
-        <section className="space-y-md">
-          <h3 className="font-title-lg text-title-lg text-on-background">How does your mind feel right now?</h3>
-          <div className="flex flex-wrap gap-sm">
-            {['Restless', 'Distracted', 'Calm', 'Mentally Heavy', 'Focused'].map(state => {
-              const isActive = activeMindStates.includes(state);
-              return (
-                <button 
-                  key={state}
-                  onClick={() => toggleMindState(state)}
-                  className={`px-md py-sm rounded-full border text-label-md font-label-md transition-colors ${
-                    isActive ? 'bg-[#24452d] text-[#aad0af] border-transparent' : 'border-border-dusty bg-surface hover:bg-surface-mint text-on-surface'
-                  }`}
-                >
-                  {state}
-                </button>
-              );
-            })}
-          </div>
-        </section>
-
-        <section className="space-y-md">
-          <h3 className="font-title-lg text-title-lg text-on-background">What deserves your attention right now?</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-md">
-            {focusOptions.map(option => {
-              const isActive = selectedFocus === option.id;
-              return (
-                <div 
-                  key={option.id}
-                  onClick={() => setSelectedFocus(option.id)}
-                  className={`cursor-pointer p-md rounded-xl border transition-all flex flex-col items-center gap-sm text-center ${
-                    isActive ? 'bg-secondary-container border-primary' : 'bg-surface-mint border-transparent hover:border-border-dusty'
-                  }`}
-                >
-                  <span className="material-symbols-outlined text-primary text-[32px]">{option.icon}</span>
-                  <span className="font-label-md text-label-md">{option.label}</span>
+        {/* Setup App Limits Card */}
+        <section>
+          <div className="bg-white rounded-3xl p-6 md:p-8 shadow-[0_4px_24px_rgba(0,0,0,0.03)] border border-white/60 hover:shadow-[0_8px_32px_rgba(0,0,0,0.06)] transition-all duration-300">
+            <div className="flex justify-between items-center mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-xl bg-surface-mint flex items-center justify-center">
+                  <span className="material-symbols-outlined text-primary">phonelink_lock</span>
                 </div>
-              );
-            })}
-          </div>
-        </section>
-
-        <section className="flex flex-col items-center space-y-lg py-xl bg-surface-herbal/20 rounded-[32px] border border-outline-variant/30">
-          <div className="relative w-64 h-64 flex items-center justify-center">
-            <svg className="absolute inset-0 w-full h-full -rotate-90">
-              <circle className="text-outline-variant/20" cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" strokeWidth="4"></circle>
-              <circle 
-                className="text-primary transition-all duration-[1000ms] ease-linear" 
-                cx="128" cy="128" fill="transparent" r="110" stroke="currentColor" 
-                strokeDasharray="691" 
-                strokeDashoffset="0" 
-                strokeLinecap="round" strokeWidth="4"
-              ></circle>
-            </svg>
-            <div className="text-center">
-              <span className="font-display-lg text-display-lg text-primary tracking-tight">
-                {timerDuration}:00
-              </span>
-              <p className="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mt-1">minutes</p>
+                <div>
+                  <h3 className="font-title-lg text-xl text-primary font-bold">App Limits</h3>
+                  <p className="text-sm text-on-surface-variant font-medium">Protect your attention</p>
+                </div>
+              </div>
+              <button className="bg-surface-container-low text-primary px-4 py-2 rounded-full font-bold text-sm hover:bg-surface-mint transition-colors">
+                Manage
+              </button>
+            </div>
+            <div className="flex gap-2">
+              <div className="px-3 py-1.5 rounded-lg bg-surface-container-low text-xs font-bold text-on-surface-variant">Instagram (30m)</div>
+              <div className="px-3 py-1.5 rounded-lg bg-surface-container-low text-xs font-bold text-on-surface-variant">Twitter (15m)</div>
+              <div className="px-3 py-1.5 rounded-lg bg-surface-container-low text-xs font-bold text-on-surface-variant">YouTube (1h)</div>
             </div>
           </div>
-          <div className="flex gap-sm">
-            {[25, 45, 60].map(mins => {
-              const isActive = timerDuration === mins;
-              return (
-                <button 
-                  key={mins}
-                  onClick={() => setTimerDuration(mins)}
-                  className={`px-lg py-sm rounded-full border text-label-md font-label-md transition-colors ${
-                    isActive ? 'bg-[#24452d] text-[#aad0af] border-transparent' : 'border-border-dusty bg-surface hover:bg-secondary-container'
-                  }`}
-                >
-                  {mins}
-                </button>
-              );
-            })}
-            <button className="px-lg py-sm rounded-full border border-border-dusty text-label-md font-label-md bg-surface hover:bg-secondary-container transition-colors">
-              Custom
-            </button>
-          </div>
         </section>
 
-        <section className="space-y-md">
-          <div className="flex justify-between items-center">
-            <h3 className="font-title-lg text-title-lg text-on-background">Protected From</h3>
-            <span className="text-label-sm font-label-sm text-secondary uppercase">All Notifications Off</span>
+        {/* Focus Rooms Carousel */}
+        <section>
+          <div className="flex justify-between items-end mb-4">
+            <h3 className="text-xl text-primary font-bold tracking-tight">Quick Focus</h3>
           </div>
-          <div className="flex flex-wrap gap-sm">
-            {['Instagram', 'YouTube', 'WhatsApp', 'Facebook', 'X', 'Snapchat'].map(app => (
-              <div key={app} className="flex items-center gap-2 px-md py-sm rounded-full bg-surface-container border border-outline-variant">
-                <span className="material-symbols-outlined text-[18px] text-on-surface-variant">block</span>
-                <span className="font-label-md text-label-md">{app}</span>
+          <div className="flex overflow-x-auto gap-4 pb-4 snap-x snap-mandatory hide-scrollbar -mx-6 px-6 md:mx-0 md:px-0">
+            {focusOptions.map(option => (
+              <div 
+                key={option.id}
+                onClick={() => {
+                  setSelectedFocus(option.id);
+                  setTimerDuration(25);
+                  setIsRunning(true);
+                }}
+                className="snap-start shrink-0 w-32 cursor-pointer p-4 rounded-2xl border border-transparent bg-surface-mint/50 hover:bg-surface-mint hover:border-primary/20 transition-all flex flex-col items-center gap-3 text-center"
+              >
+                <span className="material-symbols-outlined text-primary text-3xl">{option.icon}</span>
+                <span className="font-bold text-sm text-primary">{option.label}</span>
               </div>
             ))}
           </div>
         </section>
 
-        <div className="pt-xl pb-margin-desktop">
-          <button 
+        {/* Host a Room Card */}
+        <section>
+          <div 
             onClick={() => setIsRunning(true)}
-            className="w-full py-lg rounded-xl bg-primary text-white font-title-lg text-on-primary shadow-sm hover:shadow-md hover:bg-primary-container transition-all active:scale-[0.98]"
+            className="cursor-pointer group relative overflow-hidden rounded-3xl bg-[#1a3b2b] p-8 shadow-[0_12px_24px_rgba(26,59,43,0.15)] hover:shadow-[0_16px_32px_rgba(26,59,43,0.25)] transition-all duration-300 hover:-translate-y-1"
           >
-            Begin Focus Session
-          </button>
-        </div>
+            <div className="absolute inset-0 opacity-20 pointer-events-none group-hover:opacity-30 transition-opacity">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-surface-mint rounded-full blur-3xl translate-x-10 -translate-y-10"></div>
+            </div>
+            <div className="relative z-10 flex justify-between items-center">
+              <div>
+                <h3 className="text-2xl font-bold text-white mb-1">Host a Room</h3>
+                <p className="text-surface-mint/80 font-medium">Create a space for your circle</p>
+              </div>
+              <div className="w-14 h-14 rounded-full bg-white/10 border border-white/20 flex items-center justify-center backdrop-blur-md group-hover:scale-110 transition-transform">
+                <span className="material-symbols-outlined text-white text-3xl">add</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Active Rooms */}
+        <section>
+          <div className="flex justify-between items-end mb-6">
+            <h3 className="text-xl text-primary font-bold tracking-tight">Active Rooms</h3>
+            <span className="text-[10px] font-bold uppercase tracking-widest text-primary bg-surface-mint px-3 py-1.5 rounded-lg flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+              Live now
+            </span>
+          </div>
+          
+          <div className="grid grid-cols-1 gap-4">
+            <div className="bg-white rounded-3xl p-6 shadow-[0_4px_24px_rgba(0,0,0,0.03)] border border-border-dusty/20 hover:border-primary/20 transition-all flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+              <div className="flex items-start gap-4">
+                <div className="mt-1 flex -space-x-2">
+                  <div className="w-10 h-10 rounded-full border-2 border-white bg-primary flex items-center justify-center text-white font-bold text-xs">A</div>
+                  <div className="w-10 h-10 rounded-full border-2 border-white bg-surface-herbal flex items-center justify-center text-primary font-bold text-xs">J</div>
+                  <div className="w-10 h-10 rounded-full border-2 border-white bg-surface-container flex items-center justify-center text-on-surface-variant font-bold text-[10px]">+14</div>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="w-2 h-2 rounded-full bg-[#4CAF50] shadow-[0_0_8px_rgba(76,175,80,0.6)] animate-pulse"></span>
+                    <h4 className="font-bold text-lg text-primary">Deep Work Session</h4>
+                  </div>
+                  <p className="text-sm text-on-surface-variant font-medium">Zen · 25m</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3 w-full md:w-auto">
+                <button className="w-12 h-12 rounded-xl border border-border-dusty flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-low transition-colors">
+                  <span className="material-symbols-outlined">share</span>
+                </button>
+                <button 
+                  onClick={() => setIsRunning(true)}
+                  className="flex-1 md:flex-none px-8 py-3 bg-primary text-white rounded-xl font-bold hover:bg-primary-container transition-colors shadow-sm"
+                >
+                  Join
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Join by Room ID */}
+        <section>
+          <div className="bg-surface-container-low rounded-3xl p-6 md:p-8 border border-dashed border-border-dusty/50">
+            <h3 className="text-lg text-primary font-bold mb-4">Join by Room ID</h3>
+            <div className="flex gap-3">
+              <input 
+                type="text" 
+                placeholder="ABC123" 
+                className="flex-1 px-4 py-3 rounded-xl border border-border-dusty bg-white focus:outline-none focus:border-primary transition-colors font-medium tracking-wide uppercase"
+              />
+              <button className="px-8 py-3 bg-surface-mint text-primary rounded-xl font-bold hover:bg-white hover:shadow-sm transition-all border border-transparent hover:border-border-dusty/20">
+                Join
+              </button>
+            </div>
+          </div>
+        </section>
+
       </main>
     </div>
   );

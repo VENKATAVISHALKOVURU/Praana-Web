@@ -8,9 +8,10 @@ import Onboarding from './components/Onboarding';
 import Layout from './components/Layout';
 import Home from './components/Home';
 import Focus from './components/Focus';
-import Rooms from './components/Rooms';
+import Plan from './components/Plan';
 import Saathi from './components/Saathi';
 import Profile from './components/Profile';
+import Rooms from './components/Rooms';
 
 function App() {
   return (
@@ -28,9 +29,10 @@ function App() {
         <Route element={<Layout />}>
           <Route path="/home" element={<Home />} />
           <Route path="/focus" element={<Focus />} />
-          <Route path="/rooms" element={<Rooms />} />
+          <Route path="/plan" element={<Plan />} />
           <Route path="/saathi" element={<Saathi />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/rooms" element={<Rooms />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/login" replace />} />

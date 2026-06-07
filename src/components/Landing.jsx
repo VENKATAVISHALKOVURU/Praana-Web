@@ -1,26 +1,62 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../landing.css';
-import { Canvas } from '@react-three/fiber';
-import { Sphere, MeshDistortMaterial, OrbitControls } from '@react-three/drei';
+import { Canvas, useFrame } from '@react-three/fiber';
+import { Sphere, MeshDistortMaterial } from '@react-three/drei';
+import * as THREE from 'three';
 
 function AnimatedOrb() {
+  const meshRef = React.useRef();
+  const materialRef = React.useRef();
+
+  useFrame((state, delta) => {
+    // Calculate scroll progress (0 to 1)
+    const scrollY = window.scrollY;
+    const maxScroll = Math.max(1, document.body.scrollHeight - window.innerHeight);
+    const scrollProgress = Math.min(1, Math.max(0, scrollY / maxScroll));
+    
+    if (meshRef.current) {
+      // Smoothly interpolate rotation
+      meshRef.current.rotation.y = THREE.MathUtils.lerp(meshRef.current.rotation.y, scrollProgress * Math.PI * 4, 0.05);
+      meshRef.current.rotation.x = THREE.MathUtils.lerp(meshRef.current.rotation.x, scrollProgress * Math.PI * 2, 0.05);
+      
+      // Move orb around based on scroll
+      // Starts center (0,0), moves right then left
+      const targetX = Math.sin(scrollProgress * Math.PI * 2) * 3;
+      const targetY = Math.cos(scrollProgress * Math.PI) * -1.5 + 1.5; // slight bobbing
+      
+      meshRef.current.position.x = THREE.MathUtils.lerp(meshRef.current.position.x, targetX, 0.05);
+      meshRef.current.position.y = THREE.MathUtils.lerp(meshRef.current.position.y, targetY, 0.05);
+      
+      // Scale down slightly as user scrolls
+      const targetScale = 2.5 - scrollProgress * 1.0;
+      meshRef.current.scale.setScalar(THREE.MathUtils.lerp(meshRef.current.scale.x, targetScale, 0.05));
+    }
+    
+    if (materialRef.current) {
+      // Change distortion based on scroll (more distorted at the bottom)
+      materialRef.current.distort = THREE.MathUtils.lerp(materialRef.current.distort, 0.3 + scrollProgress * 0.4, 0.05);
+      
+      // Shift color from mint to a deeper olive based on scroll
+      const color1 = new THREE.Color("#c3e5b2"); // surface-herbal
+      const color2 = new THREE.Color("#aad0af"); // primary-fixed-dim
+      materialRef.current.color.copy(color1).lerp(color2, scrollProgress);
+    }
+  });
+
   return (
-    <Canvas style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
-      <ambientLight intensity={1.5} />
-      <directionalLight position={[10, 10, 5]} intensity={2} />
-      <Sphere visible args={[1, 100, 200]} scale={2.5}>
-        <MeshDistortMaterial
-          color="#c3e5b2"
-          attach="material"
-          distort={0.4}
-          speed={1.5}
-          roughness={0.2}
-          transparent
-          opacity={0.6}
-        />
-      </Sphere>
-    </Canvas>
+    <Sphere ref={meshRef} visible args={[1, 64, 64]} scale={2.5}>
+      <MeshDistortMaterial
+        ref={materialRef}
+        color="#c3e5b2"
+        attach="material"
+        distort={0.3}
+        speed={1.5}
+        roughness={0.2}
+        transparent
+        opacity={0.65}
+      />
+    </Sphere>
   );
 }
 
@@ -57,9 +93,15 @@ export default function Landing() {
   };
 
   return (
-    <div className="landing-page-wrapper">
-      
-
+    <div className="landing-page-wrapper relative">
+      {/* 3D Background Canvas */}
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh', zIndex: -1, pointerEvents: 'none' }}>
+        <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 5], fov: 45 }}>
+          <ambientLight intensity={1.5} />
+          <directionalLight position={[10, 10, 5]} intensity={2} />
+          <AnimatedOrb />
+        </Canvas>
+      </div>
 
 <nav>
   <a href="#" className="nav-logo">
@@ -81,7 +123,6 @@ export default function Landing() {
 
 
 <div className="hero">
-  <AnimatedOrb />
   <div className="hero-inner" style={{ zIndex: 1, position: 'relative' }}>
     <div className="hero-logo-mark fade-up">
       <svg viewBox="0 0 40 40" fill="none">
@@ -420,8 +461,8 @@ export default function Landing() {
       <div className="footer-links">
         <h4>Legal</h4>
         <ul>
-          <li><a href="#">Privacy</a></li>
-          <li><a href="#">Terms</a></li>
+          <li><a href="/praana_legal.html">Privacy</a></li>
+          <li><a href="/praana_legal.html">Terms</a></li>
           <li><a href="#">Cookie Policy</a></li>
         </ul>
       </div>

@@ -1,6 +1,8 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
+import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDvEMdcw892jWafME2XKJt9nZL33SW2SIg",
@@ -22,5 +24,7 @@ isSupported().then((yes) => yes ? analytics = getAnalytics(app) : null);
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
+const db = getFirestore(app);
+const rtdb = getDatabase(app);
 
-export { auth, googleProvider, signInWithPopup, signInWithRedirect, getRedirectResult };
+export { auth, googleProvider, signInWithPopup, signInWithRedirect, getRedirectResult, db, rtdb };

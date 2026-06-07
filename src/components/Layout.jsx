@@ -1,16 +1,16 @@
 import { Outlet, NavLink, Link } from 'react-router-dom';
-import { Home as HomeIcon, Timer, Users, Sparkles } from 'lucide-react';
+import { Home as HomeIcon, Timer, Map, Sparkles } from 'lucide-react';
 
 export default function Layout() {
   const navItems = [
     { path: '/home', icon: HomeIcon, label: 'Home' },
     { path: '/focus', icon: Timer, label: 'Focus' },
-    { path: '/rooms', icon: Users, label: 'Rooms' },
+    { path: '/plan', icon: Map, label: 'Plan' },
     { path: '/saathi', icon: Sparkles, label: 'Saathi' },
   ];
 
   return (
-    <div className="flex flex-col h-screen w-full bg-[#f8f7f2] text-on-surface overflow-hidden font-body-md selection:bg-surface-herbal/30">
+    <div className="flex flex-col min-h-screen w-full bg-[#f8f7f2] text-on-surface font-body-md selection:bg-surface-herbal/30 relative">
       
       {/* Desktop Top Navigation */}
       <header className="hidden md:flex items-center justify-between px-8 h-20 bg-white/80 backdrop-blur-xl border-b border-border-dusty/20 shadow-[0_4px_24px_rgba(0,0,0,0.02)] z-50 flex-shrink-0">
@@ -64,13 +64,13 @@ export default function Layout() {
       </header>
 
       {/* Main Content Area */}
-      <main className="flex-1 overflow-y-auto relative bg-[#f8f7f2] pb-24 md:pb-0 scroll-smooth">
+      <main className="flex-1 relative bg-[#f8f7f2] pb-24 md:pb-0">
         <div className="absolute inset-0 bg-gradient-to-br from-surface-mint/10 to-transparent pointer-events-none"></div>
         <Outlet />
       </main>
 
       {/* Mobile Bottom Nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-xl border-t border-border-dusty/20 flex justify-around items-center px-4 py-2 pb-6 z-50 shadow-[0_-4px_24px_rgba(0,0,0,0.04)]">
+      <nav className="md:hidden sticky bottom-0 left-0 w-full bg-white/95 backdrop-blur-xl border-t border-border-dusty/20 flex justify-around items-center px-4 py-2 pb-6 mt-auto z-50 shadow-[0_-4px_24px_rgba(0,0,0,0.04)]">
         {navItems.map((item) => (
           <NavLink 
             key={item.path}

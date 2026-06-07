@@ -2,11 +2,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { auth, googleProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from '../firebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
+  // Form fields
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     // Check if user is returning from a mobile Google login redirect
@@ -15,7 +21,7 @@ export default function Login() {
         const user = result.user;
         console.log("Logged in successfully via redirect as:", user.displayName);
         localStorage.setItem('praana_userId', user.uid);
-        localStorage.setItem('praana_userName', user.displayName);
+        localStorage.setItem('praana_userName', user.displayName || 'User');
         navigate('/onboarding');
       }
     }).catch((error) => {
@@ -24,30 +30,33 @@ export default function Login() {
     });
   }, [navigate]);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
+    setErrorMsg('');
+
+    try {
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      localStorage.setItem('praana_userId', userCredential.user.uid);
+      localStorage.setItem('praana_userName', userCredential.user.displayName || 'User');
+      
       setIsLoading(false);
       navigate('/onboarding');
-    }, 1500);
+    } catch (error) {
+      console.error("Login failed:", error);
+      setErrorMsg(error.message);
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleLogin = async () => {
     try {
-      const isMobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      
-      if (isMobile) {
-        // Use redirect exclusively on mobile to prevent popup blocking and cross-site tracking issues
-        await signInWithRedirect(auth, googleProvider);
-      } else {
-        // Use popup on desktop
-        const result = await signInWithPopup(auth, googleProvider);
-        const user = result.user;
-        localStorage.setItem('praana_userId', user.uid);
-        localStorage.setItem('praana_userName', user.displayName);
-        navigate('/onboarding');
-      }
+      // Use popup for all devices to prevent redirect loops on iOS Safari
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      localStorage.setItem('praana_userId', user.uid);
+      localStorage.setItem('praana_userName', user.displayName);
+      navigate('/onboarding');
     } catch (error) {
       console.error("Google Popup login failed:", error);
       
@@ -97,6 +106,8 @@ export default function Login() {
                   placeholder="name@example.com" 
                   type="email" 
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
                 <span className="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-outline/40">mail</span>
               </div>
@@ -115,6 +126,8 @@ export default function Login() {
                   placeholder="••••••••" 
                   type={showPassword ? "text" : "password"} 
                   required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
                 <button 
                   onClick={() => setShowPassword(!showPassword)}
@@ -125,6 +138,13 @@ export default function Login() {
                 </button>
               </div>
             </div>
+
+            {/* Error Message */}
+            {errorMsg && (
+              <div className="text-red-500 text-sm font-medium text-center mt-1">
+                {errorMsg}
+              </div>
+            )}
 
             {/* Action Button */}
             <button 
@@ -155,12 +175,12 @@ export default function Login() {
         </section>
 
         {/* Footer Navigation */}
-        <footer className="mt-8 text-center">
+        <div className="mt-8 text-center">
           <p className="font-body-md text-base text-on-surface-variant">
             New to the breath? 
             <Link to="/signup" className="text-primary font-semibold hover:underline decoration-surface-herbal decoration-2 underline-offset-4 ml-1">Create an Account</Link>
           </p>
-        </footer>
+        </div>
       </main>
 
       {/* Decorative Illustration */}

@@ -13,6 +13,7 @@ export default function Onboarding() {
     q4: null,
     q5: null
   });
+  const [isSaving, setIsSaving] = useState(false);
 
   const questions = [
     {
@@ -74,11 +75,27 @@ export default function Onboarding() {
     }
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (step < questions.length) {
       setStep(step + 1);
       setFadeKey(prev => prev + 1);
     } else {
+      const userId = localStorage.getItem('praana_userId');
+      if (userId) {
+        setIsSaving(true);
+        try {
+          const { doc, setDoc } = await import('firebase/firestore');
+          const { db } = await import('../firebase');
+          await setDoc(doc(db, 'users', userId), {
+            onboarding: answers,
+            profileGenerated: false,
+            updatedAt: new Date().toISOString()
+          }, { merge: true });
+        } catch (error) {
+          console.error("Failed to save onboarding data:", error);
+        }
+        setIsSaving(false);
+      }
       navigate('/home'); 
     }
   };
@@ -186,14 +203,15 @@ export default function Onboarding() {
           <div className="mt-12 flex items-center gap-4">
             <button 
               onClick={handleNext}
-              disabled={!canContinue}
-              className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 ${
+              disabled={!canContinue || isSaving}
+              className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center gap-2 ${
                 canContinue 
                   ? 'bg-primary text-white shadow-md hover:bg-[#0a2313] hover:shadow-lg active:scale-95' 
                   : 'bg-surface-container text-outline cursor-not-allowed'
               }`}
             >
-              Continue
+              {isSaving ? <span className="material-symbols-outlined animate-spin">progress_activity</span> : null}
+              {isSaving ? 'Saving...' : 'Continue'}
             </button>
             {canContinue && (
               <span className="hidden md:inline text-sm text-on-surface-variant font-medium animate-pulse">

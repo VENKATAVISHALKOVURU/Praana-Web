@@ -1,149 +1,141 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { ref, onValue, set, remove, onDisconnect } from 'firebase/database';
+import { rtdb } from '../firebase';
 
 export default function Rooms() {
-  const [roomId, setRoomId] = useState('');
-  const navigate = useNavigate();
+  const [participants, setParticipants] = useState([]);
+  const [isJoined, setIsJoined] = useState(false);
+  
+  const userId = localStorage.getItem('praana_userId');
+  const userName = localStorage.getItem('praana_userName') || 'Explorer';
+  
+  const roomRef = ref(rtdb, 'rooms/global/participants');
+  const userRef = userId ? ref(rtdb, `rooms/global/participants/${userId}`) : null;
 
-  const handleJoin = (e) => {
-    e.preventDefault();
-    if (roomId.trim() !== '') {
-      // For now, this is a mock. It would normally navigate to a specific room path
-      alert(`Joining room: ${roomId}`);
-    }
+  useEffect(() => {
+    const unsubscribe = onValue(roomRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const participantList = Object.entries(data).map(([id, info]) => ({
+          id,
+          ...info
+        }));
+        setParticipants(participantList);
+        setIsJoined(!!data[userId]);
+      } else {
+        setParticipants([]);
+        setIsJoined(false);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+      if (userId && isJoined && userRef) {
+         remove(userRef);
+      }
+    };
+  }, [userId, isJoined]);
+
+  const handleJoin = async () => {
+    if (!userId || !userRef) return;
+    await set(userRef, {
+      name: userName,
+      status: 'Deep Work',
+      joinedAt: Date.now()
+    });
+    onDisconnect(userRef).remove();
+  };
+
+  const handleLeave = async () => {
+    if (!userId || !userRef) return;
+    await remove(userRef);
+    onDisconnect(userRef).cancel();
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-[#fbfaed] text-[#1b1c15] selection:bg-[#E7F6E6]">
-      {/* TopAppBar */}
-      <header className="bg-surface sticky top-0 z-40 flex justify-between items-center w-full px-margin-mobile py-sm">
-        <div className="flex items-center gap-sm">
-          <span className="material-symbols-outlined text-primary">bubble_chart</span>
-          <span className="font-headline-md text-headline-md text-primary tracking-tight">Praana</span>
+    <div className="flex flex-col min-h-full bg-[#fcfbf7] text-on-surface">
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl px-6 py-6 border-b border-border-dusty/10 flex justify-between items-center">
+        <div>
+          <h1 className="font-headline-md text-2xl text-primary tracking-tight font-bold">Focus Room</h1>
+          <p className="text-sm text-on-surface-variant font-medium mt-1">Global Collective Space</p>
         </div>
-        <div className="flex items-center gap-md">
-          <button className="p-2 rounded-full hover:bg-surface-container-low transition-colors">
-            <span className="material-symbols-outlined text-on-surface-variant">search</span>
-          </button>
-          <div className="w-10 h-10 rounded-full bg-primary-container overflow-hidden border border-outline-variant">
-            <img 
-              alt="User profile" 
-              className="w-full h-full object-cover" 
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDknCoprzI3frSGErUxteOWs_Nfk-1H5U_1o3-lRxzJd83dzdBKhDpUd9PBRj9HF6JSJIT6QuuTYBgtscXQ0nCTEBa1MDKH9WCMDRLWhKgYO4pBLAf5JjBjKIpR4cXOugUdz8j0N-5nWgsFL-hrlfb-p8FSbd0ZIHrCG5zP97MCqac3Sb5VzimfkCZoasuVSw3D9-VA8Kl4ERZ-UpsQBy_GCgUrAzOmxLcQb1v9jY4uKNI9dPYo7AHPT29dgTt_68pg95WbYsFygM"
-            />
-          </div>
+        <div className="flex items-center gap-2 bg-surface-mint/30 px-3 py-1.5 rounded-full border border-surface-herbal/20">
+          <span className="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+          <span className="text-xs font-bold text-primary">{participants.length} Active</span>
         </div>
       </header>
-
-      <main className="flex-1 px-margin-mobile pb-32">
-        {/* Hero Section */}
-        <section className="mt-lg mb-xl">
-          <h1 className="font-headline-lg-mobile text-headline-lg-mobile text-primary">Focus Rooms</h1>
-          <p className="font-body-md text-body-md text-on-surface-variant mt-xs opacity-80">Focus quietly with others</p>
-        </section>
-
-        {/* Active Rooms Grid */}
-        <section className="mb-xl">
-          <div className="flex justify-between items-center mb-md">
-            <h2 className="font-title-lg text-title-lg text-primary">Active Rooms</h2>
-            <button className="font-label-md text-label-md text-secondary hover:underline">View all</button>
-          </div>
+      
+      <main className="flex-1 px-6 pt-8 pb-32 max-w-3xl mx-auto w-full flex flex-col gap-8">
+        
+        {/* Status Card */}
+        <section className="bg-surface-mint w-full p-8 rounded-3xl shadow-[0_10px_40px_-10px_rgba(90,91,44,0.1)] relative overflow-hidden border border-border-dusty/30">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/20 rounded-full blur-3xl -translate-y-20 translate-x-20 pointer-events-none"></div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-md">
-            {/* Large Featured Room Card */}
-            <div className="md:col-span-2 group relative overflow-hidden rounded-xl bg-surface-mint p-lg shadow-[0_4px_12px_rgba(90,91,44,0.05)] border border-border-dusty/30 transition-transform duration-300 hover:-translate-y-1">
-              <div className="flex flex-col h-full justify-between">
-                <div>
-                  <div className="flex justify-between items-start">
-                    <span className="px-3 py-1 bg-primary text-on-primary rounded-full text-label-sm font-label-sm animate-pulse">LIVE</span>
-                    <div className="flex -space-x-2">
-                      <img alt="Participant" className="w-6 h-6 rounded-full border-2 border-surface-mint" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjmUUVoL0KWNxUtnYnBnxmlohXW3-lN58WgLB1-foIIblZch5meBmIh1ns33j3kwtHk0R5UpFQg4T3DYWcwM94cPDh7esbR0WKa6ehfTv7VYIbpVMccgpLDuC4M1NDAXKepsmkOPMA1KYqjjr2-6M2-QOL5uVFtTuIsmpRiU2Gl0eJQp2Wx4YUuIKlnYdqT1hfeddIEDT-Ajvgt5Q61q4tpUKCiIDEs3swahZRVrGoIfekovtwjbylN2n9hwlX3hIqZolfCpCYBZ8" />
-                      <img alt="Participant" className="w-6 h-6 rounded-full border-2 border-surface-mint" src="https://lh3.googleusercontent.com/aida-public/AB6AXuACIxyVLslwDoXRbBq3m7NeWjavBkbOGNBu1cKRyT1Nxv-vsXMmKxAPgPVzdJOOonD-ZtTLgKq9jcxEzUc0rZ1JCzCKJWuwzMDMAU_KItiZfP5PpOHrtRd-sMF14d6nLLyffYWqWn5evg5Lp4MDkhNLSxiYB76OoMNLLQB638bfy9VgXSHTaSFHPljZXHBy0YwbHx7O1m8SkXkhPZ9JYYMg5ve7uS608V5XjTHzSJzdPqfkyGhx47jfqaRmqiPmMaN9sgunYJOqyR4" />
-                      <div className="w-6 h-6 rounded-full bg-secondary-container flex items-center justify-center border-2 border-surface-mint">
-                        <span className="text-[10px] font-bold text-on-secondary-container">+12</span>
-                      </div>
-                    </div>
-                  </div>
-                  <h3 className="font-headline-md text-headline-md text-primary mt-md">Deep Work Room</h3>
-                  <p className="font-body-md text-body-md text-on-surface-variant mt-xs">Strictly no microphones. Pomodoro: 50/10.</p>
-                </div>
-                <div className="mt-lg flex items-center justify-between">
-                  <div className="flex items-center gap-sm text-secondary">
-                    <span className="material-symbols-outlined text-body-md">timer</span>
-                    <span className="font-label-md text-label-md">24:12 remaining</span>
-                  </div>
-                  <button className="bg-primary text-on-primary px-lg py-sm rounded-lg font-label-md transition-opacity active:opacity-80">Join Now</button>
-                </div>
-              </div>
-            </div>
-
-            {/* Secondary Room Card */}
-            <div className="rounded-xl bg-surface-container-low p-md border border-border-dusty/20 transition-transform duration-300 hover:border-border-dusty/50 hover:-translate-y-1">
-              <div className="flex justify-between items-center mb-sm">
-                <div className="flex items-center gap-xs">
-                  <span className="material-symbols-outlined text-secondary">groups</span>
-                  <span className="font-label-sm text-label-sm text-on-surface-variant">8 Active</span>
-                </div>
-                <span className="material-symbols-outlined text-on-surface-variant opacity-30">lock_open</span>
-              </div>
-              <h4 className="font-title-lg text-title-lg text-primary">Silent Study</h4>
-              <p className="font-label-md text-label-md text-on-surface-variant mt-xs">Perfect for reading and solo research.</p>
-              <button className="w-full mt-md py-sm rounded-lg border border-border-dusty text-primary font-label-md hover:bg-surface-container-high transition-colors">Enter</button>
-            </div>
-
-            {/* Secondary Room Card */}
-            <div className="rounded-xl bg-surface-container-low p-md border border-border-dusty/20 transition-transform duration-300 hover:border-border-dusty/50 hover:-translate-y-1">
-              <div className="flex justify-between items-center mb-sm">
-                <div className="flex items-center gap-xs">
-                  <span className="material-symbols-outlined text-secondary">groups</span>
-                  <span className="font-label-sm text-label-sm text-on-surface-variant">3 Active</span>
-                </div>
-                <span className="material-symbols-outlined text-secondary">nightlight</span>
-              </div>
-              <h4 className="font-title-lg text-title-lg text-primary">Midnight Focus</h4>
-              <p className="font-label-md text-label-md text-on-surface-variant mt-xs">Low lighting, lofi beats, collective calm.</p>
-              <button className="w-full mt-md py-sm rounded-lg border border-border-dusty text-primary font-label-md hover:bg-surface-container-high transition-colors">Enter</button>
-            </div>
-          </div>
-        </section>
-
-        {/* Create Room Button Section */}
-        <section className="mb-xl">
-          <div className="relative group cursor-pointer overflow-hidden rounded-xl bg-primary py-xl px-lg text-center shadow-[0_8px_16px_rgba(90,91,44,0.1)] transition-transform active:scale-[0.98]">
-            <div className="absolute inset-0 opacity-10 pointer-events-none">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-tertiary-fixed rounded-full blur-3xl translate-x-10 -translate-y-10"></div>
-              <div className="absolute bottom-0 left-0 w-24 h-24 bg-secondary-container rounded-full blur-2xl -translate-x-10 translate-y-10"></div>
-            </div>
-            <div className="relative z-10">
-              <div className="bg-primary-container inline-flex p-md rounded-full mb-md">
-                <span className="material-symbols-outlined text-on-primary-container">add</span>
-              </div>
-              <h2 className="font-headline-md text-headline-md text-on-primary">Host a Private Room</h2>
-              <p className="font-body-md text-body-md text-primary-fixed mt-xs opacity-70">Create a space for your inner circle</p>
-            </div>
-          </div>
-        </section>
-
-        {/* Join Room Section */}
-        <section className="mb-8">
-          <div className="bg-surface-container-highest/30 rounded-xl p-lg border border-dashed border-border-dusty">
-            <h3 className="font-title-lg text-title-lg text-primary mb-md">Join by Room ID</h3>
-            <form onSubmit={handleJoin} className="flex flex-col sm:flex-row gap-md">
-              <div className="flex-1">
-                <input 
-                  type="text"
-                  value={roomId}
-                  onChange={(e) => setRoomId(e.target.value)}
-                  className="w-full px-md py-sm bg-surface border border-border-dusty rounded-lg text-body-md focus:outline-none focus:border-primary transition-colors placeholder:text-on-surface-variant/40" 
-                  placeholder="Enter 6-digit ID"
-                />
-              </div>
-              <button type="submit" className="bg-secondary text-on-secondary px-xl py-sm rounded-lg font-label-md hover:opacity-90 transition-opacity">
+          <div className="relative z-10 flex flex-col items-center text-center">
+            <span className="material-symbols-outlined text-primary text-5xl mb-4" style={{ fontVariationSettings: '"FILL" 1' }}>
+              {isJoined ? 'self_improvement' : 'group_work'}
+            </span>
+            <h2 className="text-2xl font-headline-md font-medium tracking-tight mb-2 text-primary">
+              {isJoined ? "You are in the flow." : "Ready to focus together?"}
+            </h2>
+            <p className="text-on-surface-variant text-sm max-w-sm mb-8">
+              {isJoined 
+                ? "Your presence is contributing to the collective energy of the room. Stay mindful." 
+                : "Join the room to signal your intent. Seeing others focus helps anchor your own attention."}
+            </p>
+            
+            {isJoined ? (
+              <button 
+                onClick={handleLeave}
+                className="bg-white/80 backdrop-blur text-primary font-bold px-8 py-3.5 rounded-xl hover:bg-white transition-all shadow-sm active:scale-95 border border-primary/10"
+              >
+                Leave Room
+              </button>
+            ) : (
+              <button 
+                onClick={handleJoin}
+                className="bg-primary text-surface-mint font-bold px-8 py-3.5 rounded-xl hover:bg-[#0a2313] transition-all shadow-md active:scale-95"
+              >
                 Join Room
               </button>
-            </form>
+            )}
           </div>
         </section>
+
+        {/* Participants Grid */}
+        <section>
+          <h3 className="text-lg font-bold text-primary mb-6 flex items-center gap-2">
+            <span className="material-symbols-outlined text-[20px]">people</span>
+            Fellow Explorers
+          </h3>
+          
+          {participants.length === 0 ? (
+            <div className="text-center py-12 bg-white rounded-2xl border border-dashed border-border-dusty/40">
+              <p className="text-on-surface-variant text-sm font-medium">The room is currently empty.<br/>Be the first to start focusing.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {participants.map((p) => {
+                const isMe = p.id === userId;
+                return (
+                  <div key={p.id} className={`flex flex-col items-center p-5 rounded-2xl border transition-all ${isMe ? 'bg-surface-mint/20 border-primary/20' : 'bg-white border-border-dusty/20'} shadow-sm hover:shadow-md`}>
+                    <div className="w-14 h-14 rounded-full bg-surface-container-high flex items-center justify-center text-xl font-bold text-primary mb-3 relative">
+                      {p.name.charAt(0).toUpperCase()}
+                      <div className="absolute bottom-0 right-0 w-3.5 h-3.5 bg-green-500 border-2 border-white rounded-full"></div>
+                    </div>
+                    <span className="text-sm font-semibold text-on-surface truncate w-full text-center">
+                      {isMe ? 'You' : p.name}
+                    </span>
+                    <span className="text-[10px] uppercase tracking-wider font-bold text-outline mt-1">
+                      {p.status}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </section>
+        
       </main>
     </div>
   );

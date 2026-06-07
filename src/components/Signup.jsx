@@ -1,11 +1,18 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { auth, googleProvider, signInWithPopup, signInWithRedirect, getRedirectResult } from '../firebase';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 export default function Signup() {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  
+  // Form fields
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   useEffect(() => {
     // Check if user is returning from a mobile Google login redirect
@@ -23,30 +30,35 @@ export default function Signup() {
     });
   }, [navigate]);
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
+    setErrorMsg('');
+    
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(userCredential.user, { displayName: name });
+      
+      localStorage.setItem('praana_userId', userCredential.user.uid);
+      localStorage.setItem('praana_userName', name);
+      
       setIsLoading(false);
       navigate('/onboarding');
-    }, 1500);
+    } catch (error) {
+      console.error("Signup failed:", error);
+      setErrorMsg(error.message);
+      setIsLoading(false);
+    }
   };
 
   const handleGoogleLogin = async () => {
     try {
-      const isMobile = window.innerWidth <= 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      
-      if (isMobile) {
-        // Use redirect exclusively on mobile to prevent popup blocking and cross-site tracking issues
-        await signInWithRedirect(auth, googleProvider);
-      } else {
-        // Use popup on desktop
-        const result = await signInWithPopup(auth, googleProvider);
-        const user = result.user;
-        localStorage.setItem('praana_userId', user.uid);
-        localStorage.setItem('praana_userName', user.displayName);
-        navigate('/onboarding');
-      }
+      // Use popup for all devices to prevent redirect loops on iOS Safari
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+      localStorage.setItem('praana_userId', user.uid);
+      localStorage.setItem('praana_userName', user.displayName);
+      navigate('/onboarding');
     } catch (error) {
       console.error("Google Popup login failed:", error);
       
@@ -108,6 +120,8 @@ export default function Signup() {
                 placeholder="Elias Thorne" 
                 required 
                 type="text" 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
               />
             </div>
           </div>
@@ -122,6 +136,8 @@ export default function Signup() {
                 placeholder="hello@praana.co" 
                 required 
                 type="email" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
           </div>
@@ -136,6 +152,8 @@ export default function Signup() {
                 placeholder="••••••••" 
                 required 
                 type={showPassword ? "text" : "password"} 
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button 
                 onClick={() => setShowPassword(!showPassword)}
@@ -147,10 +165,17 @@ export default function Signup() {
             </div>
           </div>
           
+          {/* Error Message */}
+          {errorMsg && (
+            <div className="text-red-500 text-sm font-medium text-center mt-2">
+              {errorMsg}
+            </div>
+          )}
+
           {/* Primary Action */}
           <div className="pt-2">
             <button 
-              className={`w-full bg-primary text-white font-semibold text-lg py-3.5 rounded-xl shadow-[0_10px_30px_-5px_rgba(90,91,44,0.1)] active:scale-[0.98] transition-all duration-200 hover:bg-primary-container flex justify-center items-center ${isLoading ? 'opacity-80' : ''}`} 
+              className={`w-full bg-primary text-surface-mint font-semibold text-lg py-3.5 rounded-xl shadow-[0_10px_30px_-5px_rgba(90,91,44,0.1)] active:scale-[0.98] transition-all duration-200 hover:bg-primary-container flex justify-center items-center ${isLoading ? 'opacity-80' : ''}`} 
               type="submit"
               disabled={isLoading}
             >
@@ -161,7 +186,7 @@ export default function Signup() {
           <div className="pt-4">
             <button 
               onClick={handleGoogleLogin} 
-              className="w-full flex items-center justify-center space-x-2 bg-transparent border border-border-dusty text-on-surface font-medium text-sm py-3.5 rounded-xl hover:bg-surface-container-low transition-colors duration-200 active:scale-[0.98]" 
+              className="w-full flex items-center justify-center space-x-2 bg-surface-container-low border border-border-dusty/20 text-on-surface font-semibold text-sm py-3.5 rounded-xl hover:bg-surface-container-high transition-colors duration-200 active:scale-[0.98]" 
               type="button"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -176,7 +201,7 @@ export default function Signup() {
         </form>
         
         {/* Footer / Secondary Actions */}
-        <footer className="mt-8 text-center space-y-4">
+        <div className="mt-8 text-center space-y-4">
           <p className="font-label-md text-sm text-on-surface-variant font-medium">
             Already have an account? <Link to="/login" className="text-primary font-bold hover:underline">Log in</Link>
           </p>
@@ -185,7 +210,7 @@ export default function Signup() {
             <span className="font-label-sm text-xs font-semibold text-outline tracking-widest uppercase">Editorial Precision</span>
             <span className="h-[1px] w-8 bg-border-dusty"></span>
           </div>
-        </footer>
+        </div>
       </main>
     </div>
   );
