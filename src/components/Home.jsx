@@ -5,6 +5,8 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { ref, onValue } from 'firebase/database';
 import { rtdb } from '../firebase.js';
 import { useTranslation } from 'react-i18next';
+import WeeklyFlow3D from './WeeklyFlow3D';
+import InsightBackground3D from './InsightBackground3D';
 
 export default function Home() {
   const { t } = useTranslation();
@@ -154,8 +156,8 @@ export default function Home() {
           </span>
         </div>
         <div className="flex items-center gap-4">
-          <button onClick={startBreathing} className="w-10 h-10 rounded-full bg-[#C3E5B2] flex items-center justify-center text-[#0D2E19] hover:shadow-md transition-all duration-300">
-            <span className="material-symbols-outlined text-[20px]">hourglass_empty</span>
+          <button onClick={startBreathing} className="w-10 h-10 rounded-full bg-[#C3E5B2] flex items-center justify-center text-[#0D2E19] hover:shadow-md transition-all duration-300" title="Breathing Exercise">
+            <span className="material-symbols-outlined text-[20px]">air</span>
           </button>
           <Link to="/saathi" className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#0D2E19]/70 hover:text-[#0D2E19] hover:shadow-md transition-all duration-300">
             <span className="material-symbols-outlined text-[20px]">notifications</span>
@@ -182,7 +184,8 @@ export default function Home() {
       <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24 flex flex-col gap-8">
         
         {/* 2. AI Insight Card (The "Saathi" Summary) */}
-        <section className="relative overflow-hidden rounded-3xl p-6 md:p-8 shadow-sm border border-[#0D2E19]/5 bg-white/60 backdrop-blur-xl group">
+        <section className="relative overflow-hidden rounded-3xl p-6 md:p-8 shadow-sm border border-[#0D2E19]/5 bg-white/60 backdrop-blur-xl group min-h-[140px] flex items-center">
+          <InsightBackground3D />
           <div className="absolute inset-0 bg-gradient-to-br from-[#C3E5B2]/20 to-transparent pointer-events-none"></div>
           <div className="relative z-10 flex items-start gap-4 md:gap-6">
             <div className="w-12 h-12 rounded-2xl bg-[#0D2E19] flex items-center justify-center text-[#C3E5B2] shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-500">
@@ -242,6 +245,18 @@ export default function Home() {
               <span className="block text-3xl font-display text-[#0D2E19] font-bold">8</span>
             </div>
           </div>
+        </section>
+
+        {/* 3.5 Weekly Flow Calendar (3D Upgrade) */}
+        <section className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-[#0D2E19]/5">
+          <div className="mb-2 flex justify-between items-center">
+            <h2 className="text-xl font-bold text-[#0D2E19] tracking-tight">Awareness Rhythm</h2>
+            <span className="text-xs font-bold bg-[#C3E5B2]/30 text-[#0D2E19] px-3 py-1.5 rounded-full flex items-center gap-1">
+              <span className="material-symbols-outlined text-[14px]">calendar_today</span>
+              Weekly Flow
+            </span>
+          </div>
+          <WeeklyFlow3D />
         </section>
 
         {/* 4. App Usage & Time Limits (Progress Bars) */}

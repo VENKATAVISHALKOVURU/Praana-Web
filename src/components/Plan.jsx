@@ -55,7 +55,7 @@ export default function Plan() {
       
       const prompt = `You are a psychological architect specializing in digital wellbeing.
 Create a customized 21-day behavioral change roadmap based on the following user onboarding data:
-${JSON.stringify(onboardingData, null, 2)}
+${JSON.stringify(onboardingData || {}, null, 2)}
 
 Output strictly valid JSON exactly matching this structure:
 {
@@ -84,11 +84,18 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
         missions: parsedPlan.missions || parsedPlan
       };
       
-      const docRef = doc(db, 'users', userId);
-      await setDoc(docRef, { plan: newPlan, profileGenerated: true }, { merge: true });
       setPlan(newPlan);
+      
+      if (userId) {
+        try {
+          const docRef = doc(db, 'users', userId);
+          await setDoc(docRef, { plan: newPlan, profileGenerated: true }, { merge: true });
+        } catch (dbError) {
+          console.warn("Could not save to Firestore:", dbError);
+        }
+      }
     } catch (e) {
-      console.error("Failed to save generated plan", e);
+      console.error("Gemini generation failed, using fallback plan", e);
       // Fallback to dummy plan if Gemini API fails (e.g., missing API key)
       const newPlan = {
         currentDay: 1,
@@ -101,9 +108,17 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
           return { day, title, description: desc };
         })
       };
-      const docRef = doc(db, 'users', userId);
-      await setDoc(docRef, { plan: newPlan, profileGenerated: true }, { merge: true });
+      
       setPlan(newPlan);
+
+      if (userId) {
+        try {
+          const docRef = doc(db, 'users', userId);
+          await setDoc(docRef, { plan: newPlan, profileGenerated: true }, { merge: true });
+        } catch (dbError) {
+          console.warn("Could not save fallback to Firestore:", dbError);
+        }
+      }
     }
     
     setIsGenerating(false);
