@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { useTranslation } from 'react-i18next';
@@ -9,6 +10,7 @@ export default function Plan() {
   const [plan, setPlan] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isGenerating, setIsGenerating] = useState(false);
+  const navigate = useNavigate();
   
   const userId = localStorage.getItem('praana_userId');
 
@@ -57,8 +59,11 @@ export default function Plan() {
 Create a customized 21-day behavioral change roadmap based on the following user onboarding data:
 ${JSON.stringify(onboardingData || {}, null, 2)}
 
+Respond entirely in ${i18n.language === 'te' ? 'Telugu' : 'English'}. All JSON string values (like planName, title, description) must be in this language.
+
 Output strictly valid JSON exactly matching this structure:
 {
+  "planName": "String",
   "missions": [
     {
       "day": 1,
@@ -80,6 +85,7 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
 
       const parsedPlan = JSON.parse(text);
       const newPlan = {
+        planName: parsedPlan.planName || "Your Personalized Journey",
         currentDay: 1,
         missions: parsedPlan.missions || parsedPlan
       };
@@ -98,6 +104,7 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
       console.error("Gemini generation failed, using fallback plan", e);
       // Fallback to dummy plan if Gemini API fails (e.g., missing API key)
       const newPlan = {
+        planName: "Digital Detox Foundation",
         currentDay: 1,
         missions: Array.from({ length: 21 }).map((_, index) => {
           const day = index + 1;
@@ -125,6 +132,32 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
     setIsLoading(false);
   };
 
+  const completeMission = async () => {
+    if (currentDay >= 21) return; // Journey complete
+    const nextDay = currentDay + 1;
+    setCurrentDay(nextDay);
+    const updatedPlan = { ...plan, currentDay: nextDay };
+    setPlan(updatedPlan);
+    
+    if (userId) {
+      try {
+        const docRef = doc(db, 'users', userId);
+        await setDoc(docRef, { plan: updatedPlan }, { merge: true });
+      } catch (dbError) {
+        console.error("Could not save progress to Firestore:", dbError);
+      }
+    }
+  };
+
+  const askSaathi = () => {
+    const todayMission = plan.missions[currentDay - 1];
+    navigate('/saathi', { 
+      state: { 
+        missionContext: `Please explain my mission for today: ${todayMission.title} - ${todayMission.description}` 
+      } 
+    });
+  };
+
   if (isLoading || isGenerating) {
     return (
       <div className="flex flex-col min-h-full bg-[#f8f7f2] items-center justify-center text-center p-6 pb-32">
@@ -145,16 +178,16 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
         <div className="w-20 h-20 bg-surface-mint rounded-3xl flex items-center justify-center mb-6 shadow-sm border border-primary/10">
           <span className="material-symbols-outlined text-4xl text-primary" style={{ fontVariationSettings: '"FILL" 1' }}>map</span>
         </div>
-        <h2 className="text-3xl font-headline-md font-bold text-primary mb-3">Your Journey Awaits</h2>
+        <h2 className="text-3xl font-headline-md font-bold text-primary mb-3">{t('plan.journeyAwaits', 'Your Journey Awaits')}</h2>
         <p className="text-on-surface-variant max-w-md text-lg mb-8">
-          You don't have a personalized 21-day behavioral roadmap yet. Generate one based on your onboarding profile to begin your transformation.
+          {t('plan.noPlanDesc', "You don't have a personalized 21-day behavioral roadmap yet. Generate one based on your onboarding profile to begin your transformation.")}
         </p>
         <button 
           onClick={() => generatePlan()}
           className="bg-primary text-white font-bold text-lg px-8 py-4 rounded-xl hover:bg-primary-container transition-all shadow-md active:scale-95 flex items-center gap-2"
         >
           <span className="material-symbols-outlined text-xl">magic_button</span>
-          Generate 21-Day Plan
+          {t('plan.generateBtn', 'Generate 21-Day Plan')}
         </button>
       </div>
     );
@@ -167,11 +200,22 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
       <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-xl px-8 py-6 border-b border-border-dusty/10">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div>
-            <h1 className="font-headline-md text-3xl text-primary tracking-tight font-bold">{t('plan.actionPlan')}</h1>
+            <h1 className="font-headline-md text-3xl text-primary tracking-tight font-bold">
+              {plan.planName || t('plan.actionPlan')}
+            </h1>
             <p className="text-on-surface-variant text-lg font-medium mt-1">{t('plan.journey')}</p>
           </div>
-          <div className="bg-surface-mint/50 px-4 py-2 rounded-xl border border-primary/10 text-primary font-bold">
-            Day {currentDay} of 21
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={() => generatePlan()}
+              className="w-10 h-10 rounded-full bg-surface-container-low flex items-center justify-center text-primary hover:bg-surface-mint hover:shadow-md transition-all duration-300"
+              title="Generate New Plan"
+            >
+              <span className="material-symbols-outlined text-[20px]">add</span>
+            </button>
+            <div className="bg-surface-mint/50 px-4 py-2 rounded-xl border border-primary/10 text-primary font-bold">
+              Day {currentDay} of 21
+            </div>
           </div>
         </div>
       </header>
@@ -189,9 +233,21 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
               <p className="text-surface-mint/90 text-sm font-medium leading-relaxed mb-6">
                 {todayMission.description}
               </p>
-              <button className="bg-surface-mint text-primary font-bold px-6 py-3 rounded-full hover:bg-white transition-colors shadow-md active:scale-95">
-                {t('plan.completeMission')}
-              </button>
+              <div className="flex gap-4">
+                <button 
+                  onClick={completeMission}
+                  className="bg-surface-mint text-primary font-bold px-6 py-3 rounded-full hover:bg-white transition-colors shadow-md active:scale-95"
+                >
+                  {t('plan.completeMission')}
+                </button>
+                <button 
+                  onClick={askSaathi}
+                  className="bg-white/10 text-white font-bold px-4 py-3 rounded-full hover:bg-white/20 transition-colors shadow-sm active:scale-95 flex items-center gap-2 border border-white/20"
+                >
+                  <span className="material-symbols-outlined text-[20px]">smart_toy</span>
+                  {t('plan.askSaathi', 'Ask Saathi')}
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -215,16 +271,16 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
                   key={day} 
                   className={`flex items-center p-5 rounded-2xl border transition-all duration-300 ${
                     isCurrent 
-                      ? 'bg-white border-primary/30 shadow-md transform scale-[1.02]' 
+                      ? 'bg-orange-50 border-orange-400 shadow-md transform scale-[1.02]' 
                       : isCompleted 
-                        ? 'bg-surface-mint/20 border-surface-herbal/50 hover:bg-surface-mint/30' 
-                        : 'bg-surface-container-low border-transparent opacity-60'
+                        ? 'bg-green-50 border-green-300 hover:bg-green-100' 
+                        : 'bg-red-50/50 border-red-200 opacity-60'
                   }`}
                 >
                   <div className={`w-12 h-12 rounded-full flex items-center justify-center shrink-0 mr-4 ${
-                    isCurrent ? 'bg-primary text-surface-mint shadow-inner' :
-                    isCompleted ? 'bg-surface-mint text-primary' :
-                    'bg-surface-container-high text-on-surface-variant'
+                    isCurrent ? 'bg-orange-500 text-white shadow-inner' :
+                    isCompleted ? 'bg-green-500 text-white' :
+                    'bg-red-100 text-red-400'
                   }`}>
                     {isCompleted ? (
                       <span className="material-symbols-outlined font-bold">check</span>
@@ -236,11 +292,11 @@ Make sure there are exactly 21 missions. Do not output anything other than JSON.
                   </div>
                   
                   <div className="flex-1">
-                    <h4 className={`font-semibold ${isCurrent ? 'text-primary' : 'text-on-surface'}`}>
+                    <h4 className={`font-semibold ${isCurrent ? 'text-orange-800' : isCompleted ? 'text-green-800' : 'text-red-800/70'}`}>
                       {isCurrent ? t('plan.todaysFocus') : isCompleted ? t('plan.dayCompleted', { day }) : t('plan.dayMission', { day })}
                     </h4>
                     {!isLocked && (
-                      <p className="text-on-surface-variant mt-2 text-sm leading-relaxed">
+                      <p className={`mt-2 text-sm leading-relaxed ${isCurrent ? 'text-orange-900/80' : 'text-green-900/80'}`}>
                         {title}
                       </p>
                     )}

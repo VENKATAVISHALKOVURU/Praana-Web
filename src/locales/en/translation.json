@@ -101,8 +101,8 @@
   "saathi": {
     "welcomeFallback": "Good day, {{name}}. I'm here.",
     "greetingFallback": "{{greeting}}, {{name}}. What's on your mind?",
-    "errorResting": "Sorry, I'm resting right now.",
-    "errorNetwork": "Saathi is resting right now. Try again in a moment.",
+    "errorResting": "I'm here with you. There seems to be a brief network hiccup — just tap send again and I'll respond. 🌿",
+    "errorNetwork": "I'm here with you. There seems to be a brief network hiccup — just tap send again and I'll respond. 🌿",
     "thinking": "Thinking...",
     "listening": "Listening quietly",
     "cantFocus": "I can't focus",
@@ -124,7 +124,11 @@
     "days21": "21 Days",
     "todaysFocus": "Today's Focus",
     "dayCompleted": "Day {{day}} Completed",
-    "dayMission": "Day {{day}} Mission"
+    "dayMission": "Day {{day}} Mission",
+    "journeyAwaits": "Your Journey Awaits",
+    "noPlanDesc": "You don't have a personalized 21-day behavioral roadmap yet. Generate one based on your onboarding profile to begin your transformation.",
+    "generateBtn": "Generate 21-Day Plan",
+    "askSaathi": "Ask Saathi"
   },
   "rooms": {
     "focusRoom": "Focus Room",

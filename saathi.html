@@ -531,11 +531,11 @@
           addBubble(data.reply, 'saathi');
           chatHistory.push({ text: data.reply, isFromUser: false });
         } else {
-          addBubble("Sorry, I'm having trouble right now.", 'saathi');
+          addBubble("I'm here with you. There seems to be a brief network hiccup — just tap send again and I'll respond. 🌿", 'saathi');
         }
       } catch (err) {
         removeTyping(typingId);
-        addBubble("Saathi is resting right now. Try again in a moment.", 'saathi');
+        addBubble("I'm here with you. There seems to be a brief network hiccup — just tap send again and I'll respond. 🌿", 'saathi');
       }
       
       const messages = document.getElementById('messages');

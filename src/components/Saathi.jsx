@@ -2,6 +2,8 @@ import './app-pages.css';
 import { Sparkles, Send } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router-dom';
+import { auth } from '../firebase';
 
 export default function Saathi() {
   const { t, i18n } = useTranslation();
@@ -10,6 +12,7 @@ export default function Saathi() {
   const [messages, setMessages] = useState([]);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
+  const location = useLocation();
 
   // Auto-scroll to bottom
   const scrollToBottom = () => {
@@ -27,6 +30,16 @@ export default function Saathi() {
       localStorage.setItem('praana_userId', userId);
     }
 
+    // Check for mission context passed from Plan.jsx
+    if (location.state?.missionContext) {
+      setTimeout(() => {
+        handleSend(location.state.missionContext);
+      }, 300);
+      // Clear the state so a refresh doesn't trigger it again
+      window.history.replaceState({}, document.title);
+      return;
+    }
+
     setIsTyping(true);
 
     const fetchWelcomeMessage = async () => {
@@ -35,9 +48,15 @@ export default function Saathi() {
           ? 'http://localhost:3000/api/v1/chat/welcome'
           : 'https://saathi-chat-bot.onrender.com/api/v1/chat/welcome';
           
+        const user = auth.currentUser;
+        const token = user ? await user.getIdToken() : '';
+          
         const res = await fetch(welcomeUrl, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
           body: JSON.stringify({ 
             userId,
             behavioralContext: {
@@ -82,11 +101,20 @@ export default function Saathi() {
     const text = typeof textToSend === 'string' ? textToSend : message;
     if (!text.trim()) return;
 
-    // Add user message
-    const newMessages = [...messages, { text, isBot: false }];
-    setMessages(newMessages);
     setMessage('');
     setIsTyping(true);
+
+    let currentHistory = [];
+
+    // Add user message safely using functional update
+    setMessages(prev => {
+      const newMessages = [...prev, { text, isBot: false }];
+      currentHistory = newMessages.map(m => ({
+        text: m.text,
+        isFromUser: !m.isBot
+      }));
+      return newMessages;
+    });
 
     try {
       // We use a generic user ID since no login is required
@@ -96,20 +124,20 @@ export default function Saathi() {
         localStorage.setItem('praana_userId', userId);
       }
 
-      // Convert local state messages to the format the API expects
-      const chatHistory = newMessages.map(m => ({
-        text: m.text,
-        isFromUser: !m.isBot
-      }));
-
       const apiUrl = import.meta.env.DEV 
-        ? 'http://localhost:3000/api/saathi/chat'
-        : 'https://saathi-chat-bot.onrender.com/api/saathi/chat';
+        ? 'http://localhost:3000/api/v1/chat'
+        : 'https://saathi-chat-bot.onrender.com/api/v1/chat';
+        
+      const user = auth.currentUser;
+      const token = user ? await user.getIdToken() : '';
         
       const res = await fetch(apiUrl, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, userName, message: text, chatHistory, language: i18n.language })
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ userId, userName, message: text, chatHistory: currentHistory, language: i18n.language })
       });
       
       const data = await res.json();
