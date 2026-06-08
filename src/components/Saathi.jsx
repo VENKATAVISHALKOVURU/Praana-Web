@@ -50,6 +50,7 @@ export default function Saathi() {
           
         const user = auth.currentUser;
         const token = user ? await user.getIdToken() : '';
+        const finalUserId = token ? userId : (userId.startsWith('web-guest-') ? userId : 'web-guest-' + Math.random().toString(36).substring(7));
           
         const res = await fetch(welcomeUrl, {
           method: 'POST',
@@ -58,7 +59,7 @@ export default function Saathi() {
             'Authorization': `Bearer ${token}`
           },
           body: JSON.stringify({ 
-            userId,
+            userId: finalUserId,
             behavioralContext: {
               emotionalState: 'neutral',
               repeatOpenCount: 1
@@ -130,6 +131,7 @@ export default function Saathi() {
         
       const user = auth.currentUser;
       const token = user ? await user.getIdToken() : '';
+      const finalUserId = token ? userId : (userId.startsWith('web-guest-') ? userId : 'web-guest-' + Math.random().toString(36).substring(7));
         
       const res = await fetch(apiUrl, {
         method: 'POST',
@@ -137,7 +139,7 @@ export default function Saathi() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ userId, userName, message: text, chatHistory: currentHistory, language: i18n.language })
+        body: JSON.stringify({ userId: finalUserId, userName, message: text, chatHistory: currentHistory, language: i18n.language })
       });
       
       const data = await res.json();
