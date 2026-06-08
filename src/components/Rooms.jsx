@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ref, onValue, set, remove, onDisconnect, get } from 'firebase/database';
+import { ref, onValue, set, remove, onDisconnect, get, update } from 'firebase/database';
 import { rtdb, auth } from '../firebase';
 import { useTranslation } from 'react-i18next';
 
@@ -19,6 +19,12 @@ export default function Rooms() {
   const [participants, setParticipants] = useState([]);
   const [isJoined, setIsJoined] = useState(false);
   const [activeRoomsList, setActiveRoomsList] = useState([]);
+  
+  // Timer states
+  const [timeLeft, setTimeLeft] = useState(25 * 60);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
+  const [customTimeInput, setCustomTimeInput] = useState('25');
+  const [isTimerComplete, setIsTimerComplete] = useState(false);
   
   const [userId, setUserId] = useState(localStorage.getItem('praana_userId'));
   const [userName, setUserName] = useState(localStorage.getItem('praana_userName') || 'Explorer');
@@ -76,6 +82,43 @@ export default function Rooms() {
     };
   }, [activeRoomId, userId, isJoined]);
 
+  // Timer logic
+  useEffect(() => {
+    let interval;
+    if (isTimerRunning && timeLeft > 0) {
+      interval = setInterval(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+    } else if (isTimerRunning && timeLeft === 0) {
+      setIsTimerRunning(false);
+      setIsTimerComplete(true);
+      if (userRef) update(userRef, { status: 'Session Complete' });
+      // Play completion sound
+      const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+      audio.play().catch(e => console.log('Audio play failed', e));
+    }
+    return () => clearInterval(interval);
+  }, [isTimerRunning, timeLeft]);
+
+  const setCustomTime = (minutes) => {
+    if (isNaN(minutes) || minutes <= 0) return;
+    setTimeLeft(minutes * 60);
+    setIsTimerComplete(false);
+    setCustomTimeInput(minutes.toString());
+  };
+
+  const startTimer = () => {
+    if (timeLeft === 0) setTimeLeft(25 * 60);
+    setIsTimerRunning(true);
+    setIsTimerComplete(false);
+    if (userRef) update(userRef, { status: 'Deep Work' });
+  };
+
+  const pauseTimer = () => {
+    setIsTimerRunning(false);
+    if (userRef) update(userRef, { status: 'Paused' });
+  };
+
   // Fetch active rooms for lobby
   useEffect(() => {
     if (activeRoomId) return; // Only fetch in lobby
@@ -100,10 +143,11 @@ export default function Rooms() {
     if (!userId || !userRef) return;
     await set(userRef, {
       name: userName,
-      status: 'Deep Work',
+      status: 'Preparing',
       joinedAt: Date.now()
     });
     onDisconnect(userRef).remove();
+    setIsJoined(true);
   };
 
   const handleLeaveActiveRoom = async () => {
@@ -112,6 +156,8 @@ export default function Rooms() {
     onDisconnect(userRef).cancel();
     setActiveRoomId(null);
     setLobbyView('main');
+    setIsJoined(false);
+    setIsTimerRunning(false);
   };
 
   const createRoom = async () => {
@@ -379,13 +425,62 @@ export default function Rooms() {
                 </p>
                 
                 {isJoined ? (
-                  <button 
-                    onClick={handleLeaveActiveRoom}
-                    className="bg-white/80 backdrop-blur text-primary font-bold px-8 py-3.5 rounded-xl hover:bg-white transition-all shadow-sm active:scale-95 border border-primary/10 flex items-center gap-2"
-                  >
-                    <span className="material-symbols-outlined text-[18px]">logout</span>
-                    {t('rooms.leaveRoom')}
-                  </button>
+                  <div className="w-full max-w-md mx-auto flex flex-col items-center">
+                    <div className="bg-white/40 p-8 rounded-3xl backdrop-blur border border-white/50 w-full mb-8 shadow-sm">
+                      <div className="text-6xl font-display font-bold text-primary mb-8 tracking-tighter">
+                        {String(Math.floor(timeLeft / 60)).padStart(2, '0')}:{String(timeLeft % 60).padStart(2, '0')}
+                      </div>
+                      
+                      {!isTimerRunning && !isTimerComplete && (
+                        <div className="flex flex-col gap-5 mb-6">
+                          <div className="flex justify-center gap-3">
+                            <button onClick={() => setCustomTime(15)} className="px-5 py-2.5 bg-white rounded-xl text-sm font-bold text-primary hover:bg-primary hover:text-white transition-colors shadow-sm">15m</button>
+                            <button onClick={() => setCustomTime(25)} className="px-5 py-2.5 bg-white rounded-xl text-sm font-bold text-primary hover:bg-primary hover:text-white transition-colors shadow-sm">25m</button>
+                            <button onClick={() => setCustomTime(50)} className="px-5 py-2.5 bg-white rounded-xl text-sm font-bold text-primary hover:bg-primary hover:text-white transition-colors shadow-sm">50m</button>
+                          </div>
+                          <div className="flex items-center gap-3 justify-center">
+                            <input 
+                              type="number" 
+                              value={customTimeInput} 
+                              onChange={(e) => setCustomTimeInput(e.target.value)} 
+                              className="w-24 px-4 py-2.5 rounded-xl text-center font-bold text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 shadow-inner" 
+                              placeholder="Min"
+                            />
+                            <button onClick={() => setCustomTime(parseInt(customTimeInput))} className="px-5 py-2.5 bg-primary/10 text-primary rounded-xl text-sm font-bold hover:bg-primary hover:text-white transition-colors">Set</button>
+                          </div>
+                        </div>
+                      )}
+                      
+                      {isTimerComplete && (
+                        <div className="text-green-700 bg-green-50 px-4 py-3 rounded-xl font-bold mb-6 flex items-center justify-center gap-2 border border-green-200">
+                          <span className="material-symbols-outlined">celebration</span>
+                          Focus Session Complete!
+                        </div>
+                      )}
+                      
+                      <div className="flex justify-center mt-2">
+                        {!isTimerRunning ? (
+                          <button onClick={startTimer} className="px-8 py-3.5 bg-primary text-white rounded-xl font-bold hover:bg-[#0a2313] transition-all shadow-md active:scale-95 w-full flex items-center justify-center gap-2">
+                            <span className="material-symbols-outlined">{isTimerComplete ? 'refresh' : 'play_arrow'}</span>
+                            {isTimerComplete ? 'Start New Session' : 'Start Focus'}
+                          </button>
+                        ) : (
+                          <button onClick={pauseTimer} className="px-8 py-3.5 bg-white text-primary rounded-xl font-bold border border-primary/20 hover:bg-gray-50 transition-all shadow-sm active:scale-95 w-full flex items-center justify-center gap-2">
+                            <span className="material-symbols-outlined">pause</span>
+                            Pause Timer
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <button 
+                      onClick={handleLeaveActiveRoom}
+                      className="bg-white/80 backdrop-blur text-primary font-bold px-8 py-3.5 rounded-xl hover:bg-white transition-all shadow-sm active:scale-95 border border-primary/10 flex items-center gap-2"
+                    >
+                      <span className="material-symbols-outlined text-[18px]">logout</span>
+                      {t('rooms.leaveRoom')}
+                    </button>
+                  </div>
                 ) : (
                   <div className="flex gap-4">
                     <button 
