@@ -18,9 +18,21 @@ export default function Rooms() {
   // Room states
   const [participants, setParticipants] = useState([]);
   const [isJoined, setIsJoined] = useState(false);
+  const [activeRoomsList, setActiveRoomsList] = useState([]);
   
   const [userId, setUserId] = useState(localStorage.getItem('praana_userId'));
   const [userName, setUserName] = useState(localStorage.getItem('praana_userName') || 'Explorer');
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const roomParam = params.get('room');
+    const pwdParam = params.get('pwd');
+    if (roomParam) {
+      setLobbyView('join');
+      setRoomCodeInput(roomParam);
+      if (pwdParam) setRoomPasswordInput(pwdParam);
+    }
+  }, []);
 
   useEffect(() => {
     const unsubscribeAuth = auth.onAuthStateChanged((user) => {
@@ -63,6 +75,26 @@ export default function Rooms() {
       }
     };
   }, [activeRoomId, userId, isJoined]);
+
+  // Fetch active rooms for lobby
+  useEffect(() => {
+    if (activeRoomId) return; // Only fetch in lobby
+    const roomsRef = ref(rtdb, 'rooms');
+    const unsubscribe = onValue(roomsRef, (snapshot) => {
+      const data = snapshot.val();
+      if (data) {
+        const list = Object.entries(data).map(([id, info]) => {
+          const pCount = info.participants ? Object.keys(info.participants).length : 0;
+          const isPrivate = !!info.settings?.password;
+          return { id, participantCount: pCount, isPrivate };
+        }).filter(r => r.participantCount > 0);
+        setActiveRoomsList(list);
+      } else {
+        setActiveRoomsList([]);
+      }
+    });
+    return () => unsubscribe();
+  }, [activeRoomId]);
 
   const handleJoinActiveRoom = async () => {
     if (!userId || !userRef) return;
@@ -113,8 +145,18 @@ export default function Rooms() {
     
     setActiveRoomId(roomId);
     setRoomCodeInput('');
-    setRoomPasswordInput('');
+    // Keep password in state for invite link generation
     setErrorMsg('');
+  };
+
+  const copyInviteLink = () => {
+    const url = new URL(window.location.origin + '/rooms');
+    url.searchParams.set('room', activeRoomId);
+    if (roomPasswordInput) {
+      url.searchParams.set('pwd', roomPasswordInput);
+    }
+    navigator.clipboard.writeText(url.toString());
+    alert('Invite link copied to clipboard!');
   };
 
   const renderLobby = () => {
@@ -196,39 +238,86 @@ export default function Rooms() {
     }
 
     return (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div 
-          onClick={() => { setActiveRoomId('GLOBAL'); }}
-          className="bg-white p-8 rounded-3xl shadow-sm border border-border-dusty/30 hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center text-center group"
-        >
-          <div className="w-16 h-16 bg-surface-mint rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
-            <span className="material-symbols-outlined text-3xl">public</span>
+      <div className="flex flex-col gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div 
+            onClick={() => { setActiveRoomId('GLOBAL'); }}
+            className="bg-white p-8 rounded-3xl shadow-sm border border-border-dusty/30 hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center text-center group"
+          >
+            <div className="w-16 h-16 bg-surface-mint rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+              <span className="material-symbols-outlined text-3xl">public</span>
+            </div>
+            <h3 className="font-bold text-xl text-primary mb-2">Global Space</h3>
+            <p className="text-on-surface-variant text-sm">Join the open focus room and work alongside the entire community.</p>
           </div>
-          <h3 className="font-bold text-xl text-primary mb-2">Global Space</h3>
-          <p className="text-on-surface-variant text-sm">Join the open focus room and work alongside the entire community.</p>
+
+          <div 
+            onClick={() => setLobbyView('join')}
+            className="bg-white p-8 rounded-3xl shadow-sm border border-border-dusty/30 hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center text-center group"
+          >
+            <div className="w-16 h-16 bg-surface-container-low rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform group-hover:bg-primary group-hover:text-white">
+              <span className="material-symbols-outlined text-3xl">meeting_room</span>
+            </div>
+            <h3 className="font-bold text-xl text-primary mb-2">Join Room</h3>
+            <p className="text-on-surface-variant text-sm">Got a code? Join a private focus room with your friends or colleagues.</p>
+          </div>
+
+          <div 
+            onClick={() => setLobbyView('create')}
+            className="bg-primary p-8 rounded-3xl shadow-sm border border-primary/20 hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center text-center group"
+          >
+            <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
+              <span className="material-symbols-outlined text-3xl">add</span>
+            </div>
+            <h3 className="font-bold text-xl text-white mb-2">Create Room</h3>
+            <p className="text-white/80 text-sm">Start a new private focus session and invite others with a secure code.</p>
+          </div>
         </div>
 
-        <div 
-          onClick={() => setLobbyView('join')}
-          className="bg-white p-8 rounded-3xl shadow-sm border border-border-dusty/30 hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center text-center group"
-        >
-          <div className="w-16 h-16 bg-surface-container-low rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform group-hover:bg-primary group-hover:text-white">
-            <span className="material-symbols-outlined text-3xl">meeting_room</span>
+        {activeRoomsList.length > 0 && (
+          <div className="mt-8 w-full max-w-4xl mx-auto">
+            <h3 className="text-xl font-bold text-primary mb-6 flex items-center gap-2">
+              <span className="material-symbols-outlined">explore</span>
+              Active Rooms
+            </h3>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {activeRoomsList.map((room) => (
+                <div 
+                  key={room.id}
+                  onClick={() => {
+                    if (room.isPrivate) {
+                      setLobbyView('join');
+                      setRoomCodeInput(room.id);
+                    } else {
+                      setActiveRoomId(room.id);
+                    }
+                  }}
+                  className="bg-white p-5 rounded-2xl shadow-sm border border-border-dusty/30 hover:border-primary/30 hover:shadow-md transition-all cursor-pointer flex items-center justify-between group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${room.isPrivate ? 'bg-surface-container-low text-on-surface-variant' : 'bg-surface-mint text-primary'}`}>
+                      <span className="material-symbols-outlined text-[20px]">
+                        {room.isPrivate ? 'lock' : 'public'}
+                      </span>
+                    </div>
+                    <div>
+                      <h4 className="font-bold text-primary text-sm group-hover:text-primary/80 transition-colors">
+                        {room.id === 'GLOBAL' ? 'Global Space' : `Room ${room.id}`}
+                      </h4>
+                      <p className="text-xs text-on-surface-variant flex items-center gap-1">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500"></span>
+                        {room.participantCount} active
+                      </p>
+                    </div>
+                  </div>
+                  <span className="material-symbols-outlined text-border-dusty group-hover:text-primary transition-colors text-[20px]">
+                    chevron_right
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
-          <h3 className="font-bold text-xl text-primary mb-2">Join Room</h3>
-          <p className="text-on-surface-variant text-sm">Got a code? Join a private focus room with your friends or colleagues.</p>
-        </div>
-
-        <div 
-          onClick={() => setLobbyView('create')}
-          className="bg-primary p-8 rounded-3xl shadow-sm border border-primary/20 hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center text-center group"
-        >
-          <div className="w-16 h-16 bg-white/20 rounded-2xl flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform">
-            <span className="material-symbols-outlined text-3xl">add</span>
-          </div>
-          <h3 className="font-bold text-xl text-white mb-2">Create Room</h3>
-          <p className="text-white/80 text-sm">Start a new private focus session and invite others with a secure code.</p>
-        </div>
+        )}
       </div>
     );
   };
@@ -245,9 +334,10 @@ export default function Rooms() {
           </div>
           {activeRoomId && (
             <div className="flex items-center gap-4">
-              <div className="hidden sm:flex bg-surface-container-low px-4 py-2 rounded-xl text-primary font-bold font-display text-sm items-center gap-2 border border-border-dusty/30">
+              <div className="hidden sm:flex bg-surface-container-low px-4 py-2 rounded-xl text-primary font-bold font-display text-sm items-center gap-2 border border-border-dusty/30 cursor-pointer hover:bg-border-dusty/10 transition-colors" onClick={copyInviteLink} title="Copy Invite Link">
                 <span className="text-on-surface-variant text-xs">CODE:</span>
                 {activeRoomId}
+                <span className="material-symbols-outlined text-[16px] text-on-surface-variant ml-1">content_copy</span>
               </div>
               <div className="flex items-center gap-2 bg-surface-mint/30 px-4 py-2 rounded-full border border-surface-herbal/20">
                 <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
