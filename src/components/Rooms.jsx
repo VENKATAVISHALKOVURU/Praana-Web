@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ref, onValue, set, remove, onDisconnect, get } from 'firebase/database';
-import { rtdb } from '../firebase';
+import { rtdb, auth } from '../firebase';
 import { useTranslation } from 'react-i18next';
 
 export default function Rooms() {
@@ -19,8 +19,20 @@ export default function Rooms() {
   const [participants, setParticipants] = useState([]);
   const [isJoined, setIsJoined] = useState(false);
   
-  const userId = localStorage.getItem('praana_userId');
-  const userName = localStorage.getItem('praana_userName') || 'Explorer';
+  const [userId, setUserId] = useState(localStorage.getItem('praana_userId'));
+  const [userName, setUserName] = useState(localStorage.getItem('praana_userName') || 'Explorer');
+
+  useEffect(() => {
+    const unsubscribeAuth = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setUserId(user.uid);
+        setUserName(user.displayName || user.email?.split('@')[0] || 'Explorer');
+        localStorage.setItem('praana_userId', user.uid);
+        localStorage.setItem('praana_userName', user.displayName || user.email?.split('@')[0] || 'Explorer');
+      }
+    });
+    return () => unsubscribeAuth();
+  }, []);
   
   // Dynamic refs based on activeRoomId
   const roomRef = activeRoomId ? ref(rtdb, `rooms/${activeRoomId}/participants`) : null;
@@ -186,7 +198,7 @@ export default function Rooms() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div 
-          onClick={() => { setActiveRoomId('global'); }}
+          onClick={() => { setActiveRoomId('GLOBAL'); }}
           className="bg-white p-8 rounded-3xl shadow-sm border border-border-dusty/30 hover:shadow-md hover:-translate-y-1 transition-all cursor-pointer flex flex-col items-center text-center group"
         >
           <div className="w-16 h-16 bg-surface-mint rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
@@ -228,17 +240,15 @@ export default function Rooms() {
           <div>
             <h1 className="font-headline-md text-3xl text-primary tracking-tight font-bold">{t('rooms.focusRoom')}</h1>
             <p className="text-on-surface-variant text-lg font-medium mt-1">
-              {!activeRoomId ? 'Lobby' : activeRoomId === 'global' ? t('rooms.globalSpace') : `Room: ${activeRoomId}`}
+              {!activeRoomId ? 'Lobby' : activeRoomId === 'GLOBAL' ? t('rooms.globalSpace') : `Room: ${activeRoomId}`}
             </p>
           </div>
           {activeRoomId && (
             <div className="flex items-center gap-4">
-              {activeRoomId !== 'global' && (
-                <div className="hidden sm:flex bg-surface-container-low px-4 py-2 rounded-xl text-primary font-bold font-display text-sm items-center gap-2 border border-border-dusty/30">
-                  <span className="text-on-surface-variant text-xs">CODE:</span>
-                  {activeRoomId}
-                </div>
-              )}
+              <div className="hidden sm:flex bg-surface-container-low px-4 py-2 rounded-xl text-primary font-bold font-display text-sm items-center gap-2 border border-border-dusty/30">
+                <span className="text-on-surface-variant text-xs">CODE:</span>
+                {activeRoomId}
+              </div>
               <div className="flex items-center gap-2 bg-surface-mint/30 px-4 py-2 rounded-full border border-surface-herbal/20">
                 <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
                 <span className="text-sm font-bold text-primary">{t('rooms.activeCount', { count: participants.length })}</span>
