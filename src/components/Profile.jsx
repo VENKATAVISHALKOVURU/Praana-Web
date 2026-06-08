@@ -98,66 +98,60 @@ export default function Profile() {
           </div>
         </div>
 
+        {/* 21-Day Plan Card */}
+        <div className="settings-section">
+          <Link to="/plan" className="block">
+            <div className="bg-surface-mint/20 border border-primary/20 rounded-2xl p-5 flex items-center justify-between hover:bg-surface-mint/30 transition-colors cursor-pointer">
+              <div className="flex-1">
+                <span className="text-[10px] font-bold tracking-widest text-primary uppercase mb-1 block">21-Day Plan</span>
+                <h4 className="text-lg font-headline-md font-bold text-on-surface mb-1">Your Behavioral Roadmap</h4>
+                <p className="text-sm text-on-surface-variant">Continue your daily habits and digital boundary exercises.</p>
+              </div>
+              <div className="w-10 h-10 rounded-full bg-primary flex items-center justify-center shrink-0 ml-4">
+                <ChevronRight size={20} color="white" />
+              </div>
+            </div>
+          </Link>
+        </div>
+
         {/* Preferences */}
         <div className="settings-section">
-          <h4 className="section-title">App Preferences</h4>
+          <h4 className="section-title mb-4 px-2 text-sm font-bold text-on-surface-variant uppercase tracking-wider">Preferences</h4>
           
-          <div className="settings-list">
-            <div className="settings-item">
-              <div className="settings-item-left">
-                <div className="settings-icon"><Bell size={20} /></div>
-                <div className="settings-text">
-                  <h5>Nudge Style</h5>
-                  <p>Gentle reminders</p>
-                </div>
-              </div>
-              <ChevronRight size={20} color="var(--on-surface-variant)" />
+          <div className="settings-list bg-surface-container-low rounded-2xl overflow-hidden shadow-sm border border-border-dusty/20">
+            <div className="settings-item hover:bg-black/5 transition-colors cursor-pointer px-5 py-4 flex items-center justify-between border-b border-border-dusty/20">
+              <span className="text-on-surface font-medium text-[15px]">Protected Apps</span>
+              <ChevronRight size={18} color="var(--on-surface-variant)" />
             </div>
 
-            <div className="settings-item">
-              <div className="settings-item-left">
-                <div className="settings-icon"><Settings size={20} /></div>
-                <div className="settings-text">
-                  <h5>Saathi AI Tone</h5>
-                  <p>Empathetic & Reflective</p>
-                </div>
-              </div>
-              <ChevronRight size={20} color="var(--on-surface-variant)" />
+            <div className="settings-item hover:bg-black/5 transition-colors cursor-pointer px-5 py-4 flex items-center justify-between border-b border-border-dusty/20">
+              <span className="text-on-surface font-medium text-[15px]">Notifications</span>
+              <ChevronRight size={18} color="var(--on-surface-variant)" />
+            </div>
+
+            <div className="settings-item hover:bg-black/5 transition-colors cursor-pointer px-5 py-4 flex items-center justify-between border-b border-border-dusty/20">
+              <span className="text-on-surface font-medium text-[15px]">Account</span>
+              <ChevronRight size={18} color="var(--on-surface-variant)" />
+            </div>
+
+            <div onClick={handleLogout} className="settings-item hover:bg-red-50 transition-colors cursor-pointer px-5 py-4 flex items-center justify-between border-b border-border-dusty/20">
+              <span className="text-[#c81e1e] font-medium text-[15px]">Log Out</span>
+            </div>
+
+            <div className="settings-item hover:bg-black/5 transition-colors cursor-pointer px-5 py-4 flex items-center justify-between">
+              <span className="text-on-surface font-medium text-[15px]">Privacy Policy & Terms of Service</span>
             </div>
           </div>
         </div>
 
-        {/* Privacy */}
-        <div className="settings-section">
-          <h4 className="section-title">Privacy & Data</h4>
-          
-          <div className="settings-list">
-            <div className="settings-item">
-              <div className="settings-item-left">
-                <div className="settings-icon"><Shield size={20} /></div>
-                <div className="settings-text">
-                  <h5>Data Analytics</h5>
-                  <p>Anonymous wellness metrics</p>
-                </div>
-              </div>
-              <div className="toggle-switch active">
-                <div className="toggle-knob"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Logout */}
-        <div className="settings-section" style={{ marginTop: '32px' }}>
-          <button className="btn-outline danger-btn w-full flex-center" onClick={handleLogout}>
-            <LogOut size={18} style={{ marginRight: '8px' }} />
-            Log Out
-          </button>
-        </div>
       </div>
-
-      {/* Global Interruption Overlay (Simulation) */}
-      <InterruptionOverlay isOpen={showOverlay} onClose={() => setShowOverlay(false)} />
+      
+      {showOverlay && (
+        <InterruptionOverlay 
+          onClose={() => setShowOverlay(false)}
+          blockType="TIME_LIMIT_BLOCK"
+        />
+      )}
     </div>
   );
 }

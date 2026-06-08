@@ -2,13 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { auth } from '../firebase.js';
 import { onAuthStateChanged } from 'firebase/auth';
-import { Canvas, useFrame } from '@react-three/fiber';
-import { Sphere, MeshDistortMaterial } from '@react-three/drei';
 import { ref, onValue } from 'firebase/database';
 import { rtdb } from '../firebase.js';
 import { useTranslation } from 'react-i18next';
-
-// Removed DashboardBreathingOrb
 
 export default function Home() {
   const { t } = useTranslation();
@@ -19,6 +15,9 @@ export default function Home() {
   const [currentDate, setCurrentDate] = useState('Today');
   const [insightIndex, setInsightIndex] = useState(0);
   const [activeParticipants, setActiveParticipants] = useState(0);
+  
+  // App usage state (simulated for demo purposes based on prompt)
+  const [mounted, setMounted] = useState(false);
   
   // Breathing Exercise State
   const [breathingActive, setBreathingActive] = useState(false);
@@ -58,6 +57,9 @@ export default function Home() {
   }, [breathingInterval]);
 
   useEffect(() => {
+    // Trigger animations after mount
+    setTimeout(() => setMounted(true), 100);
+
     // Set greeting based on time of day
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) {
@@ -81,25 +83,17 @@ export default function Home() {
     // Listen to Firebase auth and get real user data
     const unsubscribeAuth = onAuthStateChanged(auth, (user) => {
       if (user) {
-        // Set photo
         setUserPhoto(user.photoURL || null);
-
-        // Set name: prefer displayName, fallback to email prefix
         const name = user.displayName || user.email?.split('@')[0] || 'Friend';
         const firstName = name.split(' ')[0];
         setUserName(firstName);
-
-        // Build initials (up to 2 letters)
         const parts = name.trim().split(' ').filter(Boolean);
         const initials = parts.length >= 2
           ? parts[0][0] + parts[1][0]
           : parts[0]?.slice(0, 2) || 'P';
         setUserInitials(initials.toUpperCase());
-
-        // Also keep localStorage in sync
         localStorage.setItem('praana_userName', name);
       } else {
-        // Fallback to localStorage if auth not ready yet
         const storedName = localStorage.getItem('praana_userName') || 'Friend';
         const firstName = storedName.split(' ')[0];
         setUserName(firstName);
@@ -124,27 +118,49 @@ export default function Home() {
     };
   }, []);
 
+  // Simulated App Data
+  const appUsageData = [
+    { name: 'Instagram', icon: 'photo_camera', color: 'bg-pink-500', used: 102, limit: 60 },     // Exceeded (102m / 60m)
+    { name: 'YouTube', icon: 'play_arrow', color: 'bg-red-500', used: 45, limit: 50 },         // Warning (>80%) (45m / 50m)
+    { name: 'Twitter', icon: 'flutter_dash', color: 'bg-blue-400', used: 20, limit: 60 },      // Safe
+    { name: 'TikTok', icon: 'music_note', color: 'bg-black', used: 15, limit: null },          // No limit set
+  ];
+
+  const getProgressColor = (used, limit) => {
+    if (!limit) return 'bg-surface-mint';
+    const percent = (used / limit) * 100;
+    if (percent >= 100) return 'bg-[#C81E1E]'; // Soft Red
+    if (percent >= 80) return 'bg-orange-400';
+    return 'bg-[#0D2E19]'; // Primary Deep Green
+  };
+
+  const getProgressWidth = (used, limit) => {
+    if (!limit) return '0%';
+    return `${Math.min((used / limit) * 100, 100)}%`;
+  };
+
   return (
-    <div className="min-h-full pb-12 relative z-10">
-      {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-40 bg-[#f8f7f2]/80 backdrop-blur-xl border-b border-border-dusty/10 flex justify-between items-center w-full px-6 py-4 md:px-12 md:py-6 shadow-[0_4px_32px_rgba(0,0,0,0.02)] transition-all">
+    <div className="min-h-full pb-12 relative z-10 bg-[#FCFBF7]">
+      {/* 1. Header Section */}
+      <header className="sticky top-0 z-40 bg-[#FCFBF7]/80 backdrop-blur-xl border-b border-border-dusty/10 flex justify-between items-center w-full px-6 py-4 md:px-12 md:py-6 transition-all">
         <div className="flex flex-col gap-0.5">
           <div className="flex items-center gap-2">
-            <span className="font-headline-md text-xl md:text-2xl text-primary tracking-tight font-semibold">
-              {timeOfDay === 'morning' ? t('home.goodMorning') : timeOfDay === 'afternoon' ? t('home.goodAfternoon') : t('home.goodEvening')}
-              {userName ? `, ${userName}` : ''}
+            <span className="font-headline-md text-xl md:text-2xl text-[#0D2E19] tracking-tight font-semibold">
+              Welcome back{userName ? `, ${userName}` : ''}
             </span>
           </div>
-          <span className="font-label-sm text-xs md:text-sm text-on-surface-variant/80 italic font-medium">{t('home.awarenessSubtitle')}</span>
+          <span className="font-label-sm text-xs md:text-sm text-[#0D2E19]/70 font-medium">
+            {currentDate}
+          </span>
         </div>
         <div className="flex items-center gap-4">
-          <button onClick={startBreathing} className="w-10 h-10 rounded-full bg-surface-mint flex items-center justify-center text-primary hover:shadow-md transition-all duration-300">
+          <button onClick={startBreathing} className="w-10 h-10 rounded-full bg-[#C3E5B2] flex items-center justify-center text-[#0D2E19] hover:shadow-md transition-all duration-300">
             <span className="material-symbols-outlined text-[20px]">hourglass_empty</span>
           </button>
-          <Link to="/saathi" className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-on-surface-variant hover:text-primary hover:shadow-md transition-all duration-300">
+          <Link to="/saathi" className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-[#0D2E19]/70 hover:text-[#0D2E19] hover:shadow-md transition-all duration-300">
             <span className="material-symbols-outlined text-[20px]">notifications</span>
           </Link>
-          <Link to="/profile" className="w-11 h-11 rounded-full border-2 border-surface-herbal shadow-sm hover:shadow-md transition-all duration-300 block relative group overflow-hidden">
+          <Link to="/profile" className="w-11 h-11 rounded-full border-2 border-[#C3E5B2] shadow-sm hover:shadow-md transition-all duration-300 block relative group overflow-hidden">
             {userPhoto ? (
               <img
                 alt="User avatar"
@@ -154,7 +170,7 @@ export default function Home() {
                 onError={() => setUserPhoto(null)}
               />
             ) : (
-              <div className="w-full h-full bg-gradient-to-br from-[#1a3b2b] to-[#2d5a3d] flex items-center justify-center">
+              <div className="w-full h-full bg-[#0D2E19] flex items-center justify-center">
                 <span className="text-white text-sm font-bold tracking-wide">{userInitials}</span>
               </div>
             )}
@@ -163,192 +179,114 @@ export default function Home() {
         </div>
       </header>
 
-      <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-24 flex flex-col gap-6">
+      <main className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-24 flex flex-col gap-8">
         
-        {/* ROW 1: Hero & Saathi */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 stagger-fade-in" style={{ animationDelay: '0.1s' }}>
-          
-          {/* Hero Section */}
-          <div className="lg:col-span-8 relative overflow-hidden rounded-3xl bg-primary-container p-6 md:p-10 shadow-[0_12px_24px_-12px_rgba(13,46,25,0.4)] animate-breathing group flex flex-col justify-between min-h-[240px]">
-            <div className="absolute inset-0 opacity-30 group-hover:opacity-40 transition-opacity duration-1000 pointer-events-none">
-              <img alt="Abstract painting" className="w-full h-full object-cover mix-blend-overlay scale-105" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDo-DtvVeKkOkw0gOx5eLkztNkThjoxb4Q9w4X2Hn1EhkZy4JP2O_FG0l4uCRjsUlAVYYw6H3Dhd16d5PGvVPgKWxcF-vAs_t9BlgYZR7h_fNqyvjS2n-fVHGlE-zluLMo3IeuNBVDk8ebzvFsXgUAM81RcsjZXXV5Q29BXQNK62oSQwQz1x6ES01QXXL6GRmYMFOF1dvpH9WACSmqVW41f252CdC2OA4RSNuH8L1sFTwwmsaDOVA9kln2x-mVsWWGcnDFicYJ5DD8" />
+        {/* 2. AI Insight Card (The "Saathi" Summary) */}
+        <section className="relative overflow-hidden rounded-3xl p-6 md:p-8 shadow-sm border border-[#0D2E19]/5 bg-white/60 backdrop-blur-xl group">
+          <div className="absolute inset-0 bg-gradient-to-br from-[#C3E5B2]/20 to-transparent pointer-events-none"></div>
+          <div className="relative z-10 flex items-start gap-4 md:gap-6">
+            <div className="w-12 h-12 rounded-2xl bg-[#0D2E19] flex items-center justify-center text-[#C3E5B2] shrink-0 shadow-lg group-hover:scale-105 transition-transform duration-500">
+              <span className="material-symbols-outlined text-2xl animate-pulse">auto_awesome</span>
             </div>
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
-            
-            <div className="relative z-10 flex justify-between items-start mb-12">
-              <div className="flex items-center gap-2 bg-black/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
-                <span className="w-2 h-2 rounded-full bg-surface-mint animate-pulse"></span>
-                <span className="font-label-sm text-[10px] font-bold uppercase tracking-[0.15em] text-surface-mint">{t('home.mainInsight')}</span>
-              </div>
-              <span className="font-label-sm text-xs font-bold text-white/90 tracking-widest uppercase bg-black/20 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/10">
-                {currentDate}
-              </span>
-            </div>
-
-            <div className="relative z-10">
-              <h1 className="text-white max-w-[95%] md:max-w-[85%] font-headline-md text-3xl md:text-4xl lg:text-5xl leading-[1.15] font-medium tracking-tight drop-shadow-md">
-                {t('home.insights', { returnObjects: true })[insightIndex]}
-              </h1>
+            <div className="flex flex-col gap-2">
+              <h3 className="font-semibold text-lg md:text-xl text-[#0D2E19] tracking-tight">Saathi's Insight</h3>
+              <p className="text-sm md:text-base font-medium text-[#0D2E19]/80 leading-relaxed max-w-3xl">
+                Your screen time is down 20% compared to yesterday. You are successfully maintaining your boundaries. Keep up the momentum!
+              </p>
             </div>
           </div>
+        </section>
 
-          {/* Saathi AI Interface */}
-          <div className="lg:col-span-4 bg-gradient-to-br from-primary-container to-[#1a3821] rounded-3xl p-6 md:p-8 flex flex-col justify-between items-center text-center relative overflow-hidden shadow-[0_12px_24px_-12px_rgba(13,46,25,0.3)] group min-h-[240px]">
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-white/10 via-transparent to-transparent opacity-50"></div>
-            
-            <div className="w-14 h-14 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-surface-mint mb-4 group-hover:scale-110 transition-transform duration-500 shadow-lg relative z-10">
-              <span className="material-symbols-outlined text-3xl">auto_awesome</span>
-            </div>
-            
-            <div className="space-y-1.5 z-10 mb-6 w-full">
-              <h3 className="font-semibold text-xl text-white tracking-tight">{t('home.saathiMirror')}</h3>
-              <p className="text-sm font-medium text-surface-mint/80 leading-relaxed px-4">{t('home.saathiQuote')}</p>
-            </div>
-            
-            <Link to="/saathi" className="w-full bg-surface-mint text-primary py-3.5 rounded-xl font-bold text-sm transition-all hover:bg-white hover:scale-[1.02] active:scale-[0.98] shadow-md z-10 block text-center mt-auto">
-              {t('home.reflectBtn')}
-            </Link>
-          </div>
-        </div>
-
-        {/* ROW 2: Metrics Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-6 stagger-fade-in" style={{ animationDelay: '0.2s' }}>
-          
-          {/* Streak Card */}
-          <div className="lg:col-span-3 bg-white p-6 rounded-3xl flex flex-col justify-between min-h-[160px] shadow-sm border border-border-dusty/30 hover:border-border-dusty/60 hover:shadow-md transition-all duration-300 group cursor-default">
+        {/* 3. Key Stats Grid (4 Cards) */}
+        <section className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {/* Card 1 */}
+          <div className="bg-white p-6 rounded-3xl shadow-sm hover:shadow-md border border-[#0D2E19]/5 hover:border-[#0D2E19]/10 hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between min-h-[140px]">
             <div className="flex justify-between items-start">
-              <div className="w-10 h-10 rounded-2xl bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-surface-mint transition-colors duration-300">
-                <span className="material-symbols-outlined text-xl">nightlight</span>
-              </div>
-              <span className="uppercase text-[10px] font-bold tracking-widest text-outline">{t('home.streak')}</span>
+              <span className="uppercase text-[10px] font-bold tracking-widest text-[#0D2E19]/50">Current Streak</span>
+              <span className="material-symbols-outlined text-[#0D2E19]/30 group-hover:text-[#0D2E19] transition-colors">local_fire_department</span>
             </div>
-            <div className="mt-6">
-              <span className="block text-4xl font-display-lg text-primary tracking-tight font-semibold">12 Days</span>
-              <span className="text-sm font-medium text-on-surface-variant mt-1 block">{t('home.consciousEvenings')}</span>
+            <div className="mt-4">
+              <span className="block text-3xl font-display text-[#0D2E19] font-bold">12 Days</span>
             </div>
           </div>
-
-          {/* Completed Sessions Card */}
-          <Link to="/rooms" className="lg:col-span-3 bg-white p-6 rounded-3xl flex flex-col justify-between min-h-[160px] shadow-sm border border-border-dusty/30 hover:border-border-dusty/60 hover:shadow-md transition-all duration-300 group cursor-pointer relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-surface-mint/20 rounded-full blur-xl -translate-y-10 translate-x-10 pointer-events-none"></div>
-            <div className="flex justify-between items-start relative z-10">
-              <div className="w-10 h-10 rounded-2xl bg-surface-container-low flex items-center justify-center text-primary group-hover:bg-surface-mint transition-colors duration-300">
-                <span className="material-symbols-outlined text-xl">group_work</span>
-              </div>
-              <span className="uppercase text-[10px] font-bold tracking-widest text-outline flex items-center gap-1">
-                {activeParticipants > 0 ? <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> : null}
-                {t('home.rooms')}
-              </span>
+          
+          {/* Card 2 */}
+          <Link to="/rooms" className="bg-white p-6 rounded-3xl shadow-sm hover:shadow-md border border-[#0D2E19]/5 hover:border-[#0D2E19]/10 hover:-translate-y-1 hover:bg-[#C3E5B2]/10 transition-all duration-300 group flex flex-col justify-between min-h-[140px]">
+            <div className="flex justify-between items-start">
+              <span className="uppercase text-[10px] font-bold tracking-widest text-[#0D2E19]/50">Focus Sessions</span>
+              <span className="material-symbols-outlined text-[#0D2E19]/30 group-hover:text-[#0D2E19] transition-colors">group_work</span>
             </div>
-            <div className="mt-6 relative z-10">
-              <span className="block text-4xl font-display-lg text-primary tracking-tight font-semibold">{activeParticipants}</span>
-              <span className="text-sm font-medium text-on-surface-variant mt-1 block">{t('home.activeSouls')}</span>
+            <div className="mt-4">
+              <span className="block text-3xl font-display text-[#0D2E19] font-bold">{activeParticipants > 0 ? activeParticipants : '3'}</span>
             </div>
           </Link>
-
-          {/* Awareness Heatmap Card */}
-          <div className="sm:col-span-2 lg:col-span-6 bg-white p-6 rounded-3xl shadow-sm border border-border-dusty/30 hover:border-border-dusty/60 hover:shadow-md transition-all duration-300 flex flex-col justify-between">
-            <div className="flex justify-between items-center mb-6">
-              <div className="flex flex-col gap-1">
-                <span className="uppercase text-[10px] tracking-widest text-outline font-bold">{t('home.awarenessRhythm')}</span>
-                <span className="font-display text-xl text-primary font-semibold tracking-tight">{t('home.weeklyFlow')}</span>
-              </div>
-              <div className="w-10 h-10 rounded-2xl bg-surface-container-low flex items-center justify-center text-primary">
-                <span className="material-symbols-outlined text-xl">calendar_today</span>
-              </div>
+          
+          {/* Card 3 */}
+          <div className="bg-white p-6 rounded-3xl shadow-sm hover:shadow-md border border-[#0D2E19]/5 hover:border-[#0D2E19]/10 hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between min-h-[140px]">
+            <div className="flex justify-between items-start">
+              <span className="uppercase text-[10px] font-bold tracking-widest text-[#0D2E19]/50">Screen Time</span>
+              <span className="material-symbols-outlined text-[#0D2E19]/30 group-hover:text-[#0D2E19] transition-colors">smartphone</span>
             </div>
-            <div className="flex justify-between items-center gap-2 lg:gap-4 mt-auto">
-              {t('home.days', { returnObjects: true }).map((day, idx) => (
-                <div key={day} className="flex flex-col items-center gap-2.5 flex-1 group cursor-pointer">
-                  <span className={`uppercase font-bold text-[10px] md:text-[11px] transition-colors ${idx === 3 ? 'text-primary' : 'text-outline group-hover:text-on-surface-variant'}`}>{day}</span>
-                  <div className={`w-full max-w-[48px] aspect-square rounded-xl md:rounded-2xl flex items-center justify-center relative transition-all duration-300
-                    ${idx === 1 || idx === 2 ? 'bg-surface-mint shadow-inner' : idx === 3 ? 'border-2 border-primary bg-white shadow-sm scale-110' : 'bg-surface-container-low group-hover:bg-[#ebe9dd]'}`}>
-                    {idx === 1 || idx === 2 ? <span className="material-symbols-outlined text-sm text-primary">circle</span> : null}
-                    {idx === 3 ? <div className="w-3 h-3 rounded-full bg-primary animate-pulse"></div> : null}
-                    {idx === 0 ? <div className="w-2 h-2 rounded-full bg-border-dusty/40"></div> : null}
+            <div className="mt-4">
+              <span className="block text-3xl font-display text-[#0D2E19] font-bold">2h 45m</span>
+            </div>
+          </div>
+          
+          {/* Card 4 */}
+          <div className="bg-white p-6 rounded-3xl shadow-sm hover:shadow-md border border-[#0D2E19]/5 hover:border-[#0D2E19]/10 hover:-translate-y-1 transition-all duration-300 group flex flex-col justify-between min-h-[140px]">
+            <div className="flex justify-between items-start">
+              <span className="uppercase text-[10px] font-bold tracking-widest text-[#0D2E19]/50">Interruptions</span>
+              <span className="material-symbols-outlined text-[#0D2E19]/30 group-hover:text-[#C81E1E] transition-colors">notifications_paused</span>
+            </div>
+            <div className="mt-4">
+              <span className="block text-3xl font-display text-[#0D2E19] font-bold">8</span>
+            </div>
+          </div>
+        </section>
+
+        {/* 4. App Usage & Time Limits (Progress Bars) */}
+        <section className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-[#0D2E19]/5">
+          <div className="mb-6 flex justify-between items-center">
+            <h2 className="text-xl font-bold text-[#0D2E19] tracking-tight">App Daily Limits</h2>
+            <span className="text-xs font-bold bg-[#C3E5B2]/30 text-[#0D2E19] px-3 py-1.5 rounded-full">Today</span>
+          </div>
+          
+          <div className="space-y-6">
+            {appUsageData.map((app, idx) => (
+              <div key={idx} className="flex flex-col gap-2 group">
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded-xl ${app.color} flex items-center justify-center text-white shadow-sm`}>
+                      <span className="material-symbols-outlined text-[16px]">{app.icon}</span>
+                    </div>
+                    <span className="font-semibold text-[#0D2E19]">{app.name}</span>
                   </div>
+                  
+                  {app.limit ? (
+                    <div className="text-sm font-medium">
+                      <span className={getProgressColor(app.used, app.limit).replace('bg-', 'text-')}>{app.used}m</span>
+                      <span className="text-[#0D2E19]/40"> / {app.limit}m</span>
+                    </div>
+                  ) : (
+                    <button className="text-xs font-bold text-[#0D2E19]/60 hover:text-[#0D2E19] bg-[#FCFBF7] hover:bg-[#C3E5B2]/30 px-3 py-1 rounded-lg border border-[#0D2E19]/10 transition-colors">
+                      + Set Limit
+                    </button>
+                  )}
                 </div>
-              ))}
-            </div>
+                
+                {app.limit && (
+                  <div className="w-full h-2.5 bg-[#FCFBF7] rounded-full overflow-hidden shadow-inner relative">
+                    <div 
+                      className={`absolute top-0 left-0 h-full rounded-full transition-all duration-1000 ease-out ${getProgressColor(app.used, app.limit)}`}
+                      style={{ width: mounted ? getProgressWidth(app.used, app.limit) : '0%' }}
+                    ></div>
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
-        </div>
+        </section>
 
-        {/* ROW 3: Charts & Deep Work */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 stagger-fade-in" style={{ animationDelay: '0.3s' }}>
-          
-          {/* Screen Time vs Focus Time */}
-          <div className="lg:col-span-5 bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-border-dusty/30 hover:border-border-dusty/60 hover:shadow-md transition-all duration-300 flex flex-col justify-between min-h-[260px]">
-            <div className="flex justify-between items-start mb-8">
-              <div>
-                <h2 className="text-xl font-semibold tracking-tight text-primary">{t('home.focusVsDistraction')}</h2>
-                <p className="text-xs text-on-surface-variant font-medium mt-1">{t('home.todaysBalance')}</p>
-              </div>
-              <span className="text-[10px] font-bold uppercase tracking-widest text-outline bg-surface-container-low px-3 py-1.5 rounded-lg">{t('home.today')}</span>
-            </div>
-            
-            <div className="space-y-6 mt-auto">
-              <div className="space-y-2 group">
-                <div className="flex justify-between text-sm">
-                  <span className="text-on-surface font-semibold group-hover:text-primary transition-colors">{t('home.screenTime')}</span>
-                  <span className="text-on-surface-variant text-xs font-bold bg-surface-container-low px-2 py-0.5 rounded-md">2h 45m</span>
-                </div>
-                <div className="w-full h-3 bg-surface-container rounded-full overflow-hidden shadow-inner relative">
-                  <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-orange-400 to-red-500 rounded-full transition-all duration-1000 ease-out" style={{ width: '65%' }}></div>
-                </div>
-              </div>
-              <div className="space-y-2 group">
-                <div className="flex justify-between text-sm">
-                  <span className="text-on-surface font-semibold group-hover:text-primary transition-colors">{t('home.focusRooms')}</span>
-                  <span className="text-on-surface-variant text-xs font-bold bg-surface-container-low px-2 py-0.5 rounded-md">1h 15m</span>
-                </div>
-                <div className="w-full h-3 bg-surface-container rounded-full overflow-hidden shadow-inner relative">
-                  <div className="absolute top-0 left-0 h-full bg-gradient-to-r from-[#9bcf8a] to-surface-herbal rounded-full transition-all duration-1000 ease-out delay-300" style={{ width: '30%' }}></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Top Apps Today Section */}
-          <div className="lg:col-span-4 bg-white rounded-3xl p-6 shadow-sm border border-border-dusty/30 hover:border-border-dusty/60 hover:shadow-md transition-all duration-300 flex flex-col min-h-[260px]">
-            <div className="flex justify-between items-center mb-5">
-              <h2 className="text-xl font-semibold tracking-tight text-primary">{t('home.topApps')}</h2>
-            </div>
-            
-            <div className="space-y-3 flex-1 flex flex-col justify-center">
-              <div className="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-surface-container-low transition-colors group cursor-default border border-transparent hover:border-border-dusty/20">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-pink-500 to-orange-400 flex items-center justify-center shadow-sm shrink-0">
-                  <span className="material-symbols-outlined text-white text-[18px]">photo_camera</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-sm text-on-surface group-hover:text-primary transition-colors truncate">Instagram</h4>
-                </div>
-                <span className="font-bold text-sm text-primary font-display shrink-0">1h 42m</span>
-              </div>
-
-              <div className="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-surface-container-low transition-colors group cursor-default border border-transparent hover:border-border-dusty/20">
-                <div className="w-10 h-10 rounded-xl bg-[#1DA1F2] flex items-center justify-center shadow-sm shrink-0">
-                  <span className="material-symbols-outlined text-white text-[18px]">flutter_dash</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-sm text-on-surface group-hover:text-primary transition-colors truncate">Twitter (X)</h4>
-                </div>
-                <span className="font-bold text-sm text-primary font-display shrink-0">45m</span>
-              </div>
-
-              <div className="flex items-center gap-3 p-2.5 rounded-2xl hover:bg-surface-container-low transition-colors group cursor-default border border-transparent hover:border-border-dusty/20">
-                <div className="w-10 h-10 rounded-xl bg-red-600 flex items-center justify-center shadow-sm shrink-0">
-                  <span className="material-symbols-outlined text-white text-[18px]">play_arrow</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-sm text-on-surface group-hover:text-primary transition-colors truncate">YouTube</h4>
-                </div>
-                <span className="font-bold text-sm text-primary font-display shrink-0">30m</span>
-              </div>
-            </div>
-          </div>
-          
-          {/* Removed Breathing Regulation Card since it is now at the top */}
-        </div>
       </main>
       
       {/* Full-Screen Breathing Overlay */}
@@ -395,14 +333,14 @@ export default function Home() {
           `}</style>
           
           <div className="relative w-64 h-64 flex items-center justify-center z-10 mb-12">
-            <div className="absolute inset-0 bg-surface-mint rounded-full blur-3xl opacity-20"></div>
-            <div className="absolute inset-0 bg-gradient-to-tr from-surface-mint to-[#e6f4e1] rounded-full breathing-orb-full shadow-[0_0_80px_rgba(195,229,178,0.5)]"></div>
-            <div className="relative text-primary font-display text-4xl bg-white/90 backdrop-blur-md w-32 h-32 rounded-full flex items-center justify-center shadow-inner font-bold tracking-tight">
+            <div className="absolute inset-0 bg-[#C3E5B2] rounded-full blur-3xl opacity-20"></div>
+            <div className="absolute inset-0 bg-gradient-to-tr from-[#C3E5B2] to-[#e6f4e1] rounded-full breathing-orb-full shadow-[0_0_80px_rgba(195,229,178,0.5)]"></div>
+            <div className="relative text-[#0D2E19] font-display text-4xl bg-white/90 backdrop-blur-md w-32 h-32 rounded-full flex items-center justify-center shadow-inner font-bold tracking-tight">
               {Math.floor(breathingTimeLeft / 60)}:{(breathingTimeLeft % 60).toString().padStart(2, '0')}
             </div>
           </div>
 
-          <div className="inhale-exhale-text-full font-display-lg text-5xl text-surface-mint tracking-tight font-semibold drop-shadow-md z-10 h-12 flex items-center justify-center"></div>
+          <div className="inhale-exhale-text-full font-display-lg text-5xl text-[#C3E5B2] tracking-tight font-semibold drop-shadow-md z-10 h-12 flex items-center justify-center"></div>
         </div>
       )}
     </div>
