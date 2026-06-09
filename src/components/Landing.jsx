@@ -72,9 +72,13 @@ export default function Landing() {
         if (e.isIntersecting) {
           e.target.style.opacity = '1';
           e.target.style.transform = 'translateY(0)';
+          if (e.target.classList.contains('how-step')) {
+            const num = e.target.querySelector('.step-num');
+            if (num) num.classList.add('active');
+          }
         }
       });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.5 });
 
     document.querySelectorAll('.feature-card, .stat-card, .testimonial-card, .how-step, .hero-logo-mark, .fade-up').forEach(el => {
       el.style.opacity = '0';
@@ -223,24 +227,32 @@ export default function Landing() {
   <p className="section-desc">Praana is designed to interrupt the autopilot. A few gentle steps each time restores your power to choose.</p>
   <div className="how-grid" style={{"marginTop":"48px"}}>
     <div className="how-step">
-      <div className="step-num active">1</div>
-      <h4>You open an app</h4>
-      <p>Instagram, TikTok, whatever triggers the scroll. Praana notices.</p>
+      <div className="step-num">1</div>
+      <div className="step-content">
+        <h4>You open an app</h4>
+        <p>Instagram, TikTok, whatever triggers the scroll. Praana notices.</p>
+      </div>
     </div>
     <div className="how-step">
       <div className="step-num">2</div>
-      <h4>Breathing overlay</h4>
-      <p>A soft orb guides one conscious breath. Pause before impulse.</p>
+      <div className="step-content">
+        <h4>Breathing overlay</h4>
+        <p>A soft orb guides one conscious breath. Pause before impulse.</p>
+      </div>
     </div>
     <div className="how-step">
       <div className="step-num">3</div>
-      <h4>Emotional check-in</h4>
-      <p>A single question. Why are you here right now? What do you need?</p>
+      <div className="step-content">
+        <h4>Emotional check-in</h4>
+        <p>A single question. Why are you here right now? What do you need?</p>
+      </div>
     </div>
     <div className="how-step">
       <div className="step-num">4</div>
-      <h4>You choose</h4>
-      <p>Continue with intent — or return to focus. Either way, it was a choice.</p>
+      <div className="step-content">
+        <h4>You choose</h4>
+        <p>Continue with intent — or return to focus. Either way, it was a choice.</p>
+      </div>
     </div>
   </div>
 </section>

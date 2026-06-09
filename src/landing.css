@@ -76,7 +76,7 @@
   .hero::before {
     content: '';
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 40%, #c3e5b2 0%, #e7f6e6 30%, #fbfaed 70%);
+    /* background: radial-gradient(ellipse 80% 60% at 50% 40%, #c3e5b2 0%, #e7f6e6 30%, #fbfaed 70%); */
     z-index: 0;
   }
   .hero-inner { position: relative; z-index: 1; }
@@ -548,7 +548,39 @@
     .two-col { grid-template-columns: 1fr; gap: 40px; }
     .two-col.reverse { direction: ltr; }
     .stats-row { grid-template-columns: repeat(2, 1fr); }
-    .how-grid::before { display: none; }
+    .how-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+      position: relative;
+      padding-left: 0;
+    }
+    .how-grid::before {
+      display: block;
+      content: '';
+      position: absolute;
+      top: 24px; bottom: 24px;
+      left: 40px; /* 16px padding + 24px (half of 48px circle) */
+      width: 2px;
+      height: auto;
+      background: var(--border-dusty);
+      z-index: 0;
+    }
+    .how-step {
+      display: flex;
+      flex-direction: row;
+      text-align: left;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .step-num {
+      margin: 0;
+      flex-shrink: 0;
+      transition: all 0.4s ease;
+    }
+    .step-content {
+      padding-top: 4px;
+    }
     .footer-top { flex-direction: column; }
     .cta-section { padding: 72px 20px; }
     footer { padding: 48px 20px 24px; }
