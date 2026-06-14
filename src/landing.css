@@ -76,7 +76,7 @@
   .hero::before {
     content: '';
     position: absolute; inset: 0;
-    /* background: radial-gradient(ellipse 80% 60% at 50% 40%, #c3e5b2 0%, #e7f6e6 30%, #fbfaed 70%); */
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, #c3e5b2 0%, #e7f6e6 30%, #fbfaed 70%);
     z-index: 0;
   }
   .hero-inner { position: relative; z-index: 1; }
