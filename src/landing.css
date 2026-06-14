@@ -3,8 +3,8 @@
     --bg-dim: #dcdacf;
     --surface: #f0eee2;
     --surface-low: #f5f4e8;
-    --surface-mint: #E7F6E6;
-    --surface-herbal: #C3E5B2;
+    --surface-mint: #e8ede9;
+    --surface-herbal: #c9d6cc;
     --primary: #0d2e19;
     --primary-container: #24452d;
     --on-primary: #ffffff;
@@ -76,7 +76,7 @@
   .hero::before {
     content: '';
     position: absolute; inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 40%, #c3e5b2 0%, #e7f6e6 30%, #fbfaed 70%);
+    background: radial-gradient(ellipse 80% 60% at 50% 40%, rgba(13,46,25,0.08) 0%, rgba(13,46,25,0.03) 40%, #fbfaed 70%);
     z-index: 0;
   }
   .hero-inner { position: relative; z-index: 1; }
@@ -144,27 +144,29 @@
     gap: 24px;
   }
   .feature-card {
-    background: var(--surface-mint);
-    border-radius: 16px; padding: 32px;
-    border: 1px solid var(--border-dusty);
-    transition: transform 0.2s, box-shadow 0.2s;
+    background: var(--primary);
+    border-radius: 20px; padding: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 24px rgba(13, 46, 25, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   }
   .feature-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 40px var(--shadow-olive);
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px rgba(13, 46, 25, 0.25);
+    border-color: rgba(255, 255, 255, 0.3);
   }
   .feature-icon {
-    width: 48px; height: 48px; background: var(--primary);
+    width: 48px; height: 48px; background: rgba(255, 255, 255, 0.1);
     border-radius: 12px; display: flex; align-items: center; justify-content: center;
     margin-bottom: 20px;
   }
-  .feature-icon svg { width: 24px; height: 24px; color: white; }
+  .feature-icon svg { width: 24px; height: 24px; color: var(--secondary-container); }
   .feature-card h3 {
     font-family: 'Sora', sans-serif; font-size: 18px; font-weight: 500;
-    color: var(--primary); margin-bottom: 10px;
+    color: #ffffff; margin-bottom: 10px;
   }
   .feature-card p {
-    font-size: 14px; line-height: 1.7; color: var(--on-surface-variant);
+    font-size: 14px; line-height: 1.7; color: rgba(255, 255, 255, 0.85);
   }
 
   /* APP SCREENS SHOWCASE */
@@ -282,7 +284,7 @@
   }
   .breath-orb {
     width: 130px; height: 130px; border-radius: 50%;
-    background: radial-gradient(circle at 38% 35%, #8db494, #4a7a55);
+    background: radial-gradient(circle at 38% 35%, #8ba895, #24452d);
     display: flex; align-items: center; justify-content: center;
     box-shadow: 0 8px 32px rgba(13,46,25,0.25);
     animation: breathe 4s ease-in-out infinite;
@@ -511,6 +513,7 @@
     padding: 64px 40px 24px;
     background-color: var(--primary);
     color: rgba(255, 255, 255, 0.7);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
   
   .landing-page-wrapper .footer-inner { max-width: 1200px; margin: 0 auto; }
