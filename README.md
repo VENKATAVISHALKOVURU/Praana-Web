@@ -13,7 +13,7 @@ The application is split into two primary components:
 
 2. **Backend (`/chat bot/CHAT BOT`)**
    - Built with Node.js and Express.
-   - Integrates with the **Groq API** (running Llama 3) for blazing-fast, empathetic AI responses.
+   - Integrates with the **Groq API** (running Qwen 3.6) for blazing-fast, empathetic AI responses.
    - Uses Firebase Admin SDK to verify user sessions securely.
 
 ---
