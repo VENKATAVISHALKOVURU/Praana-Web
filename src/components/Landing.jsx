@@ -124,8 +124,8 @@ export default function Landing() {
     <div className="hero-buttons fade-up fade-up-delay-3" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
       <button className="btn-primary" onClick={handleEnterSpace}>{t('landing.btnEnterSpace')}</button>
       <a 
-        href="https://github.com/VENKATAVISHALKOVURU/Praana-Web/raw/main/public/downloads/praana-app.apk" 
-        download="Praana-App.apk" 
+        href="https://github.com/VENKATAVISHALKOVURU/Praana-Web/raw/main/public/downloads/newpraana.apk" 
+        download="newpraana.apk" 
         className="btn-secondary" 
         style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}
       >
@@ -410,8 +410,8 @@ export default function Landing() {
     <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap', marginTop: '24px' }}>
       <button className="cta-btn" onClick={handleBeginJourney} style={{ margin: 0 }}>Enter Space — It's Free</button>
       <a 
-        href="https://github.com/VENKATAVISHALKOVURU/Praana-Web/raw/main/public/downloads/praana-app.apk" 
-        download="Praana-App.apk" 
+        href="https://github.com/VENKATAVISHALKOVURU/Praana-Web/raw/main/public/downloads/newpraana.apk" 
+        download="newpraana.apk" 
         className="cta-btn secondary-btn" 
         style={{ margin: 0, backgroundColor: 'transparent', border: '2px solid rgba(255, 255, 255, 0.3)', color: 'white', display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}
       >
